@@ -6,58 +6,17 @@
     <title>重庆市第66中学校2025级1班毕业纪念</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 </head>
 <body>
-    <!-- 登录/注册模态框 -->
-    <div class="auth-modal" id="authModal">
-        <div class="auth-container">
-            <div class="auth-header">
-                <h2 id="authTitle">登录账号</h2>
-                <button class="close-btn" id="closeAuth">&times;</button>
-            </div>
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login">登录</button>
-                <button class="auth-tab" data-tab="register">注册</button>
-            </div>
-            
-            <form id="loginForm" class="auth-form">
-                <div class="form-group">
-                    <label for="loginUsername"><i class="fas fa-user"></i> 用户名</label>
-                    <input type="text" id="loginUsername" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword"><i class="fas fa-lock"></i> 密码</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <button type="submit" class="auth-btn">登录</button>
-            </form>
-            
-            <form id="registerForm" class="auth-form hidden">
-                <div class="form-group">
-                    <label for="regUsername"><i class="fas fa-user"></i> 用户名</label>
-                    <input type="text" id="regUsername" required>
-                </div>
-                <div class="form-group">
-                    <label for="regEmail"><i class="fas fa-envelope"></i> 邮箱</label>
-                    <input type="email" id="regEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword"><i class="fas fa-lock"></i> 密码</label>
-                    <input type="password" id="regPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="regConfirm"><i class="fas fa-lock"></i> 确认密码</label>
-                    <input type="password" id="regConfirm" required>
-                </div>
-                <button type="submit" class="auth-btn">注册</button>
-            </form>
-            
-            <div class="auth-footer">
-                <p>登录后可以查看完整通讯录和更多班级照片</p>
-            </div>
-        </div>
+    <!-- 主题切换按钮 -->
+    <div class="theme-switch">
+        <button id="themeToggle">
+            <i class="fas fa-moon"></i>
+            <span>夜间模式</span>
+        </button>
     </div>
-
+    
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
@@ -70,7 +29,8 @@
                 <a href="#gallery">照片墙</a>
                 <a href="#roster">通讯录</a>
                 <a href="#timeline">时光轴</a>
-                <a href="#" id="authBtn">登录/注册</a>
+                <a href="#comments">毕业感言</a>
+                <a href="login.html" id="authBtn">登录</a>
             </div>
             <button class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
@@ -97,8 +57,8 @@
         <section class="video-section glass-container">
             <h2 class="section-title">我们的毕业视频</h2>
             <div class="video-container">
-                <video id="graduationVideo" controls>
-                    <source src="https://assets.codepen.io/3364143/sample.mp4" type="video/mp4">
+                <video id="graduationVideo" controls poster="picture/video-poster.jpg">
+                    <source src="viodio/毕业视频.mp4" type="video/mp4">
                     您的浏览器不支持视频播放。
                 </video>
             </div>
@@ -109,27 +69,27 @@
             <h2 class="section-title">班级记忆</h2>
             <div class="photo-grid">
                 <div class="photo-item">
-                    <img src="https://imgtu.com/uploads/fxm5od31/r-class1.webp">
+                    <img src="picture/class1.jpg" alt="开学第一天">
                     <div class="photo-caption">开学第一天</div>
                 </div>
                 <div class="photo-item">
-                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="运动会">
+                    <img src="picture/sports.jpg" alt="运动会">
                     <div class="photo-caption">运动会风采</div>
                 </div>
                 <div class="photo-item">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="课堂学习">
+                    <img src="picture/classroom.jpg" alt="课堂学习">
                     <div class="photo-caption">课堂时光</div>
                 </div>
                 <div class="photo-item">
-                    <img src="https://images.unsplash.com/photo-1542621334-a254cf47733d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="课外活动">
+                    <img src="picture/activity.jpg" alt="课外活动">
                     <div class="photo-caption">课外活动</div>
                 </div>
                 <div class="photo-item">
-                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="毕业典礼">
+                    <img src="picture/graduation.jpg" alt="毕业典礼">
                     <div class="photo-caption">毕业典礼</div>
                 </div>
                 <div class="photo-item">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="校园风景">
+                    <img src="picture/campus.jpg" alt="校园风景">
                     <div class="photo-caption">校园风景</div>
                 </div>
             </div>
@@ -139,7 +99,7 @@
         <section class="roster-section glass-container" id="roster">
             <h2 class="section-title">班级通讯录</h2>
             <div class="roster-container">
-                <!-- 学生信息将通过JavaScript动态加载 -->
+                <!-- 学生信息通过JavaScript加载 -->
             </div>
         </section>
 
@@ -186,16 +146,19 @@
             </div>
         </section>
 
-        <!-- 毕业寄语 -->
-        <section class="message-section glass-container">
-            <h2 class="section-title">毕业寄语</h2>
-            <div class="message-container">
-                <p>亲爱的2025级1班同学们：</p>
-                <p>时光荏苒，三年的初中生活即将画上圆满的句号。回首这段美好的时光，我们一起学习、一起成长，在重庆市第66中学校的校园里留下了无数珍贵的回忆。</p>
-                <p>课堂上，我们认真听讲，积极思考；运动场上，我们挥洒汗水，奋勇争先；课外活动中，我们团结协作，展现才华。每一个瞬间都凝聚着我们的青春与梦想。</p>
-                <p>毕业不是终点，而是新的起点。愿你们带着母校的期望，怀揣梦想，勇敢前行。无论未来走到哪里，请记住我们曾经共同拥有的美好时光。</p>
-                <p>祝同学们前程似锦，未来可期！</p>
-                <p style="text-align: right; margin-top: 20px;">—— 重庆市第66中学校2025级1班全体师生</p>
+        <!-- 毕业感言 -->
+        <section class="comments-section glass-container" id="comments">
+            <h2 class="section-title">毕业感言</h2>
+            <div class="speech-container">
+                <!-- 感言通过JavaScript加载 -->
+            </div>
+            
+            <!-- 评论表单 -->
+            <div class="comment-form" id="commentForm">
+                <h3>分享你的毕业感言</h3>
+                <textarea id="commentInput" placeholder="请输入你的毕业感言..." required></textarea>
+                <button id="submitComment">发表感言</button>
+                <p class="login-prompt">请先<a href="login.html">登录</a>后再发表感言</p>
             </div>
         </section>
 
@@ -207,211 +170,7 @@
         </footer>
     </div>
 
-    <script>
-        // 用户系统
-        const authModal = document.getElementById('authModal');
-        const authBtn = document.getElementById('authBtn');
-        const closeAuth = document.getElementById('closeAuth');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const authTabs = document.querySelectorAll('.auth-tab');
-        const authTitle = document.getElementById('authTitle');
-        
-        // 显示登录/注册模态框
-        authBtn.addEventListener('click', () => {
-            authModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-        
-        // 关闭模态框
-        closeAuth.addEventListener('click', () => {
-            authModal.style.display = 'none';
-            document.body.style.overflow = '';
-        });
-        
-        // 点击模态框外部关闭
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                authModal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        });
-        
-        // 切换登录/注册标签
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // 更新活动标签
-                authTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // 切换表单
-                if (tab.dataset.tab === 'login') {
-                    loginForm.classList.remove('hidden');
-                    registerForm.classList.add('hidden');
-                    authTitle.textContent = '登录账号';
-                } else {
-                    loginForm.classList.add('hidden');
-                    registerForm.classList.remove('hidden');
-                    authTitle.textContent = '注册账号';
-                }
-            });
-        });
-        
-        // 用户注册
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('regUsername').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const confirm = document.getElementById('regConfirm').value;
-            
-            if (password !== confirm) {
-                alert('两次输入的密码不一致！');
-                return;
-            }
-            
-            // 检查用户是否已存在
-            const users = JSON.parse(localStorage.getItem('classUsers') || [];
-            const userExists = users.some(user => user.username === username);
-            
-            if (userExists) {
-                alert('用户名已存在！');
-                return;
-            }
-            
-            // 创建新用户
-            const newUser = {
-                username,
-                email,
-                password,
-                joined: new Date().toISOString()
-            };
-            
-            users.push(newUser);
-            localStorage.setItem('classUsers', JSON.stringify(users));
-            
-            alert('注册成功！请登录');
-            authTabs[0].click(); // 切换到登录标签
-            registerForm.reset();
-        });
-        
-        // 用户登录
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            const users = JSON.parse(localStorage.getItem('classUsers') || [];
-            const user = users.find(u => u.username === username && u.password === password);
-            
-            if (user) {
-                // 登录成功
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                alert(`欢迎回来，${username}！`);
-                authModal.style.display = 'none';
-                document.body.style.overflow = '';
-                updateAuthState();
-            } else {
-                alert('用户名或密码错误！');
-            }
-            
-            loginForm.reset();
-        });
-        
-        // 更新登录状态
-        function updateAuthState() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser) {
-                authBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.username}`;
-            } else {
-                authBtn.textContent = '登录/注册';
-            }
-        }
-        
-        // 初始化登录状态
-        updateAuthState();
-        
-        // 学生数据
-        const studentData = [
-            { name: "张明", phone: "13800138000", gender: "男" },
-            { name: "李华", phone: "13900139000", gender: "女" },
-            { name: "王芳", phone: "13700137000", gender: "女" },
-            { name: "刘伟", phone: "13600136000", gender: "男" },
-            { name: "陈静", phone: "13500135000", gender: "女" },
-            { name: "赵强", phone: "13400134000", gender: "男" },
-            { name: "周涛", phone: "13300133000", gender: "男" },
-            { name: "吴燕", phone: "13200132000", gender: "女" },
-            { name: "郑浩", phone: "13100131000", gender: "男" },
-            { name: "孙梅", phone: "13000130000", gender: "女" },
-            { name: "钱超", phone: "12900129000", gender: "男" },
-            { name: "冯丽", phone: "12800128000", gender: "女" }
-        ];
-        
-        // 渲染学生通讯录
-        function renderStudentRoster() {
-            const rosterContainer = document.querySelector('.roster-container');
-            rosterContainer.innerHTML = '';
-            
-            studentData.forEach(student => {
-                const genderIcon = student.gender === '男' ? 'mars' : 'venus';
-                const genderClass = student.gender === '男' ? 'male' : 'female';
-                
-                const studentCard = document.createElement('div');
-                studentCard.className = `student-card ${genderClass}`;
-                studentCard.innerHTML = `
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">${student.name}</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> ${student.phone}
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-${genderIcon}"></i> ${student.gender}
-                        </div>
-                    </div>
-                `;
-                rosterContainer.appendChild(studentCard);
-            });
-        }
-        
-        // 初始化页面
-        window.addEventListener('DOMContentLoaded', () => {
-            renderStudentRoster();
-            
-            // 移动端导航切换
-            const navToggle = document.getElementById('navToggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            navToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-            
-            // 平滑滚动
-            document.querySelectorAll('.nav-links a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                            
-                            // 关闭移动端菜单
-                            navLinks.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
 </body>
 </html>
