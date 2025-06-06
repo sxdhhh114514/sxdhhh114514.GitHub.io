@@ -5,542 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>重庆市第66中学校2025级1班毕业纪念</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* 重置与基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-            padding: 20px;
-            background: url('background/bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(26, 42, 108, 0.85);
-            z-index: -1;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* 毛玻璃效果容器 */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-container::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: inherit;
-            z-index: -1;
-            filter: blur(20px);
-        }
-
-        /* 头部样式 */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            position: relative;
-        }
-
-        .school-logo {
-            width: 120px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to right, #ffd700, #ffffff, #ffd700);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #e0e0ff;
-        }
-
-        .class-info {
-            font-size: 1.5rem;
-            color: #ffd700;
-            margin-top: 10px;
-        }
-
-        /* 视频播放器区域 */
-        .video-section {
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        video {
-            width: 100%;
-            display: block;
-            border-radius: 15px;
-            max-height: 450px;
-        }
-
-        .video-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .video-btn {
-            background: rgba(255, 215, 0, 0.8);
-            color: #1a2a6c;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            min-width: 160px;
-            justify-content: center;
-        }
-
-        .video-btn:hover {
-            background: rgba(255, 230, 50, 1);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* 照片墙 */
-        .gallery-section {
-            margin: 50px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #ffd700;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, transparent, #ffd700, transparent);
-            margin: 10px auto;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .photo-item {
-            border-radius: 15px;
-            overflow: hidden;
-            height: 250px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .photo-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            z-index: 2;
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .photo-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .photo-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-        }
-
-        .photo-caption {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            color: white;
-            font-weight: bold;
-            z-index: 1;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-        }
-
-        /* 时间线 */
-        .timeline-section {
-            margin: 50px 0;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: rgba(255, 215, 0, 0.6);
-            left: 50%;
-            margin-left: -2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 50px;
-            width: 100%;
-        }
-
-        .timeline-item:nth-child(odd) {
-            padding-right: 50%;
-        }
-
-        .timeline-item:nth-child(even) {
-            padding-left: 50%;
-        }
-
-        .timeline-content {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        .timeline-content h3 {
-            color: #ffd700;
-            margin-bottom: 10px;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #ffd700;
-            border-radius: 50%;
-            top: 20px;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content::before {
-            right: -10px;
-            transform: translateX(50%);
-        }
-
-        .timeline-item:nth-child(even) .timeline-content::before {
-            left: -10px;
-            transform: translateX(-50%);
-        }
-
-        /* 班级通讯录 */
-        .roster-section {
-            margin: 50px 0;
-        }
-
-        .roster-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .student-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .student-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: rgba(255, 215, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .student-info {
-            flex-grow: 1;
-        }
-
-        .student-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #ffd700;
-        }
-
-        .student-contact {
-            display: flex;
-            align-items: center;
-            margin-top: 8px;
-            font-size: 0.95rem;
-        }
-
-        .student-contact i {
-            width: 20px;
-            color: #ffd700;
-            margin-right: 8px;
-        }
-
-        /* 毕业寄语 */
-        .message-section {
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .message-container {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.3rem;
-            line-height: 1.8;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            border-radius: 15px;
-            position: relative;
-        }
-
-        .message-container::before,
-        .message-container::after {
-            content: '"';
-            position: absolute;
-            font-size: 5rem;
-            color: rgba(255, 215, 0, 0.3);
-        }
-
-        .message-container::before {
-            top: 10px;
-            left: 20px;
-        }
-
-        .message-container::after {
-            bottom: 10px;
-            right: 20px;
-            transform: rotate(180deg);
-        }
-
-        /* 页脚 */
-        footer {
-            text-align: center;
-            padding: 30px;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.3rem;
-            }
-            
-            .class-info {
-                font-size: 1.2rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .timeline::before {
-                left: 30px;
-            }
-            
-            .timeline-item:nth-child(odd),
-            .timeline-item:nth-child(even) {
-                padding: 0;
-                padding-left: 70px;
-            }
-            
-            .timeline-content::before {
-                left: 20px;
-                transform: translateX(-50%);
-            }
-            
-            .video-btn {
-                padding: 10px 15px;
-                font-size: 1rem;
-                min-width: 140px;
-            }
-            
-            .roster-container {
-                grid-template-columns: 1fr;
-            }
-
-            .photo-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            .video-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .video-btn {
-                width: 100%;
-                max-width: 280px;
-            }
-            
-            .photo-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* 加载状态 */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid #ffd700;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 1.2rem;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- 加载动画 -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">正在加载毕业纪念册...</div>
+    <!-- 登录/注册模态框 -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authTitle">登录账号</h2>
+                <button class="close-btn" id="closeAuth">&times;</button>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">登录</button>
+                <button class="auth-tab" data-tab="register">注册</button>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginUsername"><i class="fas fa-user"></i> 用户名</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword"><i class="fas fa-lock"></i> 密码</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="auth-btn">登录</button>
+            </form>
+            
+            <form id="registerForm" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="regUsername"><i class="fas fa-user"></i> 用户名</label>
+                    <input type="text" id="regUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail"><i class="fas fa-envelope"></i> 邮箱</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword"><i class="fas fa-lock"></i> 密码</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirm"><i class="fas fa-lock"></i> 确认密码</label>
+                    <input type="password" id="regConfirm" required>
+                </div>
+                <button type="submit" class="auth-btn">注册</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>登录后可以查看完整通讯录和更多班级照片</p>
+            </div>
+        </div>
     </div>
 
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>66中2025级1班</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">首页</a>
+                <a href="#gallery">照片墙</a>
+                <a href="#roster">通讯录</a>
+                <a href="#timeline">时光轴</a>
+                <a href="#" id="authBtn">登录/注册</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
     <div class="container">
         <!-- 头部区域 -->
         <header class="glass-container">
@@ -559,148 +97,54 @@
         <section class="video-section glass-container">
             <h2 class="section-title">我们的毕业视频</h2>
             <div class="video-container">
-                <video id="graduationVideo" poster="background/video-poster.jpg">
-                    <source src="viodio/毕业视频.mp4" type="video/mp4">
+                <video id="graduationVideo" controls>
+                    <source src="https://assets.codepen.io/3364143/sample.mp4" type="video/mp4">
                     您的浏览器不支持视频播放。
                 </video>
-            </div>
-            <div class="video-controls">
-                <button class="video-btn" onclick="playVideo()">
-                    <i class="fas fa-play"></i> 播放视频
-                </button>
-                <button class="video-btn" onclick="pauseVideo()">
-                    <i class="fas fa-pause"></i> 暂停
-                </button>
-                <button class="video-btn" onclick="toggleFullScreen()">
-                    <i class="fas fa-expand"></i> 全屏
-                </button>
             </div>
         </section>
 
         <!-- 照片墙 -->
-        <section class="gallery-section glass-container">
+        <section class="gallery-section glass-container" id="gallery">
             <h2 class="section-title">班级记忆</h2>
             <div class="photo-grid">
                 <div class="photo-item">
-                    <img src="picture/class1.jpg" alt="开学第一天">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="班级合影">
                     <div class="photo-caption">开学第一天</div>
                 </div>
                 <div class="photo-item">
-                    <img src="picture/sports.jpg" alt="运动会">
+                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="运动会">
                     <div class="photo-caption">运动会风采</div>
                 </div>
                 <div class="photo-item">
-                    <img src="picture/classroom.jpg" alt="课堂学习">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="课堂学习">
                     <div class="photo-caption">课堂时光</div>
                 </div>
                 <div class="photo-item">
-                    <img src="picture/activity.jpg" alt="课外活动">
+                    <img src="https://images.unsplash.com/photo-1542621334-a254cf47733d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="课外活动">
                     <div class="photo-caption">课外活动</div>
                 </div>
                 <div class="photo-item">
-                    <img src="picture/graduation.jpg" alt="毕业典礼">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="毕业典礼">
                     <div class="photo-caption">毕业典礼</div>
                 </div>
                 <div class="photo-item">
-                    <img src="picture/campus.jpg" alt="校园风景">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="校园风景">
                     <div class="photo-caption">校园风景</div>
                 </div>
             </div>
         </section>
 
         <!-- 班级通讯录 -->
-        <section class="roster-section glass-container">
+        <section class="roster-section glass-container" id="roster">
             <h2 class="section-title">班级通讯录</h2>
             <div class="roster-container">
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">张明</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13800138000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 男
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">李华</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13900139000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 女
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">王芳</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13700137000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 女
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">刘伟</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13600136000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 男
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">陈静</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13500135000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 女
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="student-info">
-                        <div class="student-name">赵强</div>
-                        <div class="student-contact">
-                            <i class="fas fa-phone"></i> 13400134000
-                        </div>
-                        <div class="student-contact">
-                            <i class="fas fa-venus-mars"></i> 男
-                        </div>
-                    </div>
-                </div>
+                <!-- 学生信息将通过JavaScript动态加载 -->
             </div>
         </section>
 
         <!-- 时间线 -->
-        <section class="timeline-section glass-container">
+        <section class="timeline-section glass-container" id="timeline">
             <h2 class="section-title">初中时光轴</h2>
             <div class="timeline">
                 <div class="timeline-item">
@@ -764,90 +208,210 @@
     </div>
 
     <script>
-        // 视频控制函数
-        const video = document.getElementById('graduationVideo');
+        // 用户系统
+        const authModal = document.getElementById('authModal');
+        const authBtn = document.getElementById('authBtn');
+        const closeAuth = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authTitle = document.getElementById('authTitle');
         
-        function playVideo() {
-            video.play();
-        }
+        // 显示登录/注册模态框
+        authBtn.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
         
-        function pauseVideo() {
-            video.pause();
-        }
+        // 关闭模态框
+        closeAuth.addEventListener('click', () => {
+            authModal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
         
-        function toggleFullScreen() {
-            if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.webkitRequestFullscreen) {
-                video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) {
-                video.msRequestFullscreen();
+        // 点击模态框外部关闭
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // 切换登录/注册标签
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 更新活动标签
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 切换表单
+                if (tab.dataset.tab === 'login') {
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                    authTitle.textContent = '登录账号';
+                } else {
+                    loginForm.classList.add('hidden');
+                    registerForm.classList.remove('hidden');
+                    authTitle.textContent = '注册账号';
+                }
+            });
+        });
+        
+        // 用户注册
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            
+            if (password !== confirm) {
+                alert('两次输入的密码不一致！');
+                return;
+            }
+            
+            // 检查用户是否已存在
+            const users = JSON.parse(localStorage.getItem('classUsers') || [];
+            const userExists = users.some(user => user.username === username);
+            
+            if (userExists) {
+                alert('用户名已存在！');
+                return;
+            }
+            
+            // 创建新用户
+            const newUser = {
+                username,
+                email,
+                password,
+                joined: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('classUsers', JSON.stringify(users));
+            
+            alert('注册成功！请登录');
+            authTabs[0].click(); // 切换到登录标签
+            registerForm.reset();
+        });
+        
+        // 用户登录
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const users = JSON.parse(localStorage.getItem('classUsers') || [];
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                // 登录成功
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert(`欢迎回来，${username}！`);
+                authModal.style.display = 'none';
+                document.body.style.overflow = '';
+                updateAuthState();
+            } else {
+                alert('用户名或密码错误！');
+            }
+            
+            loginForm.reset();
+        });
+        
+        // 更新登录状态
+        function updateAuthState() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                authBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.username}`;
+            } else {
+                authBtn.textContent = '登录/注册';
             }
         }
         
-        // 照片墙悬停效果增强
-        const photoItems = document.querySelectorAll('.photo-item');
-        photoItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                item.style.zIndex = '10';
-            });
-            item.addEventListener('mouseleave', () => {
-                item.style.zIndex = '1';
-            });
-        });
+        // 初始化登录状态
+        updateAuthState();
         
-        // 页面加载处理
-        window.addEventListener('load', () => {
-            // 隐藏加载动画
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            setTimeout(() => {
-                loadingOverlay.style.opacity = '0';
-                loadingOverlay.style.visibility = 'hidden';
-                
-                // 显示内容动画
-                const elements = document.querySelectorAll('.glass-container');
-                elements.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                    }, 200 * index);
-                });
-            }, 1500);
-        });
+        // 学生数据
+        const studentData = [
+            { name: "张明", phone: "13800138000", gender: "男" },
+            { name: "李华", phone: "13900139000", gender: "女" },
+            { name: "王芳", phone: "13700137000", gender: "女" },
+            { name: "刘伟", phone: "13600136000", gender: "男" },
+            { name: "陈静", phone: "13500135000", gender: "女" },
+            { name: "赵强", phone: "13400134000", gender: "男" },
+            { name: "周涛", phone: "13300133000", gender: "男" },
+            { name: "吴燕", phone: "13200132000", gender: "女" },
+            { name: "郑浩", phone: "13100131000", gender: "男" },
+            { name: "孙梅", phone: "13000130000", gender: "女" },
+            { name: "钱超", phone: "12900129000", gender: "男" },
+            { name: "冯丽", phone: "12800128000", gender: "女" }
+        ];
         
-        // 初始化元素状态
-        document.querySelectorAll('.glass-container').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        });
-        
-        // 模拟从information文件夹加载学生数据
-        function loadStudentData() {
-            // 实际应用中应通过AJAX加载information文件夹中的txt文件
-            // 这里为演示目的使用模拟数据
-            const students = [
-                { name: "舒玺达", phone: "18723143414", gender: "男" },
-                { name: "李华", phone: "13900139000", gender: "女" },
-                { name: "王芳", phone: "13700137000", gender: "女" },
-                { name: "刘伟", phone: "13600136000", gender: "男" },
-                { name: "陈静", phone: "13500135000", gender: "女" },
-                { name: "赵强", phone: "13400134000", gender: "男" }
-            ];
+        // 渲染学生通讯录
+        function renderStudentRoster() {
+            const rosterContainer = document.querySelector('.roster-container');
+            rosterContainer.innerHTML = '';
             
-            const cards = document.querySelectorAll('.student-card');
-            cards.forEach((card, index) => {
-                if (students[index]) {
-                    const student = students[index];
-                    card.querySelector('.student-name').textContent = student.name;
-                    card.querySelector('.student-contact:nth-child(2)').innerHTML = `<i class="fas fa-phone"></i> ${student.phone}`;
-                    card.querySelector('.student-contact:nth-child(3)').innerHTML = `<i class="fas fa-venus-mars"></i> ${student.gender}`;
-                }
+            studentData.forEach(student => {
+                const genderIcon = student.gender === '男' ? 'mars' : 'venus';
+                const genderClass = student.gender === '男' ? 'male' : 'female';
+                
+                const studentCard = document.createElement('div');
+                studentCard.className = `student-card ${genderClass}`;
+                studentCard.innerHTML = `
+                    <div class="student-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="student-info">
+                        <div class="student-name">${student.name}</div>
+                        <div class="student-contact">
+                            <i class="fas fa-phone"></i> ${student.phone}
+                        </div>
+                        <div class="student-contact">
+                            <i class="fas fa-${genderIcon}"></i> ${student.gender}
+                        </div>
+                    </div>
+                `;
+                rosterContainer.appendChild(studentCard);
             });
         }
         
-        // 调用加载学生数据
-        loadStudentData();
+        // 初始化页面
+        window.addEventListener('DOMContentLoaded', () => {
+            renderStudentRoster();
+            
+            // 移动端导航切换
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('.nav-links a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                            
+                            // 关闭移动端菜单
+                            navLinks.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
