@@ -43,6 +43,36 @@
         
         <!-- 主内容区 -->
         <main class="admin-content">
+<!-- 学生管理 -->
+<section id="students" class="content-section">
+    <h2><i class="fas fa-address-book"></i> 学生管理</h2>
+    <div class="admin-toolbar">
+        <button class="btn btn-primary" id="addStudentBtn">
+            <i class="fas fa-plus"></i> 添加学生
+        </button>
+        <div class="search-box">
+            <input type="text" placeholder="搜索学生..." id="studentSearch">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>电话</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+                <!-- 学生数据通过JavaScript加载 -->
+            </tbody>
+        </table>
+    </div>
+</section>
             <!-- 控制面板 -->
             <section id="dashboard" class="content-section active">
                 <h2><i class="fas fa-tachometer-alt"></i> 控制面板</h2>
