@@ -16,7 +16,7 @@
             <span>夜间模式</span>
         </button>
     </div>
-    
+
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
@@ -58,41 +58,26 @@
         <section class="video-section glass-container">
             <h2 class="section-title">我们的毕业视频</h2>
             <div class="video-container">
-                <video id="graduationVideo" controls poster="picture/video-poster.jpg">
-                    <source src="viodio/毕业视频.mp4" type="video/mp4">
-                    您的浏览器不支持视频播放。
-                </video>
+                <div class="youtube-video">
+                    <iframe 
+                        src="https://player.bilibili.com/player.html?bvid=BV1xx411x7xx" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h3>毕业纪念视频</h3>
+                    <p>珍藏我们三年的美好时光</p>
+                </div>
             </div>
         </section>
 
         <!-- 照片墙 -->
         <section class="gallery-section glass-container" id="gallery">
             <h2 class="section-title">班级记忆</h2>
-            <div class="photo-grid">
-                <div class="photo-item">
-                    <img src="picture/class1.jpg" alt="开学第一天">
-                    <div class="photo-caption">开学第一天</div>
-                </div>
-                <div class="photo-item">
-                    <img src="picture/sports.jpg" alt="运动会">
-                    <div class="photo-caption">运动会风采</div>
-                </div>
-                <div class="photo-item">
-                    <img src="picture/classroom.jpg" alt="课堂学习">
-                    <div class="photo-caption">课堂时光</div>
-                </div>
-                <div class="photo-item">
-                    <img src="picture/activity.jpg" alt="课外活动">
-                    <div class="photo-caption">课外活动</div>
-                </div>
-                <div class="photo-item">
-                    <img src="picture/graduation.jpg" alt="毕业典礼">
-                    <div class="photo-caption">毕业典礼</div>
-                </div>
-                <div class="photo-item">
-                    <img src="picture/campus.jpg" alt="校园风景">
-                    <div class="photo-caption">校园风景</div>
-                </div>
+            <div class="photo-grid" id="photoGrid">
+                <!-- 图片将通过JavaScript加载 -->
             </div>
         </section>
 
@@ -153,13 +138,13 @@
             <div class="speech-container" id="speechContainer">
                 <!-- 感言通过JavaScript加载 -->
             </div>
-            
+
             <!-- 评论表单 -->
             <div class="comment-form" id="commentForm">
                 <h3>分享你的毕业感言</h3>
                 <textarea id="commentInput" placeholder="请输入你的毕业感言..." required></textarea>
                 <button id="submitComment">发表感言</button>
-                <p class="login-prompt">请先<a href="#" id="loginPrompt">登录</a>后再发表感言</p>
+                <p class="login-prompt">请先<a href="login.html" id="loginPrompt">登录</a>后再发表感言</p>
             </div>
         </section>
 
@@ -172,5 +157,6 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
 </body>
 </html>
