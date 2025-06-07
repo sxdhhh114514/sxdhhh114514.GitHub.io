@@ -182,6 +182,38 @@ body {
     background: #0d1b4d;
 }
 
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+.btn-edit {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #138496;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
 .search-box {
     display: flex;
     background: white;
@@ -233,6 +265,23 @@ body {
 
 .admin-table tr:hover {
     background: #f8f9fa;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.inactive {
+    background: #f8d7da;
+    color: #721c24;
 }
 
 /* 模态框样式 */
@@ -295,7 +344,9 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
-}/* 新增媒体管理样式 */
+}
+
+/* 新增媒体管理样式 */
 .media-tabs {
     display: flex;
     margin-bottom: 20px;
@@ -410,11 +461,6 @@ body {
     opacity: 1;
 }
 
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 0.8rem;
-}
-
 .video-list {
     margin-top: 20px;
 }
@@ -459,6 +505,11 @@ body {
     margin-bottom: 5px;
 }
 
+.video-desc {
+    color: #666;
+    font-size: 0.9rem;
+}
+
 .video-actions {
     display: flex;
     gap: 10px;
@@ -483,4 +534,8 @@ body {
     justify-content: flex-end;
     gap: 10px;
     margin-top: 15px;
+}
+
+.hidden {
+    display: none;
 }
