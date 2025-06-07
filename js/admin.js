@@ -108,3 +108,322 @@ function loadSpeeches() {
         tableBody.appendChild(row);
     });
 }
+// 管理后台脚本 - 新增媒体管理功能
+document.addEventListener('DOMContentLoaded', () => {
+    // 初始化导航保持不变
+    
+    // 加载统计数据保持不变
+    
+    // 加载用户数据保持不变
+    
+    // 加载感言数据保持不变
+    
+    // 添加用户按钮保持不变
+    
+    // 关闭模态框保持不变
+    
+    // 新增：媒体管理功能
+    initMediaManagement();
+});
+
+// 初始化媒体管理
+function initMediaManagement() {
+    // 媒体标签切换
+    const mediaTabs = document.querySelectorAll('.media-tab');
+    mediaTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            mediaTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            document.querySelectorAll('.media-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            if (tab.dataset.tab === 'images') {
+                document.getElementById('images-section').classList.add('active');
+                loadImages();
+            } else {
+                document.getElementById('videos-section').classList.add('active');
+                loadVideos();
+            }
+        });
+    });
+    
+    // 图片上传按钮
+    document.getElementById('uploadImageBtn').addEventListener('click', () => {
+        document.getElementById('imageUploadArea').classList.remove('hidden');
+    });
+    
+    // 取消图片上传
+    document.getElementById('cancelImageUpload').addEventListener('click', () => {
+        document.getElementById('imageUploadArea').classList.add('hidden');
+        document.getElementById('imageInput').value = '';
+    });
+    
+    // 图片上传处理
+    const imageInput = document.getElementById('imageInput');
+    const confirmImageUpload = document.getElementById('confirmImageUpload');
+    
+    imageInput.addEventListener('change', () => {
+        confirmImageUpload.disabled = imageInput.files.length === 0;
+    });
+    
+    confirmImageUpload.addEventListener('click', uploadImages);
+    
+    // 拖放上传功能
+    const uploadArea = document.querySelector('.upload-area');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        
+        if (e.dataTransfer.files.length) {
+            imageInput.files = e.dataTransfer.files;
+            confirmImageUpload.disabled = false;
+        }
+    });
+    
+    // 添加视频按钮
+    document.getElementById('addVideoBtn').addEventListener('click', () => {
+        document.getElementById('videoForm').classList.remove('hidden');
+    });
+    
+    // 取消添加视频
+    document.getElementById('cancelVideoAdd').addEventListener('click', () => {
+        document.getElementById('videoForm').classList.add('hidden');
+        document.getElementById('videoTitle').value = '';
+        document.getElementById('videoId').value = '';
+        document.getElementById('videoDescription').value = '';
+    });
+    
+    // 保存视频
+    document.getElementById('saveVideo').addEventListener('click', saveVideo);
+    
+    // 初始加载图片
+    loadImages();
+}
+
+// 加载图片
+function loadImages() {
+    const imageGrid = document.getElementById('imageGrid');
+    imageGrid.innerHTML = '';
+    
+    const images = JSON.parse(localStorage.getItem('classImages')) || [];
+    
+    images.forEach((image, index) => {
+        const imageItem = document.createElement('div');
+        imageItem.className = 'image-item';
+        imageItem.innerHTML = `
+            <img src="${image.url}" alt="${image.title || '班级图片'}">
+            <div class="image-info">
+                <div class="image-title">${image.title || '未命名图片'}</div>
+                <div class="image-size">${formatFileSize(image.size)}</div>
+            </div>
+            <div class="image-actions">
+                <button class="btn btn-sm btn-delete" data-index="${index}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        imageGrid.appendChild(imageItem);
+    });
+    
+    // 添加删除事件
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', deleteImage);
+    });
+}
+
+// 上传图片到ImgBB
+async function uploadImages() {
+    const files = document.getElementById('imageInput').files;
+    if (files.length === 0) return;
+    
+    const uploadArea = document.getElementById('imageUploadArea');
+    uploadArea.innerHTML = '<div class="uploading">上传中，请稍候...</div>';
+    
+    try {
+        const images = JSON.parse(localStorage.getItem('classImages')) || [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            
+            // 使用ImgBB API上传图片
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('https://api.imgbb.com/1/upload?key=YOUR_IMGBB_API_KEY', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                images.push({
+                    url: result.data.url,
+                    title: file.name,
+                    size: file.size,
+                    date: new Date().toISOString()
+                });
+            }
+        }
+        
+        localStorage.setItem('classImages', JSON.stringify(images));
+        loadImages();
+        
+        document.getElementById('imageUploadArea').classList.add('hidden');
+        document.getElementById('imageInput').value = '';
+        
+        // 更新统计信息
+        document.getElementById('totalMedia').textContent = images.length;
+    } catch (error) {
+        uploadArea.innerHTML = `
+            <div class="upload-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>上传失败</h3>
+                <p>${error.message || '请重试'}</p>
+                <button class="btn btn-secondary" id="retryUpload">重试</button>
+            </div>
+        `;
+        
+        document.getElementById('retryUpload').addEventListener('click', () => {
+            document.getElementById('imageUploadArea').classList.add('hidden');
+            document.getElementById('uploadImageBtn').click();
+        });
+    }
+}
+
+// 删除图片
+function deleteImage(e) {
+    const index = e.target.closest('.btn-delete').dataset.index;
+    const images = JSON.parse(localStorage.getItem('classImages')) || [];
+    
+    if (index >= 0 && index < images.length) {
+        images.splice(index, 1);
+        localStorage.setItem('classImages', JSON.stringify(images));
+        loadImages();
+        
+        // 更新统计信息
+        document.getElementById('totalMedia').textContent = images.length;
+    }
+}
+
+// 加载视频
+function loadVideos() {
+    const videoList = document.getElementById('videoList');
+    videoList.innerHTML = '';
+    
+    const videos = JSON.parse(localStorage.getItem('classVideos')) || [];
+    
+    videos.forEach((video, index) => {
+        const videoItem = document.createElement('div');
+        videoItem.className = 'video-item';
+        videoItem.innerHTML = `
+            <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}">
+            </div>
+            <div class="video-details">
+                <div class="video-title">${video.title}</div>
+                <div class="video-id">ID: ${video.id}</div>
+                <div class="video-desc">${video.description || '无描述'}</div>
+            </div>
+            <div class="video-actions">
+                <button class="btn btn-sm btn-edit" data-index="${index}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-delete" data-index="${index}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        videoList.appendChild(videoItem);
+    });
+    
+    // 添加事件
+    document.querySelectorAll('.video-actions .btn-delete').forEach(btn => {
+        btn.addEventListener('click', deleteVideo);
+    });
+    
+    document.querySelectorAll('.video-actions .btn-edit').forEach(btn => {
+        btn.addEventListener('click', editVideo);
+    });
+}
+
+// 保存视频
+function saveVideo() {
+    const title = document.getElementById('videoTitle').value.trim();
+    const id = document.getElementById('videoId').value.trim();
+    const description = document.getElementById('videoDescription').value.trim();
+    
+    if (!title || !id) {
+        alert('请填写标题和视频ID');
+        return;
+    }
+    
+    const videos = JSON.parse(localStorage.getItem('classVideos')) || [];
+    
+    // 检查是否已存在
+    const existingIndex = videos.findIndex(v => v.id === id);
+    
+    if (existingIndex >= 0) {
+        videos[existingIndex] = { id, title, description };
+    } else {
+        videos.push({ id, title, description });
+    }
+    
+    localStorage.setItem('classVideos', JSON.stringify(videos));
+    loadVideos();
+    
+    document.getElementById('videoForm').classList.add('hidden');
+    document.getElementById('videoTitle').value = '';
+    document.getElementById('videoId').value = '';
+    document.getElementById('videoDescription').value = '';
+}
+
+// 删除视频
+function deleteVideo(e) {
+    const index = e.target.closest('.btn-delete').dataset.index;
+    const videos = JSON.parse(localStorage.getItem('classVideos')) || [];
+    
+    if (index >= 0 && index < videos.length) {
+        videos.splice(index, 1);
+        localStorage.setItem('classVideos', JSON.stringify(videos));
+        loadVideos();
+    }
+}
+
+// 编辑视频
+function editVideo(e) {
+    const index = e.target.closest('.btn-edit').dataset.index;
+    const videos = JSON.parse(localStorage.getItem('classVideos')) || [];
+    
+    if (index >= 0 && index < videos.length) {
+        const video = videos[index];
+        document.getElementById('videoTitle').value = video.title;
+        document.getElementById('videoId').value = video.id;
+        document.getElementById('videoDescription').value = video.description || '';
+        
+        document.getElementById('videoForm').classList.remove('hidden');
+    }
+}
+
+// 辅助函数：格式化文件大小
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
