@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 头部内容保持不变 -->
-</head>
-<body>
-    <div class="admin-container">
-        <!-- 侧边栏导航保持不变 -->
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>毕业纪念网站管理后台</title>
@@ -22,7 +16,7 @@
                 <h1><i class="fas fa-graduation-cap"></i> 毕业纪念网站</h1>
                 <h2>管理后台</h2>
             </div>
-            
+
             <nav class="admin-nav">
                 <ul>
                     <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> 控制面板</a></li>
@@ -30,49 +24,18 @@
                     <li><a href="#speeches"><i class="fas fa-comments"></i> 感言管理</a></li>
                     <li><a href="#students"><i class="fas fa-address-book"></i> 学生管理</a></li>
                     <li><a href="#media"><i class="fas fa-photo-video"></i> 媒体管理</a></li>
-                    <li><a href="#settings"><i class="fas fa-cog"></i> 系统设置</a></li>
                     <li><a href="index.html"><i class="fas fa-external-link-alt"></i> 返回网站</a></li>
                 </ul>
             </nav>
-            
+
             <div class="admin-footer">
                 <p>©sxd 2025 重庆市第66中学校</p>
                 <p>技术支持: 2025级1班sxd</p>
             </div>
         </aside>
-        
+
         <!-- 主内容区 -->
         <main class="admin-content">
-<!-- 学生管理 -->
-<section id="students" class="content-section">
-    <h2><i class="fas fa-address-book"></i> 学生管理</h2>
-    <div class="admin-toolbar">
-        <button class="btn btn-primary" id="addStudentBtn">
-            <i class="fas fa-plus"></i> 添加学生
-        </button>
-        <div class="search-box">
-            <input type="text" placeholder="搜索学生..." id="studentSearch">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-    </div>
-
-    <div class="admin-table-container">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>姓名</th>
-                    <th>性别</th>
-                    <th>电话</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody id="studentsTableBody">
-                <!-- 学生数据通过JavaScript加载 -->
-            </tbody>
-        </table>
-    </div>
-</section>
             <!-- 控制面板 -->
             <section id="dashboard" class="content-section active">
                 <h2><i class="fas fa-tachometer-alt"></i> 控制面板</h2>
@@ -117,7 +80,7 @@
                 
                 <div class="recent-activity">
                     <h3>最近活动</h3>
-                    <div class="activity-list">
+                    <div class="activity-list" id="activityList">
                         <!-- 活动将通过JavaScript加载 -->
                     </div>
                 </div>
@@ -131,7 +94,7 @@
                         <i class="fas fa-plus"></i> 添加用户
                     </button>
                     <div class="search-box">
-                        <input type="text" placeholder="搜索用户...">
+                        <input type="text" id="userSearch" placeholder="搜索用户...">
                         <button><i class="fas fa-search"></i></button>
                     </div>
                 </div>
@@ -144,7 +107,7 @@
                                 <th>用户名</th>
                                 <th>邮箱</th>
                                 <th>注册日期</th>
-                                <th>状态</th>
+                                <th>角色</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -160,7 +123,7 @@
                 <h2><i class="fas fa-comments"></i> 感言管理</h2>
                 <div class="admin-toolbar">
                     <div class="search-box">
-                        <input type="text" placeholder="搜索感言...">
+                        <input type="text" id="speechSearch" placeholder="搜索感言...">
                         <button><i class="fas fa-search"></i></button>
                     </div>
                 </div>
@@ -173,7 +136,6 @@
                                 <th>作者</th>
                                 <th>内容</th>
                                 <th>日期</th>
-                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -183,60 +145,39 @@
                     </table>
                 </div>
             </section>
-        </main>
-    </div>
-
-    <!-- 添加用户模态框 -->
-    <div class="modal" id="addUserModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>添加新用户</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="form-group">
-                        <label>用户名</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>邮箱</label>
-                        <input type="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>密码</label>
-                        <input type="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>确认密码</label>
-                        <input type="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>用户角色</label>
-                        <select>
-                            <option value="user">普通用户</option>
-                            <option value="editor">编辑</option>
-                            <option value="admin">管理员</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">添加用户</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/admin.js"></script>
-</body>
-</html>
-        <!-- 主内容区 -->
-        <main class="admin-content">
-            <!-- 控制面板保持不变 -->
             
-            <!-- 用户管理保持不变 -->
+            <!-- 学生管理 -->
+            <section id="students" class="content-section">
+                <h2><i class="fas fa-address-book"></i> 学生管理</h2>
+                <div class="admin-toolbar">
+                    <button class="btn btn-primary" id="addStudentBtn">
+                        <i class="fas fa-plus"></i> 添加学生
+                    </button>
+                    <div class="search-box">
+                        <input type="text" id="studentSearch" placeholder="搜索学生...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>电话</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <!-- 学生数据通过JavaScript加载 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
             
-            <!-- 感言管理保持不变 -->
-            
-            <!-- 新增：媒体管理 -->
+            <!-- 媒体管理 -->
             <section id="media" class="content-section">
                 <h2><i class="fas fa-photo-video"></i> 媒体管理</h2>
                 
@@ -297,9 +238,9 @@
                             <input type="text" id="videoTitle" required>
                         </div>
                         <div class="form-group">
-                            <label>YouTube 视频ID</label>
-                            <input type="text" id="videoId" placeholder="例如：dQw4w9WgXcQ" required>
-                            <p class="form-hint">在YouTube视频URL中找到v=后面的字符</p>
+                            <label>哔哩哔哩 视频ID</label>
+                            <input type="text" id="videoId" placeholder="例如：BV1xx411x7xx" required>
+                            <p class="form-hint">在哔哩哔哩视频URL中找到BV后面的字符</p>
                         </div>
                         <div class="form-group">
                             <label>描述</label>
@@ -315,9 +256,84 @@
         </main>
     </div>
 
-    <!-- 添加用户模态框保持不变 -->
+    <!-- 添加用户模态框 -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加新用户</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="password" name="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>用户角色</label>
+                        <select name="role">
+                            <option value="user">普通用户</option>
+                            <option value="editor">编辑</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">添加用户</button>
+                </form>
+            </div>
+        </div>
+    </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+    <!-- 添加学生模态框 -->
+    <div class="modal" id="addStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="studentModalTitle">添加新学生</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addStudentForm">
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input type="text" id="studentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>性别</label>
+                        <select id="studentGender" required>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>电话</label>
+                        <input type="tel" id="studentPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" id="studentEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>家庭住址</label>
+                        <input type="text" id="studentAddress">
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存学生</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="js/admin.js"></script>
+    <script src="js/theme.js"></script>
 </body>
 </html>
