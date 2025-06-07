@@ -1,0 +1,28 @@
+CREATE TABLE students (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    gender TEXT NOT NULL
+);
+
+CREATE TABLE speeches (
+    id INTEGER PRIMARY KEY,
+    author TEXT NOT NULL,
+    content TEXT NOT NULL,
+    date DATE DEFAULT CURRENT_DATE
+);
+
+-- 插入示例学生数据
+INSERT INTO students (name, phone, gender) VALUES 
+('张明', '13800138000', '男'),
+('李华', '13900139000', '女'),
+('王芳', '13700137000', '女'),
+('刘伟', '13600136000', '男'),
+('陈静', '13500135000', '女'),
+('赵强', '13400134000', '男');
+
+-- 插入示例感言数据
+INSERT INTO speeches (author, content, date) VALUES 
+('张明', '三年时光转瞬即逝，感谢老师和同学们的陪伴！', '2025-06-10'),
+('李华', '初中生活是我最珍贵的回忆，永远记得我们一起奋斗的日子。', '2025-06-12'),
+('王老师', '看着你们从懵懂少年成长为有志青年，老师为你们感到骄傲！', '2025-06-15');
