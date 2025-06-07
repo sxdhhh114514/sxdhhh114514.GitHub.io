@@ -1,79 +1,147 @@
-// auth.js - 处理登录和注册页面逻辑
-
-// 登录页面逻辑
-if (document.getElementById('loginForm')) {
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const remember = document.getElementById('remember').checked;
-        
-        const users = JSON.parse(localStorage.getItem('classUsers') || []);
-        const user = users.find(u => u.username === username && u.password === password);
-        
-        if (user) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            
-            // 如果勾选"记住我"，设置长期存储
-            if (remember) {
-                localStorage.setItem('rememberedUser', JSON.stringify({
-                    username: user.username,
-                    token: btoa(`${username}:${password}`)
-                }));
-            }
-            
-            alert(`欢迎回来，${username}！`);
-            window.location.href = 'index.html';
-        } else {
-            alert('用户名或密码错误！');
-        }
-    });
+/* 登录注册页面样式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-// 注册页面逻辑
-if (document.getElementById('registerForm')) {
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('regUsername').value;
-        const email = document.getElementById('regEmail').value;
-        const password = document.getElementById('regPassword').value;
-        const confirm = document.getElementById('regConfirm').value;
-        
-        if (password !== confirm) {
-            alert('两次输入的密码不一致！');
-            return;
-        }
-        
-        const users = JSON.parse(localStorage.getItem('classUsers') || []);
-        const userExists = users.some(u => u.username === username);
-        
-        if (userExists) {
-            alert('用户名已存在！');
-            return;
-        }
-        
-        const newUser = { username, email, password, role: 'user' };
-        users.push(newUser);
-        localStorage.setItem('classUsers', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-        
-        alert('注册成功！');
-        window.location.href = 'index.html';
-    });
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-// 自动填充记住的用户
-document.addEventListener('DOMContentLoaded', () => {
-    const rememberedUser = JSON.parse(localStorage.getItem('rememberedUser'));
-    
-    if (rememberedUser && document.getElementById('username')) {
-        try {
-            const [username, password] = atob(rememberedUser.token).split(':');
-            document.getElementById('username').value = username;
-            document.getElementById('password').value = password;
-            document.getElementById('remember').checked = true;
-        } catch (e) {
-            console.error('自动登录失败', e);
-        }
-    }
-});
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 20px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.auth-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.auth-header h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #ffd700;
+}
+
+.auth-form {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1a2a6c;
+    box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.form-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.form-options a {
+    color: #1a2a6c;
+    text-decoration: none;
+}
+
+.form-options a:hover {
+    text-decoration: underline;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    background: #1a2a6c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
+
+.auth-btn:hover {
+    background: #0d1b4d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.auth-footer p {
+    margin-bottom: 10px;
+}
+
+.auth-footer a {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
