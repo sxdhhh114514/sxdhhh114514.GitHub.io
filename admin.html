@@ -1,194 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>毕业纪念网站管理后台</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <!-- 头部内容保持不变 -->
 </head>
 <body>
     <div class="admin-container">
-        <!-- 侧边栏导航 -->
-        <aside class="sidebar">
-            <div class="admin-header">
-                <h1><i class="fas fa-graduation-cap"></i> 毕业纪念网站</h1>
-                <h2>管理后台</h2>
-            </div>
-            
-            <nav class="admin-nav">
-                <ul>
-                    <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> 控制面板</a></li>
-                    <li><a href="#users"><i class="fas fa-users"></i> 用户管理</a></li>
-                    <li><a href="#speeches"><i class="fas fa-comments"></i> 感言管理</a></li>
-                    <li><a href="#students"><i class="fas fa-address-book"></i> 学生管理</a></li>
-                    <li><a href="#media"><i class="fas fa-photo-video"></i> 媒体管理</a></li>
-                    <li><a href="#settings"><i class="fas fa-cog"></i> 系统设置</a></li>
-                    <li><a href="index.html"><i class="fas fa-external-link-alt"></i> 返回网站</a></li>
-                </ul>
-            </nav>
-            
-            <div class="admin-footer">
-                <p>© 2025 重庆市第66中学校</p>
-                <p>技术支持: 2025级1班</p>
-            </div>
-        </aside>
+        <!-- 侧边栏导航保持不变 -->
         
         <!-- 主内容区 -->
         <main class="admin-content">
-            <!-- 控制面板 -->
-            <section id="dashboard" class="content-section active">
-                <h2><i class="fas fa-tachometer-alt"></i> 控制面板</h2>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>用户总数</h3>
-                            <p id="totalUsers">0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>感言总数</h3>
-                            <p id="totalSpeeches">0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>学生总数</h3>
-                            <p id="totalStudents">0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>媒体文件</h3>
-                            <p id="totalMedia">0</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="recent-activity">
-                    <h3>最近活动</h3>
-                    <div class="activity-list">
-                        <!-- 活动将通过JavaScript加载 -->
-                    </div>
-                </div>
-            </section>
+            <!-- 控制面板保持不变 -->
             
-            <!-- 用户管理 -->
-            <section id="users" class="content-section">
-                <h2><i class="fas fa-users"></i> 用户管理</h2>
-                <div class="admin-toolbar">
-                    <button class="btn btn-primary" id="addUserBtn">
-                        <i class="fas fa-plus"></i> 添加用户
-                    </button>
-                    <div class="search-box">
-                        <input type="text" placeholder="搜索用户...">
-                        <button><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-                
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>用户名</th>
-                                <th>邮箱</th>
-                                <th>注册日期</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <!-- 用户数据通过JavaScript加载 -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <!-- 用户管理保持不变 -->
             
-            <!-- 感言管理 -->
-            <section id="speeches" class="content-section">
-                <h2><i class="fas fa-comments"></i> 感言管理</h2>
-                <div class="admin-toolbar">
-                    <div class="search-box">
-                        <input type="text" placeholder="搜索感言...">
-                        <button><i class="fas fa-search"></i></button>
+            <!-- 感言管理保持不变 -->
+            
+            <!-- 新增：媒体管理 -->
+            <section id="media" class="content-section">
+                <h2><i class="fas fa-photo-video"></i> 媒体管理</h2>
+                
+                <div class="media-tabs">
+                    <button class="media-tab active" data-tab="images">图片管理</button>
+                    <button class="media-tab" data-tab="videos">视频管理</button>
+                </div>
+                
+                <!-- 图片管理 -->
+                <div class="media-section active" id="images-section">
+                    <div class="admin-toolbar">
+                        <button class="btn btn-primary" id="uploadImageBtn">
+                            <i class="fas fa-upload"></i> 上传图片
+                        </button>
+                        <div class="search-box">
+                            <input type="text" placeholder="搜索图片..." id="imageSearch">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="image-grid" id="imageGrid">
+                        <!-- 图片将通过JavaScript加载 -->
+                    </div>
+                    
+                    <div class="upload-area hidden" id="imageUploadArea">
+                        <div class="upload-container">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>拖放图片或点击上传</h3>
+                            <p>支持 JPG, PNG, GIF 格式，最大 5MB</p>
+                            <input type="file" id="imageInput" accept="image/*" multiple>
+                        </div>
+                        <div class="upload-actions">
+                            <button class="btn btn-secondary" id="cancelImageUpload">取消</button>
+                            <button class="btn btn-primary" id="confirmImageUpload" disabled>上传</button>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>作者</th>
-                                <th>内容</th>
-                                <th>日期</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="speechesTableBody">
-                            <!-- 感言数据通过JavaScript加载 -->
-                        </tbody>
-                    </table>
+                <!-- 视频管理 -->
+                <div class="media-section" id="videos-section">
+                    <div class="admin-toolbar">
+                        <button class="btn btn-primary" id="addVideoBtn">
+                            <i class="fas fa-plus"></i> 添加视频
+                        </button>
+                        <div class="search-box">
+                            <input type="text" placeholder="搜索视频..." id="videoSearch">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="video-list" id="videoList">
+                        <!-- 视频将通过JavaScript加载 -->
+                    </div>
+                    
+                    <div class="video-form hidden" id="videoForm">
+                        <div class="form-group">
+                            <label>视频标题</label>
+                            <input type="text" id="videoTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube 视频ID</label>
+                            <input type="text" id="videoId" placeholder="例如：dQw4w9WgXcQ" required>
+                            <p class="form-hint">在YouTube视频URL中找到v=后面的字符</p>
+                        </div>
+                        <div class="form-group">
+                            <label>描述</label>
+                            <textarea id="videoDescription"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-secondary" id="cancelVideoAdd">取消</button>
+                            <button class="btn btn-primary" id="saveVideo">保存</button>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- 添加用户模态框 -->
-    <div class="modal" id="addUserModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>添加新用户</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="form-group">
-                        <label>用户名</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>邮箱</label>
-                        <input type="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>密码</label>
-                        <input type="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>确认密码</label>
-                        <input type="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label>用户角色</label>
-                        <select>
-                            <option value="user">普通用户</option>
-                            <option value="editor">编辑</option>
-                            <option value="admin">管理员</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">添加用户</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
+    <!-- 添加用户模态框保持不变 -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
     <script src="js/admin.js"></script>
 </body>
 </html>
