@@ -427,3 +427,103 @@ function formatFileSize(bytes) {
     
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
+// 在initMediaManagement之前初始化学生管理
+function initStudentManagement() {
+    // 添加学生按钮
+    document.getElementById('addStudentBtn').addEventListener('click', () => {
+        showStudentForm();
+    });
+
+    // 加载学生数据
+    loadStudents();
+}
+
+// 加载学生数据到表格
+function loadStudents() {
+    const students = JSON.parse(localStorage.getItem('classStudents')) || studentData; // 默认使用初始数据
+    const tableBody = document.getElementById('studentsTableBody');
+    tableBody.innerHTML = '';
+
+    students.forEach((student, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${student.name}</td>
+            <td>${student.gender}</td>
+            <td>${student.phone}</td>
+            <td>
+                <button class="btn btn-sm btn-edit" data-index="${index}">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-delete" data-index="${index}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // 添加编辑和删除事件
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', editStudent);
+    });
+
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', deleteStudent);
+    });
+}
+
+// 显示学生表单（添加或编辑）
+function showStudentForm(student = null) {
+    // 这里我们使用一个模态框来添加/编辑学生
+    // 由于代码较长，我们简化处理：使用prompt和confirm
+    // 实际项目中应该创建一个模态框
+    const isEdit = student !== null;
+    const title = prompt('请输入学生姓名', student?.name || '');
+    if (title === null) return; // 用户取消
+
+    const gender = prompt('请输入学生性别（男/女）', student?.gender || '男');
+    if (gender === null) return;
+
+    const phone = prompt('请输入学生电话', student?.phone || '');
+    if (phone === null) return;
+
+    const students = JSON.parse(localStorage.getItem('classStudents')) || [];
+
+    if (isEdit) {
+        // 编辑
+        students[student.index] = { name: title, gender, phone };
+    } else {
+        // 添加
+        students.push({ name: title, gender, phone });
+    }
+
+    localStorage.setItem('classStudents', JSON.stringify(students));
+    loadStudents();
+}
+
+// 编辑学生
+function editStudent(e) {
+    const index = e.target.closest('.btn-edit').dataset.index;
+    const students = JSON.parse(localStorage.getItem('classStudents')) || [];
+    const student = students[index];
+    student.index = index; // 临时存储索引
+    showStudentForm(student);
+}
+
+// 删除学生
+function deleteStudent(e) {
+    const index = e.target.closest('.btn-delete').dataset.index;
+    if (confirm('确定要删除这个学生吗？')) {
+        const students = JSON.parse(localStorage.getItem('classStudents')) || [];
+        students.splice(index, 1);
+        localStorage.setItem('classStudents', JSON.stringify(students));
+        loadStudents();
+    }
+}
+
+// 在DOMContentLoaded事件中调用
+document.addEventListener('DOMContentLoaded', () => {
+    // ... 其他初始化代码 ...
+    initStudentManagement(); // 初始化学生管理
+});
