@@ -17,7 +17,104 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSpeeches();
     
     // 初始化用户系统
-    initAuthSystem();
+// main.js中修改登录/注册逻辑
+
+// 初始化用户系统
+function initAuthSystem() {
+    const authBtn = document.getElementById('authBtn');
+    const loginPrompt = document.getElementById('loginPrompt');
+    const submitComment = document.getElementById('submitComment');
+    
+    // 登录/注册按钮
+    authBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (currentUser) {
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('currentUser');
+                checkLoginStatus();
+            }
+        } else {
+            // 跳转到登录页面
+            window.location.href = 'login.html';
+        }
+    });
+    
+    // 登录提示
+    if (loginPrompt) {
+        loginPrompt.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+    }
+    
+    // 评论提交
+    submitComment.addEventListener('click', () => {
+        const commentInput = document.getElementById('commentInput');
+        const comment = commentInput.value.trim();
+        
+        if (!comment) {
+            alert('请输入毕业感言内容');
+            return;
+        }
+        
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('请先登录后再发表感言');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // 创建新的感言
+        const newSpeech = {
+            author: currentUser.username,
+            content: comment,
+            date: new Date().toLocaleDateString()
+        };
+        
+        // 添加到感言列表
+        const speeches = JSON.parse(localStorage.getItem('classSpeeches') || '[]');
+        speeches.unshift(newSpeech);
+        localStorage.setItem('classSpeeches', JSON.stringify(speeches));
+        
+        // 重新渲染
+        renderSpeeches();
+        
+        // 清空输入框
+        commentInput.value = '';
+        
+        alert('感言发表成功！');
+    });
+}
+
+// 检查登录状态
+function checkLoginStatus() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const authBtn = document.getElementById('authBtn');
+    const loginPrompt = document.querySelector('.login-prompt');
+    const adminLink = document.getElementById('adminLink');
+    
+    if (currentUser) {
+        authBtn.textContent = currentUser.username;
+        
+        // 显示评论表单
+        if (loginPrompt) loginPrompt.style.display = 'none';
+        
+        // 管理员显示后台链接
+        if (currentUser.role === 'admin') {
+            adminLink.style.display = 'inline-block';
+        } else {
+            adminLink.style.display = 'none';
+        }
+    } else {
+        authBtn.textContent = '登录/注册';
+        
+        // 隐藏评论表单
+        if (loginPrompt) loginPrompt.style.display = 'block';
+        adminLink.style.display = 'none';
+    }
+}
     
     // 初始化主题切换
     initThemeToggle();
