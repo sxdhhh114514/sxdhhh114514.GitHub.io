@@ -51,7 +51,7 @@ body {
 /* 主题切换按钮 */
 .theme-switch {
     position: fixed;
-    top: 20px;
+    top: 60px;
     right: 20px;
     z-index: 2000;
 }
