@@ -1,24 +1,24 @@
 :root {
-    --primary-color: #1a2a6c;
-    --secondary-color: #b21f1f;
-    --accent-color: #ffd700;
+    /* 亮色主题变量 */
+    --primary-color: #4361ee;
     --text-color: #333;
-    --text-light: #fff;
     --bg-color: #f8f9fa;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --card-bg: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     --transition: all 0.3s ease;
+    --accent-color: #f72585;
+    --border-color: #e9ecef;
 }
 
-[data-theme="dark"] {
-    --primary-color: #0d1b4d;
-    --secondary-color: #8a1a1a;
-    --accent-color: #e6c300;
-    --text-color: #f0f0f0;
-    --text-light: #e0e0e0;
+.dark-theme {
+    /* 暗色主题变量 */
+    --primary-color: #4895ef;
+    --text-color: #f8f9fa;
     --bg-color: #121212;
-    --card-bg: rgba(30, 30, 40, 0.8);
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --card-bg: #1e1e1e;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --accent-color: #b5179e;
+    --border-color: #343a40;
 }
 
 /* 基础样式 */
