@@ -217,23 +217,22 @@ function initThemeToggle() {
         text.textContent = '日间模式';
     }
     
-    // 主题切换
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+     
+    // 主题切换功能
+    themeButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
         
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        if (newTheme === 'dark') {
+        if (document.body.classList.contains('dark-theme')) {
             icon.className = 'fas fa-sun';
-            text.textContent = '日间模式';
+            text.textContent = '切换到亮色主题';
+            localStorage.setItem('theme', 'dark');
         } else {
             icon.className = 'fas fa-moon';
-            text.textContent = '夜间模式';
+            text.textContent = '切换到暗色主题';
+            localStorage.setItem('theme', 'light');
         }
     });
-}
+    
     // 拖拽功能实现
     let isDragging = false;
     let offsetX, offsetY;
