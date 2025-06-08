@@ -32,7 +32,7 @@
                 <a href="#timeline">时光轴</a>
                 <a href="#comments">毕业感言</a>
                 <a href="#" id="authBtn">登录/注册</a>
-                <a href="admin.html" id="adminLink">管理后台</a>
+                <a href="admin.html" id="adminLink" style="display:none;">管理后台</a>
             </div>
             <button class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
@@ -157,10 +157,10 @@
 
             <!-- 评论表单 -->
             <div class="comment-form" id="commentForm">
-                <h3>分享你的毕业感言(由于技术问题别人可能无法看到你的留言)</h3>
+                <h3>分享你的毕业感言</h3>
                 <textarea id="commentInput" placeholder="请输入你的毕业感言..." required></textarea>
                 <button id="submitComment">发表感言</button>
-                <p class="login-prompt">请先<a href="#" id="loginPrompt">登录</a>后再发表感言</p>
+                <p class="login-prompt" id="commentLoginPrompt">请先<a href="login.html">登录</a>后再发表感言</p>
             </div>
         </section>
 
