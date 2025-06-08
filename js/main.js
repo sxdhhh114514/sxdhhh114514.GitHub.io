@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "刘弋辉", gender: "male", phone: "18996101182", email: "none@example.com" },
         { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
         { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
-        { name: "周九", gender: "female", phone: "13300133000", email: "zhoujiu@example.com" },
+        { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
         { name: "吴十", gender: "male", phone: "13200132000", email: "wushi@example.com" }
     ];
     
