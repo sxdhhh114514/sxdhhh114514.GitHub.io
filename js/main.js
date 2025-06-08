@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 themeSwitch.style.left = `${x}px`;
                 themeSwitch.style.top = `${y}px`;
                 themeSwitch.style.right = 'unset';
+            } else {
+                // 默认位置（右上角）
+                themeSwitch.style.right = '20px';
+                themeSwitch.style.top = '60px';
             }
         };
         
@@ -62,6 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = themeSwitch.getBoundingClientRect();
             offsetX = clientX - rect.left;
             offsetY = clientY - rect.top;
+            
+            // 添加过渡禁用以防止拖动时抖动
+            themeSwitch.style.transition = 'none';
         };
         
         const doDrag = (clientX, clientY) => {
@@ -90,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDragging) {
                 isDragging = false;
                 themeSwitch.classList.remove('dragging');
+                
+                // 恢复过渡效果
+                themeSwitch.style.transition = '';
                 
                 // 保存位置到本地存储
                 const rect = themeSwitch.getBoundingClientRect();
@@ -121,12 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 startDrag(touch.clientX, touch.clientY);
                 e.preventDefault();
             }
-        });
+        }, { passive: false });
         
         document.addEventListener('touchmove', (e) => {
             const touch = e.touches[0];
             doDrag(touch.clientX, touch.clientY);
-        });
+        }, { passive: false });
         
         document.addEventListener('touchend', endDrag);
         
@@ -162,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initButtonPosition();
     }
 
-    // ============== 原有功能保持不变 ==============
+    // ============== 导航栏功能 ==============
     
     // 导航栏切换
     const navToggle = document.getElementById('navToggle');
@@ -172,7 +182,16 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
+        
+        // 点击导航链接时关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     }
+    
+    // ============== 学生通讯录功能 ==============
     
     // 学生通讯录数据
     const students = [
@@ -183,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
         { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
         { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
-        { name: "任子硕", gender: "male", phone: "不知道联系用qq吧", email: "这是qq邮箱前面是qq号2256208106@qq.com" }
+        { name: "任子硕", gender: "male", phone: "不知道联系用qq吧", email: "这是qq邮箱前面是qq号2256208106@qq.com" },
         { name: "冯博谦", gender: "male", phone: "19908322715", email: "2481163010@qq.com" },
         { name: "何长城", gender: "male", phone: "13648361513", email: "2408496418@qq.com" },
     ];
@@ -191,13 +210,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 加载学生通讯录
     const rosterContainer = document.getElementById('rosterContainer');
     if (rosterContainer) {
+        // 清空容器以防重复加载
+        rosterContainer.innerHTML = '';
+        
         students.forEach(student => {
             const studentCard = document.createElement('div');
             studentCard.className = `student-card ${student.gender}`;
             
             const avatar = document.createElement('div');
             avatar.className = 'student-avatar';
-            avatar.innerHTML = `<i class="fas fa-user"></i>`;
+            
+            // 使用性别图标
+            const genderIcon = document.createElement('i');
+            genderIcon.className = student.gender === 'male' ? 'fas fa-male' : 'fas fa-female';
+            avatar.appendChild(genderIcon);
             
             const info = document.createElement('div');
             info.className = 'student-info';
@@ -225,6 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // ============== 毕业感言功能 ==============
+    
     // 毕业感言数据
     const speeches = [
         { author: "李明", date: "2025-06-10", content: "三年的初中生活转瞬即逝，感谢老师们的辛勤付出和同学们的陪伴。我会永远珍藏这段美好的回忆！" },
@@ -235,6 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 加载毕业感言
     const speechContainer = document.getElementById('speechContainer');
     if (speechContainer) {
+        // 清空容器以防重复加载
+        speechContainer.innerHTML = '';
+        
         speeches.forEach((speech, index) => {
             const speechItem = document.createElement('div');
             speechItem.className = 'speech-item';
@@ -279,15 +310,68 @@ document.addEventListener('DOMContentLoaded', () => {
         submitComment.addEventListener('click', (e) => {
             e.preventDefault();
             
-            if (commentInput.value.trim() === '') {
+            const content = commentInput.value.trim();
+            if (!content) {
                 alert('请输入感言内容');
                 return;
             }
             
-            alert('感言已提交！感谢分享（注：由于技术原因，其他人可能无法看到您的留言）');
+            // 创建新感言
+            const newSpeech = {
+                author: "我",
+                date: new Date().toISOString().split('T')[0],
+                content: content
+            };
+            
+            // 添加到感言列表
+            const speechItem = document.createElement('div');
+            speechItem.className = 'speech-item';
+            speechItem.style.animation = 'fadeIn 0.6s ease forwards';
+            speechItem.style.opacity = '0';
+            
+            const header = document.createElement('div');
+            header.className = 'speech-header';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'speech-avatar';
+            avatar.textContent = newSpeech.author.charAt(0);
+            
+            const author = document.createElement('div');
+            author.className = 'speech-author';
+            author.textContent = newSpeech.author;
+            
+            const date = document.createElement('div');
+            date.className = 'speech-date';
+            date.textContent = newSpeech.date;
+            
+            header.appendChild(avatar);
+            header.appendChild(author);
+            header.appendChild(date);
+            
+            const contentElem = document.createElement('div');
+            contentElem.className = 'speech-content';
+            contentElem.textContent = newSpeech.content;
+            
+            speechItem.appendChild(header);
+            speechItem.appendChild(contentElem);
+            
+            if (speechContainer) {
+                speechContainer.appendChild(speechItem);
+                
+                // 滚动到新添加的感言
+                setTimeout(() => {
+                    speechItem.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+            
+            // 清空输入框
             commentInput.value = '';
+            
+            alert('感言已提交！感谢分享');
         });
     }
+    
+    // ============== 页面导航功能 ==============
     
     // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -305,20 +389,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 // 移动端关闭导航菜单
-                if (navLinks.classList.contains('active')) {
+                if (navLinks && navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
                 }
             }
         });
     });
     
+    // ============== 视频功能 ==============
+    
     // 视频自动播放（在用户交互后）
     const video = document.getElementById('graduationVideo');
     if (video) {
-        document.addEventListener('click', () => {
-            if (video.paused) {
-                video.play().catch(e => console.log('视频播放失败:', e));
-            }
-        }, { once: true });
+        // 添加播放按钮覆盖层
+        const videoOverlay = document.createElement('div');
+        videoOverlay.className = 'video-overlay';
+        videoOverlay.innerHTML = '<i class="fas fa-play"></i>';
+        video.parentElement.appendChild(videoOverlay);
+        
+        const playVideo = () => {
+            video.play().catch(e => console.log('视频播放失败:', e));
+            videoOverlay.style.display = 'none';
+        };
+        
+        // 点击覆盖层播放视频
+        videoOverlay.addEventListener('click', playVideo);
+        
+        // 点击视频容器播放视频
+        video.parentElement.addEventListener('click', playVideo);
     }
+    
+    // ============== 其他优化 ==============
+    
+    // 添加加载完成后的动画
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 500);
 });
