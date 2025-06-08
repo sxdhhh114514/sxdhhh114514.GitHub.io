@@ -1,3 +1,4 @@
+/* 主题变量 */
 :root {
     /* 亮色主题变量 */
     --primary-color: #4361ee;
@@ -9,6 +10,7 @@
     --accent-color: #f72585;
     --border-color: #e9ecef;
 }
+
 .dark-theme {
     /* 暗色主题变量 */
     --primary-color: #4895ef;
@@ -41,6 +43,18 @@ body {
     position: relative; 
 } 
 
+/* 添加半透明覆盖层增强文本可读性 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -55,10 +69,13 @@ body {
     z-index: 2000;
     cursor: move;
     user-select: none;
+    transition: transform 0.2s ease;
 }
 
 .theme-switch.dragging {
     cursor: grabbing;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .theme-switch button {
@@ -769,7 +786,3 @@ footer {
         display: none;
     }
 }
-
-
-这个是我的网站style.css
-请帮我把背景改成https://cn.bing.com/images/search?view=detailV2&ccid=wZfFd63q&id=3AC168D735E78DE8BBA94395B3381D814FAEC261&thid=OIP.wZfFd63qRejngtilTiSM4gHaM9&mediaurl=https%3a%2f%2fimg.shetu66.com%2f2023%2f06%2f26%2f1687750287936805.png&exph=1024&expw=585&q=%e9%a3%8e%e6%99%af&simid=608011415696145526&FORM=IRPRST&ck=9772D19E52905F1AF0205B468F76784B&selectedIndex=29&itb=0谢
