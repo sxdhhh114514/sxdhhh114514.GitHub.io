@@ -54,6 +54,12 @@ body {
     top: 60px;
     right: 20px;
     z-index: 2000;
+    cursor: move;
+    user-select: none;
+}
+
+.theme-switch.dragging {
+    cursor: grabbing;
 }
 
 .theme-switch button {
@@ -61,20 +67,79 @@ body {
     color: var(--text-color);
     border: none;
     border-radius: 30px;
-    padding: 10px 15px;
+    padding: 12px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     box-shadow: var(--shadow);
     transition: var(--transition);
     font-weight: 500;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
 }
 
 .theme-switch button:hover {
     background: var(--accent-color);
-    color: var(--primary-color);
+    color: #fff;
     transform: translateY(-2px);
+}
+
+.theme-switch button:active {
+    transform: translateY(1px);
+}
+
+.instructions {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 600px;
+    margin: 20px auto 40px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.instructions h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.instructions ul {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin: 12px 0;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.footer {
+    margin-top: auto;
+    padding: 20px;
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .theme-switch {
+        top: 20px;
+        right: 20px;
+    }
 }
 
 /* 导航栏 */
