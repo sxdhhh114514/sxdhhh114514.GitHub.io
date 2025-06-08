@@ -369,28 +369,39 @@ h1 {
     flex-wrap: wrap;
 }
 
-/* 视频播放器区域 */
-.video-section {
-    margin: 40px 0;
-    text-align: center;
-}
-
-.video-container {
-    position: relative;
+/* 视频覆盖层样式 */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
     border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-video {
-    width: 100%;
-    display: block;
-    max-height: 450px;
+.video-overlay i {
+    font-size: 60px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, color 0.3s;
 }
 
+.video-overlay:hover i {
+    transform: scale(1.1);
+    color: var(--accent-color);
+}
+
+/* 页面加载动画 */
+body:not(.loaded) * {
+    animation: none !important;
+    transition: none !important;
+}
 /* 照片墙 */
 .gallery-section {
     margin: 50px 0;
