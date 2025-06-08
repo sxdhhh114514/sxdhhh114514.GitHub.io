@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
         { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
         { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
-        { name: "吴十", gender: "male", phone: "13200132000", email: "wushi@example.com" }
+        { name: "任子硕", gender: "male", phone: "不知道联系用qq吧", email: "这是qq邮箱前面是qq号2256208106@qq.com" }
     ];
     
     // 加载学生通讯录
