@@ -10,6 +10,7 @@
     --accent-color: #f72585;
     --border-color: #e9ecef;
 }
+
 .dark-theme {
     /* 暗色主题变量 */
     --primary-color: #4895ef;
@@ -41,6 +42,7 @@ body {
     transition: background 0.5s ease, color 0.5s ease; 
     position: relative; 
 } 
+
 /* 添加半透明覆盖层增强文本可读性 */
 body::after {
     content: '';
