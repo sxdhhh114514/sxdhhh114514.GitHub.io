@@ -10,17 +10,17 @@
     --accent-color: #f72585;
     --border-color: #e9ecef;
 }
-
 .dark-theme {
     /* 暗色主题变量 */
-    --text-color: #f0f0f0;
-    --text-light: #e0e0e0;
     --primary-color: #4895ef;
+    --text-color: #f8f9fa;
     --bg-color: #121212;
     --card-bg: #1e1e1e;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     --accent-color: #b5179e;
-    --border-color: #343a40
+    --border-color: #343a40;
+}
+
 /* 基础样式 */
 * {
     margin: 0;
