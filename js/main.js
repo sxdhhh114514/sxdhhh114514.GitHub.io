@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "舒玺达", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
         { name: "王承宇", gender: "male", phone: "15213020708", email: "sb@example.com" },
         { name: "刘思雨", gender: "female", phone: "13996810711", email: "none@example.com" },
-        { name: "刘弋辉", gender: "male", phone: "18996101182", email: "none@example.com" },
+        { name: "刘弋辉", gender: "male", phone: 15123884479", email: "2150001648@qq.com" },
         { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
         { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
         { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
