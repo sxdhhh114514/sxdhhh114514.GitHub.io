@@ -1,6 +1,6 @@
 /* 添加了卡片模糊效果的完整CSS *
-:root {
-      --primary-color: #4361ee;
+           :root {
+            --primary-color: #4361ee;
             --text-color: #333;
             --bg-color: #f8f9fa;
             --card-bg: rgba(255, 255, 255, 0.7);
