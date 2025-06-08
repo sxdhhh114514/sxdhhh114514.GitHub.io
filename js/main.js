@@ -177,11 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 学生通讯录数据
     const students = [
         { name: "舒玺达", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
-        { name: "王承宇", gender: "male", phone: "15213020708", email: "lisi@example.com" },
-        { name: "刘思雨", gender: "male", phone: "13996810711", email: "none@example.com" },
-        { name: "赵六", gender: "male", phone: "13600136000", email: "zhaoliu@example.com" },
-        { name: "钱七", gender: "female", phone: "13500135000", email: "qianqi@example.com" },
-        { name: "孙八", gender: "male", phone: "13400134000", email: "sunba@example.com" },
+        { name: "王承宇", gender: "male", phone: "15213020708", email: "sb@example.com" },
+        { name: "刘思雨", gender: "female", phone: "13996810711", email: "none@example.com" },
+        { name: "刘弋辉", gender: "male", phone: "18996101182", email: "none@example.com" },
+        { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
+        { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
         { name: "周九", gender: "female", phone: "13300133000", email: "zhoujiu@example.com" },
         { name: "吴十", gender: "male", phone: "13200132000", email: "wushi@example.com" }
     ];
