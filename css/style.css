@@ -13,13 +13,14 @@
 
 .dark-theme {
     /* 暗色主题变量 */
-    --primary-color: #4895ef;
-    --text-color: #f8f9fa;
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --accent-color: #b5179e;
-    --border-color: #343a40;
+    --primary-color: #0d1b4d;
+    --secondary-color: #8a1a1a;
+    --accent-color: #e6c300;
+    --text-color: #f0f0f0;
+    --text-light: #e0e0e0;
+    --bg-color: #121212
+    --card-bg: rgba(30, 30, 40, 0.8);
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* 基础样式 */
