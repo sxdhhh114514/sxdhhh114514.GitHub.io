@@ -181,7 +181,28 @@ function checkLoginStatus() {
         adminLink.style.display = 'none';
     }
 }
-
+document.addEventListener('DOMContentLoaded', () => {
+    const themeSwitch = document.getElementById('themeSwitch');
+    const themeButton = document.getElementById('themeButton');
+    const icon = themeButton.querySelector('i');
+    const text = themeButton.querySelector('span');
+    
+    // 检查本地存储中的主题设置
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        icon.className = 'fas fa-sun';
+        text.textContent = '切换到亮色主题';
+    }
+    
+    // 检查本地存储中的按钮位置
+    const savedPosition = localStorage.getItem('btnPosition');
+    if (savedPosition) {
+        const { x, y } = JSON.parse(savedPosition);
+        themeSwitch.style.left = `${x}px`;
+        themeSwitch.style.top = `${y}px`;
+        themeSwitch.style.right = 'unset';
+    }
 // 初始化主题切换
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
@@ -213,7 +234,108 @@ function initThemeToggle() {
         }
     });
 }
-
+    // 拖拽功能实现
+    let isDragging = false;
+    let offsetX, offsetY;
+    
+    themeSwitch.addEventListener('mousedown', (e) => {
+        if (e.target === themeSwitch || e.target === themeButton) {
+            isDragging = true;
+            themeSwitch.classList.add('dragging');
+            
+            // 计算鼠标相对于元素内部的偏移
+            const rect = themeSwitch.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            
+            e.preventDefault();
+        }
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        // 计算新位置
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+        
+        // 限制在窗口范围内
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+        const elWidth = themeSwitch.offsetWidth;
+        const elHeight = themeSwitch.offsetHeight;
+        
+        x = Math.max(0, Math.min(x, winWidth - elWidth));
+        y = Math.max(0, Math.min(y, winHeight - elHeight));
+        
+        // 应用新位置
+        themeSwitch.style.left = `${x}px`;
+        themeSwitch.style.top = `${y}px`;
+        themeSwitch.style.right = 'unset';
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            themeSwitch.classList.remove('dragging');
+            
+            // 保存位置到本地存储
+            const rect = themeSwitch.getBoundingClientRect();
+            localStorage.setItem('btnPosition', JSON.stringify({
+                x: rect.left,
+                y: rect.top
+            }));
+        }
+    });
+    
+    // 添加触摸事件支持（用于移动设备）
+    themeSwitch.addEventListener('touchstart', (e) => {
+        if (e.target === themeSwitch || e.target === themeButton) {
+            isDragging = true;
+            themeSwitch.classList.add('dragging');
+            
+            const touch = e.touches[0];
+            const rect = themeSwitch.getBoundingClientRect();
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
+            
+            e.preventDefault();
+        }
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        
+        const touch = e.touches[0];
+        let x = touch.clientX - offsetX;
+        let y = touch.clientY - offsetY;
+        
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+        const elWidth = themeSwitch.offsetWidth;
+        const elHeight = themeSwitch.offsetHeight;
+        
+        x = Math.max(0, Math.min(x, winWidth - elWidth));
+        y = Math.max(0, Math.min(y, winHeight - elHeight));
+        
+        themeSwitch.style.left = `${x}px`;
+        themeSwitch.style.top = `${y}px`;
+        themeSwitch.style.right = 'unset';
+    });
+    
+    document.addEventListener('touchend', () => {
+        if (isDragging) {
+            isDragging = false;
+            themeSwitch.classList.remove('dragging');
+            
+            const rect = themeSwitch.getBoundingClientRect();
+            localStorage.setItem('btnPosition', JSON.stringify({
+                x: rect.left,
+                y: rect.top
+            }));
+        }
+    });
+});
 // 初始化导航菜单
 function initNavigation() {
     const navToggle = document.getElementById('navToggle');
