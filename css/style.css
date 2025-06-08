@@ -43,7 +43,20 @@ body {
     transition: background 0.5s ease, color 0.5s ease; 
     position: relative; 
 } 
-
+/* 毛玻璃效果容器 */
+.glass-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
 /* 添加半透明覆盖层增强文本可读性 */
 body::after {
     content: '';
