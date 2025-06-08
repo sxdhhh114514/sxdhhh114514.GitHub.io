@@ -4,7 +4,7 @@ const studentData = [
     { name: "王承宇", phone: "15213020708", gender: "男" },
     { name: "刘思雨", phone: "13996810711", gender: "女" },
     { name: "刘弋辉", phone: "18996101182", gender: "男" },
-    { name: "陈静", phone: "13500135000", gender: "女" },
+    { name: "顾晨宇", phone: "15702396614", gender: "男" },
     { name: "赵强", phone: "13400134000", gender: "男" }
 ];
 
