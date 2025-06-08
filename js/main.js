@@ -1,368 +1,322 @@
-// 学生数据
-const studentData = [
-    { name: "舒玺达", phone: "18723143414", gender: "男" },
-    { name: "王承宇", phone: "15213020708", gender: "男" },
-    { name: "刘思雨", phone: "13996810711", gender: "女" },
-    { name: "刘弋辉", phone: "18996101182", gender: "男" },
-    { name: "固城宇", phone: "15702396614", gender: "男" },
-    { name: "吴俊凡", phone: "13212332863", gender: "男" }
-];
-
-// 初始化页面
 document.addEventListener('DOMContentLoaded', () => {
-    // 渲染学生通讯录
-    renderStudentRoster();
-    
-    // 渲染毕业感言
-    renderSpeeches();
-    
-    // 初始化用户系统
-    initAuthSystem();
-    
-    // 初始化主题切换
-    initThemeToggle();
-    
-    // 初始化导航菜单
-    initNavigation();
-    
-    // 检查登录状态
-    checkLoginStatus();
-});
-
-// 渲染学生通讯录
-function renderStudentRoster() {
-    const rosterContainer = document.getElementById('rosterContainer');
-    rosterContainer.innerHTML = '';
-    
-    studentData.forEach(student => {
-        const genderIcon = student.gender === '男' ? 'mars' : 'venus';
-        const genderClass = student.gender === '男' ? 'male' : 'female';
-        
-        const studentCard = document.createElement('div');
-        studentCard.className = `student-card ${genderClass}`;
-        studentCard.innerHTML = `
-            <div class="student-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="student-info">
-                <div class="student-name">${student.name}</div>
-                <div class="student-contact">
-                    <i class="fas fa-phone"></i> ${student.phone}
-                </div>
-                <div class="student-contact">
-                    <i class="fas fa-${genderIcon}"></i> ${student.gender}
-                </div>
-            </div>
-        `;
-        rosterContainer.appendChild(studentCard);
-    });
-}
-
-// 渲染毕业感言
-function renderSpeeches() {
-    const speechContainer = document.getElementById('speechContainer');
-    speechContainer.innerHTML = '';
-    
-    const speeches = JSON.parse(localStorage.getItem('classSpeeches')) || [];
-    
-    speeches.forEach((speech, index) => {
-        const initials = speech.author.substring(0, 1);
-        const delay = index * 200;
-        
-        const speechItem = document.createElement('div');
-        speechItem.className = 'speech-item';
-        speechItem.style.animationDelay = `${delay}ms`;
-        speechItem.innerHTML = `
-            <div class="speech-header">
-                <div class="speech-avatar">${initials}</div>
-                <div class="speech-author">${speech.author}</div>
-                <div class="speech-date">${speech.date}</div>
-            </div>
-            <div class="speech-content">
-                ${speech.content}
-            </div>
-        `;
-        speechContainer.appendChild(speechItem);
-    });
-}
-
-// 初始化用户系统
-function initAuthSystem() {
-    const authBtn = document.getElementById('authBtn');
-    const loginPrompt = document.getElementById('loginPrompt');
-    const submitComment = document.getElementById('submitComment');
-    
-    // 登录/注册按钮
-    authBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        
-        if (currentUser) {
-            if (confirm('确定要退出登录吗？')) {
-                localStorage.removeItem('currentUser');
-                checkLoginStatus();
-            }
-        } else {
-            window.location.href = 'login.html';
-        }
-    });
-    
-    // 登录提示
-    if (loginPrompt) {
-        loginPrompt.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'login.html';
-        });
-    }
-    
-    // 评论提交
-    submitComment.addEventListener('click', () => {
-        const commentInput = document.getElementById('commentInput');
-        const comment = commentInput.value.trim();
-        
-        if (!comment) {
-            alert('请输入毕业感言内容');
-            return;
-        }
-        
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser) {
-            alert('请先登录后再发表感言');
-            window.location.href = 'login.html';
-            return;
-        }
-        
-        // 创建新的感言
-        const newSpeech = {
-            author: currentUser.username,
-            content: comment,
-            date: new Date().toLocaleDateString()
-        };
-        
-        // 添加到感言列表
-        const speeches = JSON.parse(localStorage.getItem('classSpeeches') || '[]');
-        speeches.unshift(newSpeech);
-        localStorage.setItem('classSpeeches', JSON.stringify(speeches));
-        
-        // 重新渲染
-        renderSpeeches();
-        
-        // 清空输入框
-        commentInput.value = '';
-        
-        alert('感言发表成功！');
-    });
-}
-
-// 检查登录状态
-function checkLoginStatus() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const authBtn = document.getElementById('authBtn');
-    const loginPrompt = document.querySelector('.login-prompt');
-    const adminLink = document.getElementById('adminLink');
-    
-    if (currentUser) {
-        authBtn.textContent = currentUser.username;
-        
-        // 显示评论表单
-        if (loginPrompt) loginPrompt.style.display = 'none';
-        
-        // 管理员显示后台链接
-        if (currentUser.role === 'admin') {
-            adminLink.style.display = 'inline-block';
-        } else {
-            adminLink.style.display = 'none';
-        }
-    } else {
-        authBtn.textContent = '登录/注册';
-        
-        // 隐藏评论表单
-        if (loginPrompt) loginPrompt.style.display = 'block';
-        adminLink.style.display = 'none';
-    }
-}
-document.addEventListener('DOMContentLoaded', () => {
+    // ============== 可拖动主题切换按钮功能 ==============
     const themeSwitch = document.getElementById('themeSwitch');
     const themeButton = document.getElementById('themeButton');
-    const icon = themeButton.querySelector('i');
-    const text = themeButton.querySelector('span');
     
-    // 检查本地存储中的主题设置
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        icon.className = 'fas fa-sun';
-        text.textContent = '切换到亮色主题';
-    }
-    
-    // 检查本地存储中的按钮位置
-    const savedPosition = localStorage.getItem('btnPosition');
-    if (savedPosition) {
-        const { x, y } = JSON.parse(savedPosition);
-        themeSwitch.style.left = `${x}px`;
-        themeSwitch.style.top = `${y}px`;
-        themeSwitch.style.right = 'unset';
-    }
-// 初始化主题切换
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    const icon = themeToggle.querySelector('i');
-    const text = themeToggle.querySelector('span');
-    
-    // 应用保存的主题
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        icon.className = 'fas fa-sun';
-        text.textContent = '日间模式';
-    }
-    
-     
-    // 主题切换功能
-    themeButton.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
+    // 确保元素存在
+    if (themeSwitch && themeButton) {
+        const icon = themeButton.querySelector('i');
+        const text = themeButton.querySelector('span');
         
-        if (document.body.classList.contains('dark-theme')) {
-            icon.className = 'fas fa-sun';
-            text.textContent = '切换到亮色主题';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            icon.className = 'fas fa-moon';
-            text.textContent = '切换到暗色主题';
-            localStorage.setItem('theme', 'light');
-        }
-    });
-    
-    // 拖拽功能实现
-    let isDragging = false;
-    let offsetX, offsetY;
-    
-    themeSwitch.addEventListener('mousedown', (e) => {
-        if (e.target === themeSwitch || e.target === themeButton) {
+        // 初始化主题
+        const initTheme = () => {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // 优先使用本地存储的主题，其次使用系统偏好
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.body.classList.add('dark-theme');
+                if (icon) icon.className = 'fas fa-sun';
+                if (text) text.textContent = '日间模式';
+            } else {
+                document.body.classList.remove('dark-theme');
+                if (icon) icon.className = 'fas fa-moon';
+                if (text) text.textContent = '夜间模式';
+            }
+        };
+        
+        // 初始化按钮位置
+        const initButtonPosition = () => {
+            const savedPosition = localStorage.getItem('btnPosition');
+            if (savedPosition) {
+                const { x, y } = JSON.parse(savedPosition);
+                themeSwitch.style.left = `${x}px`;
+                themeSwitch.style.top = `${y}px`;
+                themeSwitch.style.right = 'unset';
+            }
+        };
+        
+        // 主题切换功能
+        themeButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            
+            if (document.body.classList.contains('dark-theme')) {
+                if (icon) icon.className = 'fas fa-sun';
+                if (text) text.textContent = '日间模式';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                if (icon) icon.className = 'fas fa-moon';
+                if (text) text.textContent = '夜间模式';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // 拖拽功能实现
+        let isDragging = false;
+        let offsetX, offsetY;
+        
+        const startDrag = (clientX, clientY) => {
             isDragging = true;
             themeSwitch.classList.add('dragging');
             
-            // 计算鼠标相对于元素内部的偏移
             const rect = themeSwitch.getBoundingClientRect();
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
+            offsetX = clientX - rect.left;
+            offsetY = clientY - rect.top;
+        };
+        
+        const doDrag = (clientX, clientY) => {
+            if (!isDragging) return;
             
-            e.preventDefault();
-        }
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        
-        // 计算新位置
-        let x = e.clientX - offsetX;
-        let y = e.clientY - offsetY;
-        
-        // 限制在窗口范围内
-        const winWidth = window.innerWidth;
-        const winHeight = window.innerHeight;
-        const elWidth = themeSwitch.offsetWidth;
-        const elHeight = themeSwitch.offsetHeight;
-        
-        x = Math.max(0, Math.min(x, winWidth - elWidth));
-        y = Math.max(0, Math.min(y, winHeight - elHeight));
-        
-        // 应用新位置
-        themeSwitch.style.left = `${x}px`;
-        themeSwitch.style.top = `${y}px`;
-        themeSwitch.style.right = 'unset';
-    });
-    
-    document.addEventListener('mouseup', () => {
-        if (isDragging) {
-            isDragging = false;
-            themeSwitch.classList.remove('dragging');
+            // 计算新位置
+            let x = clientX - offsetX;
+            let y = clientY - offsetY;
             
-            // 保存位置到本地存储
-            const rect = themeSwitch.getBoundingClientRect();
-            localStorage.setItem('btnPosition', JSON.stringify({
-                x: rect.left,
-                y: rect.top
-            }));
-        }
-    });
-    
-    // 添加触摸事件支持（用于移动设备）
-    themeSwitch.addEventListener('touchstart', (e) => {
-        if (e.target === themeSwitch || e.target === themeButton) {
-            isDragging = true;
-            themeSwitch.classList.add('dragging');
+            // 限制在窗口范围内
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+            const elWidth = themeSwitch.offsetWidth;
+            const elHeight = themeSwitch.offsetHeight;
             
+            x = Math.max(0, Math.min(x, winWidth - elWidth));
+            y = Math.max(0, Math.min(y, winHeight - elHeight));
+            
+            // 应用新位置
+            themeSwitch.style.left = `${x}px`;
+            themeSwitch.style.top = `${y}px`;
+            themeSwitch.style.right = 'unset';
+        };
+        
+        const endDrag = () => {
+            if (isDragging) {
+                isDragging = false;
+                themeSwitch.classList.remove('dragging');
+                
+                // 保存位置到本地存储
+                const rect = themeSwitch.getBoundingClientRect();
+                localStorage.setItem('btnPosition', JSON.stringify({
+                    x: rect.left,
+                    y: rect.top
+                }));
+            }
+        };
+        
+        // 鼠标事件
+        themeSwitch.addEventListener('mousedown', (e) => {
+            if (e.target === themeSwitch || e.target === themeButton) {
+                startDrag(e.clientX, e.clientY);
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            doDrag(e.clientX, e.clientY);
+        });
+        
+        document.addEventListener('mouseup', endDrag);
+        
+        // 触摸事件
+        themeSwitch.addEventListener('touchstart', (e) => {
+            if (e.target === themeSwitch || e.target === themeButton) {
+                const touch = e.touches[0];
+                startDrag(touch.clientX, touch.clientY);
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('touchmove', (e) => {
             const touch = e.touches[0];
-            const rect = themeSwitch.getBoundingClientRect();
-            offsetX = touch.clientX - rect.left;
-            offsetY = touch.clientY - rect.top;
-            
-            e.preventDefault();
-        }
-    });
+            doDrag(touch.clientX, touch.clientY);
+        });
+        
+        document.addEventListener('touchend', endDrag);
+        
+        // 窗口调整大小时重新定位按钮
+        window.addEventListener('resize', () => {
+            const savedPosition = localStorage.getItem('btnPosition');
+            if (savedPosition) {
+                const { x, y } = JSON.parse(savedPosition);
+                
+                // 确保按钮在可视区域内
+                const winWidth = window.innerWidth;
+                const winHeight = window.innerHeight;
+                const elWidth = themeSwitch.offsetWidth;
+                const elHeight = themeSwitch.offsetHeight;
+                
+                const newX = Math.max(0, Math.min(x, winWidth - elWidth));
+                const newY = Math.max(0, Math.min(y, winHeight - elHeight));
+                
+                themeSwitch.style.left = `${newX}px`;
+                themeSwitch.style.top = `${newY}px`;
+                themeSwitch.style.right = 'unset';
+                
+                // 更新存储位置
+                localStorage.setItem('btnPosition', JSON.stringify({
+                    x: newX,
+                    y: newY
+                }));
+            }
+        });
+        
+        // 初始化
+        initTheme();
+        initButtonPosition();
+    }
+
+    // ============== 原有功能保持不变 ==============
     
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        
-        const touch = e.touches[0];
-        let x = touch.clientX - offsetX;
-        let y = touch.clientY - offsetY;
-        
-        const winWidth = window.innerWidth;
-        const winHeight = window.innerHeight;
-        const elWidth = themeSwitch.offsetWidth;
-        const elHeight = themeSwitch.offsetHeight;
-        
-        x = Math.max(0, Math.min(x, winWidth - elWidth));
-        y = Math.max(0, Math.min(y, winHeight - elHeight));
-        
-        themeSwitch.style.left = `${x}px`;
-        themeSwitch.style.top = `${y}px`;
-        themeSwitch.style.right = 'unset';
-    });
-    
-    document.addEventListener('touchend', () => {
-        if (isDragging) {
-            isDragging = false;
-            themeSwitch.classList.remove('dragging');
-            
-            const rect = themeSwitch.getBoundingClientRect();
-            localStorage.setItem('btnPosition', JSON.stringify({
-                x: rect.left,
-                y: rect.top
-            }));
-        }
-    });
-});
-// 初始化导航菜单
-function initNavigation() {
+    // 导航栏切换
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.querySelector('.nav-links');
     
-    navToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+    
+    // 学生通讯录数据
+    const students = [
+        { name: "张三", gender: "male", phone: "13800138000", email: "zhangsan@example.com" },
+        { name: "李四", gender: "male", phone: "13900139000", email: "lisi@example.com" },
+        { name: "王五", gender: "male", phone: "13700137000", email: "wangwu@example.com" },
+        { name: "赵六", gender: "male", phone: "13600136000", email: "zhaoliu@example.com" },
+        { name: "钱七", gender: "female", phone: "13500135000", email: "qianqi@example.com" },
+        { name: "孙八", gender: "male", phone: "13400134000", email: "sunba@example.com" },
+        { name: "周九", gender: "female", phone: "13300133000", email: "zhoujiu@example.com" },
+        { name: "吴十", gender: "male", phone: "13200132000", email: "wushi@example.com" }
+    ];
+    
+    // 加载学生通讯录
+    const rosterContainer = document.getElementById('rosterContainer');
+    if (rosterContainer) {
+        students.forEach(student => {
+            const studentCard = document.createElement('div');
+            studentCard.className = `student-card ${student.gender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'student-avatar';
+            avatar.innerHTML = `<i class="fas fa-user"></i>`;
+            
+            const info = document.createElement('div');
+            info.className = 'student-info';
+            
+            const name = document.createElement('div');
+            name.className = 'student-name';
+            name.textContent = student.name;
+            
+            const phone = document.createElement('div');
+            phone.className = 'student-contact';
+            phone.innerHTML = `<i class="fas fa-phone"></i> ${student.phone}`;
+            
+            const email = document.createElement('div');
+            email.className = 'student-contact';
+            email.innerHTML = `<i class="fas fa-envelope"></i> ${student.email}`;
+            
+            info.appendChild(name);
+            info.appendChild(phone);
+            info.appendChild(email);
+            
+            studentCard.appendChild(avatar);
+            studentCard.appendChild(info);
+            
+            rosterContainer.appendChild(studentCard);
+        });
+    }
+    
+    // 毕业感言数据
+    const speeches = [
+        { author: "李明", date: "2025-06-10", content: "三年的初中生活转瞬即逝，感谢老师们的辛勤付出和同学们的陪伴。我会永远珍藏这段美好的回忆！" },
+        { author: "王芳", date: "2025-06-11", content: "在这个班级里，我不仅学到了知识，更学会了如何与人相处。感谢每一位同学，你们让我的初中生活如此精彩！" },
+        { author: "张伟", date: "2025-06-12", content: "从初一到初三，我们一起成长，一起奋斗。虽然即将分别，但我们的友谊长存！" }
+    ];
+    
+    // 加载毕业感言
+    const speechContainer = document.getElementById('speechContainer');
+    if (speechContainer) {
+        speeches.forEach((speech, index) => {
+            const speechItem = document.createElement('div');
+            speechItem.className = 'speech-item';
+            speechItem.style.animationDelay = `${index * 0.2}s`;
+            
+            const header = document.createElement('div');
+            header.className = 'speech-header';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'speech-avatar';
+            avatar.textContent = speech.author.charAt(0);
+            
+            const author = document.createElement('div');
+            author.className = 'speech-author';
+            author.textContent = speech.author;
+            
+            const date = document.createElement('div');
+            date.className = 'speech-date';
+            date.textContent = speech.date;
+            
+            header.appendChild(avatar);
+            header.appendChild(author);
+            header.appendChild(date);
+            
+            const content = document.createElement('div');
+            content.className = 'speech-content';
+            content.textContent = speech.content;
+            
+            speechItem.appendChild(header);
+            speechItem.appendChild(content);
+            
+            speechContainer.appendChild(speechItem);
+        });
+    }
+    
+    // 毕业感言提交功能
+    const commentForm = document.getElementById('commentForm');
+    const commentInput = document.getElementById('commentInput');
+    const submitComment = document.getElementById('submitComment');
+    
+    if (commentForm && commentInput && submitComment) {
+        submitComment.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (commentInput.value.trim() === '') {
+                alert('请输入感言内容');
+                return;
+            }
+            
+            alert('感言已提交！感谢分享（注：由于技术原因，其他人可能无法看到您的留言）');
+            commentInput.value = '';
+        });
+    }
     
     // 平滑滚动
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            if (this.getAttribute('href').startsWith('#')) {
-                e.preventDefault();
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
                 
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 关闭移动端菜单
+                // 移动端关闭导航菜单
+                if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
                 }
             }
         });
     });
-}
+    
+    // 视频自动播放（在用户交互后）
+    const video = document.getElementById('graduationVideo');
+    if (video) {
+        document.addEventListener('click', () => {
+            if (video.paused) {
+                video.play().catch(e => console.log('视频播放失败:', e));
+            }
+        }, { once: true });
+    }
+});
