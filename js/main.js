@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 学生通讯录数据
     const students = [
-        { name: "张三", gender: "male", phone: "13800138000", email: "zhangsan@example.com" },
-        { name: "李四", gender: "male", phone: "13900139000", email: "lisi@example.com" },
-        { name: "王五", gender: "male", phone: "13700137000", email: "wangwu@example.com" },
+        { name: "舒玺达", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
+        { name: "王承宇", gender: "male", phone: "15213020708", email: "lisi@example.com" },
+        { name: "刘思雨", gender: "male", phone: "13996810711", email: "none@example.com" },
         { name: "赵六", gender: "male", phone: "13600136000", email: "zhaoliu@example.com" },
         { name: "钱七", gender: "female", phone: "13500135000", email: "qianqi@example.com" },
         { name: "孙八", gender: "male", phone: "13400134000", email: "sunba@example.com" },
