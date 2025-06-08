@@ -61,6 +61,75 @@ body::after {
     padding-top: 80px;
 }
 
+/* =============================== */
+/* 增强卡片毛玻璃效果 */
+/* =============================== */
+
+/* 通用卡片模糊效果 */
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+/* 应用于所有卡片元素 */
+.instructions,
+.glass-container,
+.photo-item,
+.student-card,
+.timeline-content,
+.speech-item,
+.comment-form,
+.roster-container .student-card,
+.photo-grid .photo-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+}
+
+/* 调整特定元素的透明度 */
+.instructions {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.student-card {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.speech-item {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.comment-form {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 卡片悬停效果增强 */
+.glass-card:hover,
+.instructions:hover,
+.glass-container:hover,
+.photo-item:hover,
+.student-card:hover,
+.timeline-content:hover,
+.speech-item:hover,
+.comment-form:hover {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+/* =============================== */
+/* 原有样式保留 */
+/* =============================== */
+
 /* 主题切换按钮 */
 .theme-switch {
     position: fixed;
@@ -106,13 +175,10 @@ body::after {
 }
 
 .instructions {
-    background: var(--card-bg);
     border-radius: 12px;
     padding: 25px;
     max-width: 600px;
     margin: 20px auto 40px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
 }
 
 .instructions h3 {
@@ -146,12 +212,12 @@ body::after {
     .header h1 {
         font-size: 2.2rem;
     }
-    
+
     .content {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .theme-switch {
         top: 20px;
         right: 20px;
@@ -246,12 +312,7 @@ body::after {
 
 /* 毛玻璃效果容器 */
 .glass-container {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: var(--shadow);
     padding: 30px;
     margin: 20px 0;
     position: relative;
@@ -364,9 +425,7 @@ video {
     overflow: hidden;
     height: 250px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
-    background: rgba(0, 0, 0, 0.2);
 }
 
 .photo-item:hover {
@@ -418,14 +477,11 @@ video {
 }
 
 .student-card {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(5px);
     border-radius: 15px;
     padding: 20px;
     display: flex;
     align-items: center;
     transition: transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .student-card.male {
@@ -438,7 +494,6 @@ video {
 
 .student-card:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.18);
 }
 
 .student-avatar {
@@ -516,11 +571,8 @@ video {
 }
 
 .timeline-content {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
@@ -560,12 +612,9 @@ video {
 }
 
 .speech-item {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.6s ease forwards;
     opacity: 0;
     transform: translateY(20px);
@@ -616,10 +665,7 @@ video {
     max-width: 800px;
     margin: 0 auto;
     padding: 25px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .comment-form h3 {
