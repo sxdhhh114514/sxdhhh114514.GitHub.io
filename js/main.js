@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "刘思雨", gender: "female", phone: "13996810711", email: "none@example.com" },
         { name: "刘弋辉", gender: "male", phone: "15123884479", email: "2150001648@qq.com" },
         { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
-        { name: "顾晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
+        { name: "辜晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
         { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
         { name: "任子硕", gender: "male", phone: "不知道联系用qq吧", email: "这是qq邮箱前面是qq号2256208106@qq.com" },
         { name: "冯博谦", gender: "male", phone: "19908322715", email: "2481163010@qq.com" },
