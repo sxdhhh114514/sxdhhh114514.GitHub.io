@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舒玺达 | sxd.us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 背景动画效果 */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            filter: brightness(0.6);
+            animation: backgroundAnimation 20s infinite alternate;
+        }
+        
+        @keyframes backgroundAnimation {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                transform: scale(1.05) rotate(0.5deg);
+            }
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 2.5rem;
+            background: rgba(25, 25, 45, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+        
+        .domain {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #4cc9f0, #4361ee, #3a0ca3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .name {
+            font-size: 2.2rem;
+            margin: 0.5rem 0;
+            color: #f8f9fa;
+        }
+        
+        .english-name {
+            font-size: 1.4rem;
+            color: #adb5bd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-card {
+            background: rgba(33, 37, 41, 0.7);
+            border-radius: 15px;
+            padding: 1.8rem;
+            margin: 1.8rem 0;
+            border-left: 4px solid #4361ee;
+            text-align: left;
+        }
+        
+        .info-card h3 {
+            color: #4cc9f0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card p {
+            line-height: 1.7;
+            color: #e9ecef;
+            margin-bottom: 0.8rem;
+        }
+        
+        .highlight {
+            color: #4cc9f0;
+            font-weight: 600;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            gap: 15px;
+        }
+        
+        .stat-box {
+            background: rgba(58, 12, 163, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            min-width: 160px;
+            flex: 1;
+            transition: transform 0.3s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-8px);
+            background: rgba(58, 12, 163, 0.4);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4cc9f0;
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #adb5bd;
+        }
+        
+        .hobbies {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .hobby {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 140px;
+        }
+        
+        .hobby-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(67, 97, 238, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .hobby:hover .hobby-icon {
+            background: rgba(67, 97, 238, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .hobby-name {
+            font-weight: 600;
+            color: #f8f9fa;
+        }
+        
+        .footer {
+            margin-top: 2rem;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        .pulse {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #4cc9f0;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 201, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0); }
+        }
+        
+        @media (max-width: 768px) {
+            .domain { font-size: 2.5rem; }
+            .name { font-size: 1.8rem; }
+            .container { padding: 1.5rem; }
+            .stats { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="domain">sxd.us</div>
+            <h1 class="name">舒玺达</h1>
+            <div class="english-name">SXD</div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value" id="age">15</div>
+                <div class="stat-label">年龄</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">1</div>
+                <div class="stat-label">冠军头衔</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">10000+</div>
+                <div class="stat-label">代码行数</div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-user"></i> 关于我</h3>
+            <p>你好！我是舒玺达（SXD），一名充满热情的飞碟射击运动员和计算机爱好者。</p>
+            <p>出生于2010年4月15日，目前<span class="highlight" id="currentAge">15</span>岁，我追求卓越，无论是在射击场上还是电脑屏幕前。</p>
+        </div>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-trophy"></i> 飞碟射击成就</h3>
+            <p>我是一名专业的飞碟射击运动员，曾获得<span class="highlight">市级比赛冠军</span>。这项运动教会了我专注、耐心和精确度，这些品质也渗透到了我生活的其他方面。</p>
+            <p>每周我投入超过15小时进行训练，不断挑战自己的极限，追求更高的准确度和更快的反应时间。</p>
+        </div>
+        
+        <div class="info-card">
+            <h3><i class="fas fa-laptop-code"></i> 计算机技术</h3>
+            <p>作为计算机爱好者，我精通<span class="highlight">Java编程</span>，喜欢解决复杂问题和创建高效算法。</p>
+            <p>我也是<span class="highlight">Minecraft Java版</span>的忠实玩家，不仅享受游戏乐趣，还通过修改游戏代码和创建模组来提升我的编程技能。</p>
+        </div>
+        
+        <div class="hobbies">
+            <div class="hobby">
+                <div class="hobby-icon">
+                    <i class="fas fa-crosshairs"></i>
+                </div>
+                <div class="hobby-name">飞碟射击</div>
+            </div>
+            <div class="hobby">
+                <div class="hobby-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="hobby-name">Java编程</div>
+            </div>
+            <div class="hobby">
+                <div class="hobby-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="hobby-name">我的世界</div>
+            </div>
+            <div class="hobby">
+                <div class="hobby-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="hobby-name">电子竞技</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><span class="pulse"></span> 在线并接受新挑战</p>
+            <p>&copy; 2025 sxd.us | 舒玺达的个人空间</p>
+        </div>
+    </div>
+
+    <script>
+        // 计算年龄的函数
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDifference = today.getMonth() - birth.getMonth();
+            
+            // 如果当前月份小于出生月份，或者月份相同但当前日期小于出生日期
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+        
+        // 设置生日日期（2010年4月15日）
+        const birthDate = '2010-04-15';
+        const age = calculateAge(birthDate);
+        
+        // 更新页面上的年龄
+        document.getElementById('age').textContent = age;
+        document.getElementById('currentAge').textContent = age;
+        
+        // 添加动态效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const statBoxes = document.querySelectorAll('.stat-box');
+            statBoxes.forEach((box, index) => {
+                setTimeout(() => {
+                    box.style.opacity = '1';
+                    box.style.transform = 'translateY(0)';
+                }, 300 * index);
+            });
+            
+            // 背景浮动效果
+            const background = document.querySelector('.background');
+            window.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX - window.innerWidth / 2) / 50;
+                const moveY = (e.clientY - window.innerHeight / 2) / 50;
+                background.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+            });
+        });
+    </script>
+</body>
+</html>
