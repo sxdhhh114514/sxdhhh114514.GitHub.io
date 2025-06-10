@@ -519,22 +519,72 @@ h1 {
     margin-left: 5px;
 }
 
-/* 视频字幕样式 */
-.video-captions {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    right: 0;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 15px;
-    text-align: center;
-    font-size: 1.1rem;
-    z-index: 15;
-    border-radius: 5px;
-    max-width: 80%;
-    margin: 0 auto;
-    display: none;
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .video-container {
+        border-radius: 10px;
+        max-width: 100%;
+    }
+    
+    .video-overlay i {
+        font-size: 40px;
+    }
+    
+    .video-title {
+        font-size: 1.2rem;
+    }
+    
+    .video-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .control-btn {
+        font-size: 1rem;
+        padding: 3px 7px;
+    }
+    
+    .time-display {
+        font-size: 0.8rem;
+        min-width: 70px;
+    }
+    
+    .volume-slider {
+        width: 60px;
+    }
+    
+    .video-controls {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-overlay i {
+        font-size: 35px;
+    }
+    
+    .video-title {
+        font-size: 1.1rem;
+    }
+    
+    .video-controls {
+        flex-wrap: wrap;
+        padding: 5px;
+    }
+    
+    .progress-container {
+        order: 1;
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .time-display {
+        min-width: 60px;
+        font-size: 0.75rem;
+    }
+    
+    .volume-container {
+        margin-left: auto;
+    }
 }
 
 /* 移动端适配 */
