@@ -396,29 +396,188 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // ============== 视频功能 ==============
+// ============== 视频功能 ==============
+
+// 视频控制功能
+const video = document.getElementById('graduationVideo');
+if (video) {
+    // 创建视频UI元素
+    const videoContainer = video.parentElement;
     
-    // 视频自动播放（在用户交互后）
-    const video = document.getElementById('graduationVideo');
-    if (video) {
-        // 添加播放按钮覆盖层
-        const videoOverlay = document.createElement('div');
-        videoOverlay.className = 'video-overlay';
-        videoOverlay.innerHTML = '<i class="fas fa-play"></i>';
-        video.parentElement.appendChild(videoOverlay);
-        
-        const playVideo = () => {
+    // 添加播放按钮覆盖层
+    const videoOverlay = document.createElement('div');
+    videoOverlay.className = 'video-overlay';
+    videoOverlay.innerHTML = `
+        <i class="fas fa-play"></i>
+        <div class="video-title">毕业纪念视频</div>
+        <div class="video-subtitle">点击播放我们的珍贵回忆</div>
+    `;
+    videoContainer.appendChild(videoOverlay);
+    
+    // 创建控制条
+    const videoControls = document.createElement('div');
+    videoControls.className = 'video-controls';
+    videoControls.innerHTML = `
+        <button class="control-btn play-pause"><i class="fas fa-play"></i></button>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="time-display">00:00 / 00:00</div>
+        <button class="control-btn volume-btn"><i class="fas fa-volume-up"></i></button>
+        <div class="volume-container">
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
+        </div>
+        <button class="control-btn fullscreen-btn"><i class="fas fa-expand"></i></button>
+    `;
+    videoContainer.appendChild(videoControls);
+    
+    // 获取UI元素
+    const playPauseBtn = videoControls.querySelector('.play-pause');
+    const progressBar = videoControls.querySelector('.progress-bar');
+    const progressContainer = videoControls.querySelector('.progress-container');
+    const timeDisplay = videoControls.querySelector('.time-display');
+    const volumeBtn = videoControls.querySelector('.volume-btn');
+    const volumeSlider = videoControls.querySelector('.volume-slider');
+    const fullscreenBtn = videoControls.querySelector('.fullscreen-btn');
+    
+    // 播放/暂停功能
+    const togglePlay = () => {
+        if (video.paused) {
             video.play().catch(e => console.log('视频播放失败:', e));
-            videoOverlay.style.display = 'none';
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            videoOverlay.classList.add('hidden');
+        } else {
+            video.pause();
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    };
+    
+    // 点击覆盖层播放视频
+    videoOverlay.addEventListener('click', togglePlay);
+    
+    // 点击视频容器播放视频
+    videoContainer.addEventListener('click', (e) => {
+        if (e.target === videoContainer || e.target === video) {
+            togglePlay();
+        }
+    });
+    
+    // 控制条播放按钮
+    playPauseBtn.addEventListener('click', togglePlay);
+    
+    // 进度条更新
+    video.addEventListener('timeupdate', () => {
+        const percent = (video.currentTime / video.duration) * 100;
+        progressBar.style.width = `${percent}%`;
+        
+        // 更新时间显示
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         };
         
-        // 点击覆盖层播放视频
-        videoOverlay.addEventListener('click', playVideo);
-        
-        // 点击视频容器播放视频
-        video.parentElement.addEventListener('click', playVideo);
-    }
+        timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+    });
     
+    // 点击进度条跳转
+    progressContainer.addEventListener('click', (e) => {
+        const rect = progressContainer.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        video.currentTime = percent * video.duration;
+    });
+    
+    // 音量控制
+    volumeSlider.addEventListener('input', () => {
+        video.volume = volumeSlider.value;
+        volumeBtn.innerHTML = video.volume > 0 ? 
+            '<i class="fas fa-volume-up"></i>' : 
+            '<i class="fas fa-volume-mute"></i>';
+    });
+    
+    volumeBtn.addEventListener('click', () => {
+        if (video.volume > 0) {
+            video.volume = 0;
+            volumeSlider.value = 0;
+            volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+            video.volume = 1;
+            volumeSlider.value = 1;
+            volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+    });
+    
+    // 全屏功能
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            videoContainer.requestFullscreen().catch(err => {
+                console.error(`全屏请求错误: ${err.message}`);
+            });
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        }
+    });
+    
+    // 视频结束重置
+    video.addEventListener('ended', () => {
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        videoOverlay.classList.remove('hidden');
+    });
+    
+    // 键盘快捷键
+    document.addEventListener('keydown', (e) => {
+        // 只在视频可见且聚焦时响应
+        if (!videoContainer.getBoundingClientRect().top < window.innerHeight) return;
+        
+        switch(e.key) {
+            case ' ':
+                if (document.activeElement === document.body) {
+                    togglePlay();
+                    e.preventDefault();
+                }
+                break;
+            case 'ArrowLeft':
+                video.currentTime -= 5;
+                break;
+            case 'ArrowRight':
+                video.currentTime += 5;
+                break;
+            case 'ArrowUp':
+                video.volume = Math.min(video.volume + 0.1, 1);
+                volumeSlider.value = video.volume;
+                break;
+            case 'ArrowDown':
+                video.volume = Math.max(video.volume - 0.1, 0);
+                volumeSlider.value = video.volume;
+                break;
+            case 'f':
+                fullscreenBtn.click();
+                break;
+            case 'm':
+                volumeBtn.click();
+                break;
+        }
+    });
+    
+    // 加载元数据
+    video.addEventListener('loadedmetadata', () => {
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        };
+        
+        timeDisplay.textContent = `00:00 / ${formatTime(video.duration)}`;
+    });
+    
+    // 初始设置
+    video.volume = 1;
+    video.muted = false;
+}
     // ============== 其他优化 ==============
     
     // 添加加载完成后的动画
