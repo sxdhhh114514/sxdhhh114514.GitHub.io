@@ -1100,3 +1100,18 @@ footer {
         display: none;
     }
 }
+/* 添加到您的 style.css */
+.speech-loader, .speech-error {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.speech-loader i {
+    margin-right: 10px;
+}
+
+.speech-error {
+    color: #e74c3c;
+}
