@@ -21,7 +21,8 @@
             --card-bg: rgba(30, 30, 30, 0.7);
         }
 
-        * {
+     /* 基础样式 */
+      * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -29,14 +30,17 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
             min-height: 100vh;
-            padding-top: 70px;
-            position: relative;
-        }
-
+            color: var(--text-color);
+            background-image: url('https://img.shetu66.com/2023/06/26/1687750287936805.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            overflow-x: hidden; 
+            padding: 20px; 
+            transition: background 0.5s ease, color 0.5s ease; 
+            position: relative; 
+        } 
         body.loaded * {
             transition: all 0.3s ease;
         }
