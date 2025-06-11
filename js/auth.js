@@ -96,10 +96,10 @@ function handleRegister(e) {
 
 // 主题切换功能
 function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-    document.documentElement.setAttribute('data-theme', newTheme);
+    document.body.classList.toggle('dark-theme');
     localStorage.setItem('theme', newTheme);
 
     // 更新按钮文本
@@ -122,7 +122,11 @@ function toggleTheme() {
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
 
         // 更新按钮状态
         const themeToggle = document.getElementById('themeToggle');
