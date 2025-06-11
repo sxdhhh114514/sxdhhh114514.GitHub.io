@@ -224,38 +224,35 @@ body::after {
     }
 }
 
+
 /* 导航栏 */
 .navbar {
-    background: var(--primary-color);
-    backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
-
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 15px 20px;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 70px;
 }
 
 .nav-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: var(--accent-color);
-}
-
-.nav-brand i {
-    font-size: 1.8rem;
+    color: var(--primary-color);
 }
 
 .nav-links {
@@ -264,13 +261,25 @@ body::after {
 }
 
 .nav-links a {
-    color: var(--text-light);
+    color: var(--text-color);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-weight: 500;
     transition: color 0.3s;
-    position: relative;
-    padding: 5px 0;
 }
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
 
 /* 修复黑夜模式登录按钮可见性问题 */
 [data-theme="dark"] .nav-links a#authBtn {
