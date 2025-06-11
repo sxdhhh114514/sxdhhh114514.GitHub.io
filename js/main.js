@@ -272,133 +272,54 @@ document.addEventListener('DOMContentLoaded', () => {
             rosterContainer.appendChild(studentCard);
         });
     }
-
     // ============== 毕业感言功能 ==============
 
-    // 数据库配置
-    const DB_CONFIG = {
-        host: 'mysql2.sqlpub.com',
-        port: 3307,
-        database: 'sxd66cn',
-        username: 'sxd66cn',
-        password: '4b9D4ca3xnSsylS9'
-    };
-
-    // 从数据库加载毕业感言
-    const loadSpeechesFromDB = async () => {
-        try {
-            const response = await fetch('https://glitch.com/embed/#!/embed/lying-inquisitive-grade?path=server.js&previewSize=0', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('无法加载感言数据');
-            }
-
-            const speeches = await response.json();
-            return speeches;
-        } catch (error) {
-            console.error('加载感言失败:', error);
-            // 返回初始数据作为后备
-            return [
-                { author: "舒玺达", date: "2025-06-10", content: "三年的初中生活转瞬即逝，感谢老师们的辛勤付出和同学们的陪伴。我会永远珍藏这段美好的回忆！" },
-                { author: "王芳", date: "2025-06-11", content: "在这个班级里，我不仅学到了知识，更学会了如何与人相处。感谢每一位同学，你们让我的初中生活如此精彩！" },
-                { author: "张伟", date: "2025-06-12", content: "从初一到初三，我们一起成长，一起奋斗。虽然即将分别，但我们的友谊长存！" }
-            ];
-        }
-    };
-
-    // 保存感言到数据库
-    const saveSpeechToDB = async (speech) => {
-        try {
-            const response = await fetch('https://your-backend-domain.com/api/speeches', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(speech)
-            });
-
-            if (!response.ok) {
-                throw new Error('保存感言失败');
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('保存感言失败:', error);
-            return false;
-        }
-    };
-
-    // 加载并显示毕业感言
-    const loadAndDisplaySpeeches = async () => {
-        const speechContainer = document.getElementById('speechContainer');
-        if (!speechContainer) return;
-
-        // 清空容器
+    // 毕业感言数据
+    const speeches = [
+        { author: "舒玺达", date: "2025-06-10", content: "三年的初中生活转瞬即逝，感谢老师们的辛勤付出和同学们的陪伴。我会永远珍藏这段美好的回忆！" },
+        { author: "王芳", date: "2025-06-11", content: "在这个班级里，我不仅学到了知识，更学会了如何与人相处。感谢每一位同学，你们让我的初中生活如此精彩！" },
+        { author: "张伟", date: "2025-06-12", content: "从初一到初三，我们一起成长，一起奋斗。虽然即将分别，但我们的友谊长存！" }
+    ];
+     // 加载毕业感言
+    const speechContainer = document.getElementById('speechContainer');
+    if (speechContainer) {
+        // 清空容器以防重复加载
         speechContainer.innerHTML = '';
 
-        // 显示加载指示器
-        const loader = document.createElement('div');
-        loader.className = 'speech-loader';
-        loader.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载感言中...';
-        speechContainer.appendChild(loader);
+        speeches.forEach((speech, index) => {
+            const speechItem = document.createElement('div');
+            speechItem.className = 'speech-item';
+            speechItem.style.animationDelay = `${index * 0.2}s`;
 
-        try {
-            const speeches = await loadSpeechesFromDB();
+            const header = document.createElement('div');
+            header.className = 'speech-header';
 
-            // 移除加载指示器
-            speechContainer.removeChild(loader);
+            const avatar = document.createElement('div');
+            avatar.className = 'speech-avatar';
+            avatar.textContent = speech.author.charAt(0);
 
-            // 显示感言
-            speeches.forEach((speech, index) => {
-                const speechItem = document.createElement('div');
-                speechItem.className = 'speech-item';
-                speechItem.style.animationDelay = `${index * 0.2}s`;
+            const author = document.createElement('div');
+            author.className = 'speech-author';
+            author.textContent = speech.author;
 
-                const header = document.createElement('div');
-                header.className = 'speech-header';
+            const date = document.createElement('div');
+            date.className = 'speech-date';
+            date.textContent = speech.date;
 
-                const avatar = document.createElement('div');
-                avatar.className = 'speech-avatar';
-                avatar.textContent = speech.author.charAt(0);
+            header.appendChild(avatar);
+            header.appendChild(author);
+            header.appendChild(date);
 
-                const author = document.createElement('div');
-                author.className = 'speech-author';
-                author.textContent = speech.author;
+            const content = document.createElement('div');
+            content.className = 'speech-content';
+            content.textContent = speech.content;
 
-                const date = document.createElement('div');
-                date.className = 'speech-date';
-                date.textContent = speech.date;
+            speechItem.appendChild(header);
+            speechItem.appendChild(content);
 
-                header.appendChild(avatar);
-                header.appendChild(author);
-                header.appendChild(date);
-
-                const content = document.createElement('div');
-                content.className = 'speech-content';
-                content.textContent = speech.content;
-
-                speechItem.appendChild(header);
-                speechItem.appendChild(content);
-
-                speechContainer.appendChild(speechItem);
-            });
-        } catch (error) {
-            // 显示错误信息
-            speechContainer.removeChild(loader);
-            const errorMsg = document.createElement('div');
-            errorMsg.className = 'speech-error';
-            errorMsg.textContent = '加载感言失败，请稍后再试';
-            speechContainer.appendChild(errorMsg);
-        }
-    };
-
-    // 初始加载感言
-    loadAndDisplaySpeeches();
+            speechContainer.appendChild(speechItem);
+        });
+    }
 
     // 毕业感言提交功能
     const commentForm = document.getElementById('commentForm');
@@ -406,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitComment = document.getElementById('submitComment');
 
     if (commentForm && commentInput && submitComment) {
-        submitComment.addEventListener('click', async (e) => {
+        submitComment.addEventListener('click', (e) => {
             e.preventDefault();
 
             const content = commentInput.value.trim();
@@ -417,76 +338,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 创建新感言
             const newSpeech = {
-                author: "匿名",
+                author: "我",
                 date: new Date().toISOString().split('T')[0],
                 content: content
             };
 
-            // 显示提交状态
-            const originalText = submitComment.innerHTML;
-            submitComment.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
-            submitComment.disabled = true;
+            // 添加到感言列表
+            const speechItem = document.createElement('div');
+            speechItem.className = 'speech-item';
+            speechItem.style.animation = 'fadeIn 0.6s ease forwards';
+            speechItem.style.opacity = '0';
 
-            try {
-                // 保存到数据库
-                const savedSpeech = await saveSpeechToDB(newSpeech);
+            const header = document.createElement('div');
+            header.className = 'speech-header';
 
-                if (savedSpeech) {
-                    // 添加到感言列表
-                    const speechContainer = document.getElementById('speechContainer');
-                    if (speechContainer) {
-                        const speechItem = document.createElement('div');
-                        speechItem.className = 'speech-item';
-                        speechItem.style.animation = 'fadeIn 0.6s ease forwards';
-                        speechItem.style.opacity = '0';
+            const avatar = document.createElement('div');
+            avatar.className = 'speech-avatar';
+            avatar.textContent = newSpeech.author.charAt(0);
 
-                        const header = document.createElement('div');
-                        header.className = 'speech-header';
+            const author = document.createElement('div');
+            author.className = 'speech-author';
+            author.textContent = newSpeech.author;
 
-                        const avatar = document.createElement('div');
-                        avatar.className = 'speech-avatar';
-                        avatar.textContent = newSpeech.author.charAt(0);
+            const date = document.createElement('div');
+            date.className = 'speech-date';
+            date.textContent = newSpeech.date;
 
-                        const author = document.createElement('div');
-                        author.className = 'speech-author';
-                        author.textContent = newSpeech.author;
+            header.appendChild(avatar);
+            header.appendChild(author);
+            header.appendChild(date);
 
-                        const date = document.createElement('div');
-                        date.className = 'speech-date';
-                        date.textContent = newSpeech.date;
+            const contentElem = document.createElement('div');
+            contentElem.className = 'speech-content';
+            contentElem.textContent = newSpeech.content;
 
-                        header.appendChild(avatar);
-                        header.appendChild(author);
-                        header.appendChild(date);
+            speechItem.appendChild(header);
+            speechItem.appendChild(contentElem);
 
-                        const contentElem = document.createElement('div');
-                        contentElem.className = 'speech-content';
-                        contentElem.textContent = newSpeech.content;
+            if (speechContainer) {
+                speechContainer.appendChild(speechItem);
 
-                        speechItem.appendChild(header);
-                        speechItem.appendChild(contentElem);
-
-                        speechContainer.appendChild(speechItem);
-
-                        // 滚动到新添加的感言
-                        setTimeout(() => {
-                            speechItem.scrollIntoView({ behavior: 'smooth' });
-                        }, 100);
-                    }
-
-                    // 清空输入框
-                    commentInput.value = '';
-
-                    alert('感言已提交！感谢分享');
-                }
-            } catch (error) {
-                alert('提交感言失败，请稍后再试');
-                console.error('提交感言失败:', error);
-            } finally {
-                // 恢复按钮状态
-                submitComment.innerHTML = originalText;
-                submitComment.disabled = false;
+                // 滚动到新添加的感言
+                setTimeout(() => {
+                    speechItem.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
             }
+
+            // 清空输入框
+            commentInput.value = '';
+
+            alert('感言已提交！感谢分享');
         });
     }
 
