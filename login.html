@@ -195,30 +195,35 @@
             <i class="fas fa-graduation-cap"></i>
         </div>
         <h1>用户登录</h1>
-        
+
         <form id="loginForm">
             <div class="input-group">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="用户名" required>
+                <input type="text" id="username" placeholder="用户名" required>
             </div>
-            
+
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="密码" required>
+                <input type="password" id="password" placeholder="密码" required>
             </div>
             
-                <button type="submit" class="auth-btn">登录</button>
-            
+            <div class="input-group" style="justify-content: flex-start; padding-left: 10px;">
+                <input type="checkbox" id="remember" style="width: auto; margin-right: 10px;">
+                <label for="remember">记住我</label>
+            </div>
+
+            <button type="submit" class="auth-btn">登录</button>
+
             <div class="options">
                 <a href="#">忘记密码?</a>
                 <a href="register.html">注册新账号</a>
             </div>
         </form>
-        
+
         <div class="divider">
             <span>或使用其他方式登录</span>
         </div>
-        
+
         <div class="social-login">
             <div class="social-btn">
                 <i class="fab fa-qq"></i>
@@ -230,38 +235,13 @@
                 <i class="fab fa-weibo"></i>
             </div>
         </div>
-        
+
         <div class="theme-toggle" id="themeToggle">
             <i class="fas fa-moon"></i>
             <span>夜间模式</span>
         </div>
     </div>
 
-    <script>
-        // 主题切换
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-theme');
-                localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-            });
-            
-            // 初始化主题
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-            }
-        }
-        
-        // 登录表单提交
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('登录成功！');
-                window.location.href = 'index.html';
-            });
-        }
-    </script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
