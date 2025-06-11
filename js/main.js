@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 学生通讯录数据
     const students = [
-        { name: "舒玺达", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
+        { name: "舒玺达（站长）", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
         { name: "王承宇", gender: "male", phone: "15213020708", email: "sb@example.com" },
         { name: "刘思雨", gender: "female", phone: "13996810711", email: "none@example.com" },
         { name: "刘弋辉", gender: "male", phone: "15123884479", email: "2150001648@qq.com" },
