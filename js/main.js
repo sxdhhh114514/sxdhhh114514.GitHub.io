@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 清空输入框
             commentInput.value = '';
 
-            alert('感言已提交！感谢分享');
+            alert('感言已提交！感谢分享（由于技术问题可能会出现刷新留言消失的情况）');
         });
     }
 
