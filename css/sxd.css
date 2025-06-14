@@ -1,0 +1,298 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 背景动画效果 */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    filter: brightness(0.6);
+    animation: backgroundAnimation 20s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    100% {
+        transform: scale(1.05) rotate(0.5deg);
+    }
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    padding: 2.5rem;
+    background: rgba(25, 25, 45, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.domain {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #4cc9f0, #4361ee, #3a0ca3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+.name {
+    font-size: 2.2rem;
+    margin: 0.5rem 0;
+    color: #f8f9fa;
+}
+
+.english-name {
+    font-size: 1.4rem;
+    color: #adb5bd;
+    margin-bottom: 1.5rem;
+}
+
+.info-card {
+    background: rgba(33, 37, 41, 0.7);
+    border-radius: 15px;
+    padding: 1.8rem;
+    margin: 1.8rem 0;
+    border-left: 4px solid #4361ee;
+    text-align: left;
+}
+
+.info-card h3 {
+    color: #4cc9f0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card p {
+    line-height: 1.7;
+    color: #e9ecef;
+    margin-bottom: 0.8rem;
+}
+
+.highlight {
+    color: #4cc9f0;
+    font-weight: 600;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    gap: 15px;
+}
+
+.stat-box {
+    background: rgba(58, 12, 163, 0.3);
+    border-radius: 12px;
+    padding: 1.2rem;
+    min-width: 160px;
+    flex: 1;
+    transition: transform 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.stat-box:hover {
+    transform: translateY(-8px);
+    background: rgba(58, 12, 163, 0.4);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4cc9f0;
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #adb5bd;
+}
+
+.hobbies {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+.hobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 140px;
+}
+
+.hobby-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(67, 97, 238, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+}
+
+.hobby:hover .hobby-icon {
+    background: rgba(67, 97, 238, 0.4);
+    transform: scale(1.1);
+}
+
+.hobby-name {
+    font-weight: 600;
+    color: #f8f9fa;
+}
+
+.footer {
+    margin-top: 2rem;
+    color: #adb5bd;
+    font-size: 0.9rem;
+}
+
+.pulse {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #4cc9f0;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 201, 240, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0); }
+}
+
+/* 音乐控制按钮 */
+.music-controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.music-btn {
+    background: rgba(67, 97, 238, 0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn:hover {
+    background: rgba(67, 97, 238, 1);
+    transform: scale(1.1);
+}
+
+#pauseBtn {
+    display: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .domain { font-size: 2.5rem; }
+    .name { font-size: 1.8rem; }
+    .container { padding: 1.5rem; }
+    .stats { flex-direction: column; }
+    
+    .info-card {
+        padding: 1.2rem;
+    }
+    
+    .hobby-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .hobby-name {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .domain { font-size: 2rem; }
+    .name { font-size: 1.5rem; }
+    .english-name { font-size: 1.1rem; }
+    
+    .stat-box {
+        min-width: 100%;
+    }
+    
+    .hobbies {
+        gap: 15px;
+    }
+    
+    .hobby {
+        max-width: 100px;
+    }
+    
+    .music-controls {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .music-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+}
