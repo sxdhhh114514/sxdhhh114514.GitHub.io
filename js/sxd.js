@@ -96,4 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // 移动端触摸事件支持
+    document.addEventListener('touchstart', function() {}, {passive: true});
+    document.addEventListener('touchmove', function() {}, {passive: true});
 });
