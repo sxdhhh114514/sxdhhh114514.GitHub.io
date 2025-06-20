@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中考成绩查询系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e5799, #207cca, #2989d8, #1e5799);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        input {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid #ddd;
+            border-radius: 12px 0 0 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3a7bd5;
+            box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(to right, #3a7bd5, #00a8ff);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            border-radius: 0 12px 12px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, #2a6bc5, #0098e6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .result-section {
+            text-align: center;
+            padding: 30px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .result-placeholder {
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+        
+        .student-name {
+            font-size: 1.8rem;
+            color: #3a7bd5;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .score-display {
+            font-size: 6rem;
+            font-weight: 800;
+            color: #3a7bd5;
+            margin: 20px 0;
+            text-shadow: 0 5px 15px rgba(58, 123, 213, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .score-range {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #6c757d;
+        }
+        
+        .score-info {
+            margin-top: 25px;
+            background: #f0f7ff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 500px;
+        }
+        
+        .score-info h3 {
+            color: #3a7bd5;
+            margin-bottom: 15px;
+        }
+        
+        .probability-chart {
+            display: flex;
+            height: 30px;
+            width: 100%;
+            background: #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .low-range {
+            background: #ff6b6b;
+            width: 5%;
+        }
+        
+        .mid-range {
+            background: #4cd97b;
+            width: 90%;
+        }
+        
+        .high-range {
+            background: #ffd166;
+            width: 5%;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .probability-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        
+        .low-color { background: #ff6b6b; }
+        .mid-color { background: #4cd97b; }
+        .high-color { background: #ffd166; }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-content {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .subtitle { font-size: 1rem; }
+            .input-group { flex-direction: column; }
+            input { border-radius: 12px; margin-bottom: 15px; }
+            button { border-radius: 12px; padding: 16px; }
+            .score-display { font-size: 4.5rem; }
+            .logo { position: static; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>中考成绩查询系统</h1>
+            <p class="subtitle">输入您的姓名查询2025年中考成绩，祝您金榜题名，前程似锦！</p>
+        </header>
+        
+        <div class="content">
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder="请输入您的姓名" autocomplete="off">
+                    <button id="queryBtn"><i class="fas fa-search"></i> 查询成绩</button>
+                </div>
+            </div>
+            
+            <div class="result-section">
+                <div id="resultPlaceholder" class="result-placeholder">
+                    请输入姓名并点击查询按钮获取中考成绩
+                </div>
+                <div id="resultContent" class="result-content" style="display: none;">
+                    <div class="student-name" id="studentName"></div>
+                    <div class="score-display" id="scoreDisplay">0</div>
+                    <div class="score-range">总分：750分</div>
+                    
+                    <div class="score-info">
+                        <h3><i class="fas fa-chart-bar"></i> 分数分布概率</h3>
+                        <div class="probability-chart">
+                            <div class="low-range" title="0-299分 (5%)"></div>
+                            <div class="mid-range" title="300-600分 (90%)"></div>
+                            <div class="high-range" title="601-750分 (5%)"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>0分</span>
+                            <span>300分</span>
+                            <span>600分</span>
+                            <span>750分</span>
+                        </div>
+                        <div class="probability-info">
+                            <div class="info-item">
+                                <div class="color-box low-color"></div>
+                                <span>0-299分: 5%</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="color-box mid-color"></div>
+                                <span>300-600分: 90%</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="color-box high-color"></div>
+                                <span>601-750分: 5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 中考成绩查询系统 | 本系统成绩为模拟数据，仅供展示使用</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('nameInput');
+            const queryBtn = document.getElementById('queryBtn');
+            const resultPlaceholder = document.getElementById('resultPlaceholder');
+            const resultContent = document.getElementById('resultContent');
+            const studentName = document.getElementById('studentName');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            
+            // 生成符合要求的随机分数
+            function generateScore() {
+                const rand = Math.random() * 100; // 生成0-100之间的随机数
+                
+                if (rand < 90) {
+                    // 90%概率生成300-600之间的分数
+                    return Math.floor(Math.random() * 301) + 300;
+                } else if (rand < 95) {
+                    // 5%概率生成0-299之间的分数
+                    return Math.floor(Math.random() * 300);
+                } else {
+                    // 5%概率生成601-750之间的分数
+                    return Math.floor(Math.random() * 150) + 601;
+                }
+            }
+            
+            // 更新分数显示（动画效果）
+            function updateScoreDisplay(scoreElement, finalScore) {
+                let currentScore = 0;
+                const increment = Math.ceil(finalScore / 30);
+                
+                const timer = setInterval(() => {
+                    currentScore += increment;
+                    if (currentScore >= finalScore) {
+                        currentScore = finalScore;
+                        clearInterval(timer);
+                    }
+                    scoreElement.textContent = currentScore;
+                }, 30);
+            }
+            
+            queryBtn.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                
+                if (name === '') {
+                    alert('请输入您的姓名');
+                    return;
+                }
+                
+                // 生成分数
+                const score = generateScore();
+                
+                // 显示结果
+                studentName.textContent = name + ' 同学，您的中考成绩为：';
+                updateScoreDisplay(scoreDisplay, score);
+                
+                // 切换显示
+                resultPlaceholder.style.display = 'none';
+                resultContent.style.display = 'block';
+            });
+            
+            // 按回车键也可以查询
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    queryBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
