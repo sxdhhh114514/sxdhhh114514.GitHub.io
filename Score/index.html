@@ -135,19 +135,19 @@
             font-size: 6rem;
             font-weight: 800;
             color: #3a7bd5;
-            margin: 20px 0;
+            margin: 20px 0 10px;
             text-shadow: 0 5px 15px rgba(58, 123, 213, 0.3);
             animation: pulse 1.5s infinite;
         }
         
         .score-range {
             font-size: 1.2rem;
-            margin-top: 10px;
+            margin-bottom: 15px;
             color: #6c757d;
         }
         
         .detail-btn {
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 12px 30px;
             background: linear-gradient(to right, #ff6b6b, #ff9e7d);
             color: white;
@@ -187,6 +187,8 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
             text-align: center;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .subject-card:hover {
@@ -199,17 +201,35 @@
             font-weight: 600;
             color: #495057;
             margin-bottom: 8px;
+            z-index: 2;
+            position: relative;
         }
         
         .subject-score {
             font-size: 1.8rem;
             font-weight: 700;
             color: #3a7bd5;
+            z-index: 2;
+            position: relative;
         }
         
         .subject-max {
             font-size: 0.9rem;
             color: #6c757d;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .score-percentage {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(58, 123, 213, 0.2);
+            color: #3a7bd5;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+            z-index: 2;
         }
         
         .chart-container {
@@ -220,6 +240,8 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 350px; /* 固定容器高度 */
+            position: relative;
         }
         
         .chart-title {
@@ -328,6 +350,7 @@
             .score-display { font-size: 4.5rem; }
             .logo { position: static; margin-bottom: 15px; }
             .subject-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-container { height: 300px; }
         }
         
         @media (max-width: 480px) {
@@ -336,6 +359,7 @@
             .student-name { font-size: 1.4rem; }
             .subject-grid { grid-template-columns: 1fr; }
             .detail-btn { padding: 10px 20px; font-size: 1rem; }
+            .chart-container { height: 280px; }
         }
     </style>
 </head>
@@ -377,7 +401,7 @@
                         
                         <div class="chart-container">
                             <div class="chart-title"><i class="fas fa-chart-pie"></i> 各科成绩分布</div>
-                            <canvas id="scoreChart" height="250"></canvas>
+                            <canvas id="scoreChart"></canvas>
                         </div>
                     </div>
                     
@@ -432,14 +456,14 @@
             
             // 科目配置
             const subjects = [
-                { name: '语文', max: 150 },
-                { name: '数学', max: 150 },
-                { name: '英语', max: 150 },
-                { name: '物理', max: 80 },
-                { name: '化学', max: 70 },
-                { name: '政治', max: 50 },
-                { name: '历史', max: 50 },
-                { name: '体育', max: 50 }
+                { name: '语文', max: 150, color: '#FF6384' },
+                { name: '数学', max: 150, color: '#36A2EB' },
+                { name: '英语', max: 150, color: '#FFCE56' },
+                { name: '物理', max: 80, color: '#4BC0C0' },
+                { name: '化学', max: 70, color: '#9966FF' },
+                { name: '政治', max: 50, color: '#FF9F40' },
+                { name: '历史', max: 50, color: '#8AC926' },
+                { name: '体育', max: 50, color: '#1982C4' }
             ];
             
             // 存储生成的成绩
@@ -556,7 +580,8 @@
                     card.innerHTML = `
                         <div class="subject-name">${subject.name}</div>
                         <div class="subject-score">${score}</div>
-                        <div class="subject-max">满分 ${subject.max} (${scorePercentage}%)</div>
+                        <div class="subject-max">满分 ${subject.max}</div>
+                        <div class="score-percentage">${scorePercentage}%</div>
                     `;
                     subjectGrid.appendChild(card);
                 });
@@ -578,10 +603,13 @@
                 }
                 
                 const labels = subjects.map(subject => subject.name);
-                const backgroundColors = [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
-                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
-                ];
+                const backgroundColors = subjects.map(subject => subject.color);
+                
+                // 添加百分比标签
+                const dataWithLabels = scores.map((score, index) => {
+                    const percentage = Math.round((score / subjects[index].max) * 100);
+                    return `${score}分 (${percentage}%)`;
+                });
                 
                 chart = new Chart(ctx, {
                     type: 'doughnut',
@@ -602,7 +630,8 @@
                                 labels: {
                                     font: {
                                         size: 12
-                                    }
+                                    },
+                                    padding: 15
                                 }
                             },
                             tooltip: {
@@ -613,9 +642,26 @@
                                         return `${subject.name}: ${context.raw}分 (${percentage}%)`;
                                     }
                                 }
+                            },
+                            title: {
+                                display: true,
+                                text: '各科成绩分布',
+                                font: {
+                                    size: 16
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 10
+                                }
                             }
                         },
-                        cutout: '60%'
+                        cutout: '55%',
+                        layout: {
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
                     }
                 });
             }
