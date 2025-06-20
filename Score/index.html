@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中考成绩查询系统</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -14,7 +15,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1e5799, #207cca, #2989d8, #1e5799);
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,10 +26,10 @@
         
         .container {
             width: 100%;
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.92);
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
         
@@ -54,7 +55,7 @@
         }
         
         .content {
-            padding: 40px 30px;
+            padding: 30px;
         }
         
         .input-section {
@@ -115,6 +116,7 @@
             background: #ffffff;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
         }
         
         .result-placeholder {
@@ -136,6 +138,27 @@
             margin: 20px 0;
             text-shadow: 0 5px 15px rgba(58, 123, 213, 0.3);
             animation: pulse 1.5s infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .score-display:hover {
+            transform: scale(1.05);
+            color: #ff6b6b;
+        }
+        
+        .score-display::after {
+            content: "点击查看各科成绩";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: normal;
+            white-space: nowrap;
+            opacity: 0.8;
         }
         
         .score-range {
@@ -144,17 +167,68 @@
             color: #6c757d;
         }
         
-        .score-info {
-            margin-top: 25px;
-            background: #f0f7ff;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 500px;
+        .subject-scores {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            margin-top: 30px;
+            animation: fadeIn 0.8s ease-out;
         }
         
-        .score-info h3 {
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .subject-card {
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .subject-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        
+        .subject-score {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3a7bd5;
+        }
+        
+        .subject-max {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 30px auto 0;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .chart-title {
+            font-size: 1.3rem;
             color: #3a7bd5;
             margin-bottom: 15px;
+            text-align: center;
         }
         
         .probability-chart {
@@ -236,6 +310,7 @@
         
         .result-content {
             animation: fadeIn 0.8s ease-out;
+            width: 100%;
         }
         
         .logo {
@@ -246,14 +321,23 @@
             color: white;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .subtitle { font-size: 1rem; }
             .input-group { flex-direction: column; }
             input { border-radius: 12px; margin-bottom: 15px; }
             button { border-radius: 12px; padding: 16px; }
             .score-display { font-size: 4.5rem; }
+            .score-display::after { font-size: 0.8rem; }
             .logo { position: static; margin-bottom: 15px; }
+            .subject-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .score-display { font-size: 3.5rem; }
+            .student-name { font-size: 1.4rem; }
+            .subject-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -283,6 +367,17 @@
                     <div class="student-name" id="studentName"></div>
                     <div class="score-display" id="scoreDisplay">0</div>
                     <div class="score-range">总分：750分</div>
+                    
+                    <div id="subjectScores" class="subject-scores">
+                        <div class="subject-grid" id="subjectGrid">
+                            <!-- 科目成绩将通过JS动态生成 -->
+                        </div>
+                        
+                        <div class="chart-container">
+                            <div class="chart-title"><i class="fas fa-chart-pie"></i> 各科成绩分布</div>
+                            <canvas id="scoreChart" height="250"></canvas>
+                        </div>
+                    </div>
                     
                     <div class="score-info">
                         <h3><i class="fas fa-chart-bar"></i> 分数分布概率</h3>
@@ -329,9 +424,27 @@
             const resultContent = document.getElementById('resultContent');
             const studentName = document.getElementById('studentName');
             const scoreDisplay = document.getElementById('scoreDisplay');
+            const subjectScores = document.getElementById('subjectScores');
+            const subjectGrid = document.getElementById('subjectGrid');
+            
+            // 科目配置
+            const subjects = [
+                { name: '语文', max: 150 },
+                { name: '数学', max: 150 },
+                { name: '英语', max: 150 },
+                { name: '物理', max: 80 },
+                { name: '化学', max: 70 },
+                { name: '政治', max: 50 },
+                { name: '历史', max: 50 },
+                { name: '体育', max: 50 }
+            ];
+            
+            // 存储生成的成绩
+            let generatedScores = [];
+            let totalScore = 0;
             
             // 生成符合要求的随机分数
-            function generateScore() {
+            function generateTotalScore() {
                 const rand = Math.random() * 100; // 生成0-100之间的随机数
                 
                 if (rand < 90) {
@@ -344,6 +457,71 @@
                     // 5%概率生成601-750之间的分数
                     return Math.floor(Math.random() * 150) + 601;
                 }
+            }
+            
+            // 生成各科分数
+            function generateSubjectScores(total) {
+                // 先给各科分配基础分
+                const baseScores = subjects.map(subject => {
+                    let minScore;
+                    
+                    // 不同科目设置不同的最低分
+                    if (subject.name === '语文' || subject.name === '数学' || subject.name === '英语') {
+                        minScore = Math.floor(subject.max * 0.6); // 主科最低60%
+                    } else if (subject.name === '物理' || subject.name === '化学') {
+                        minScore = Math.floor(subject.max * 0.5); // 理科最低50%
+                    } else if (subject.name === '政治' || subject.name === '历史') {
+                        minScore = Math.floor(subject.max * 0.4); // 文科最低40%
+                    } else { // 体育
+                        // 体育90%概率在40-50之间，10%在30-39之间
+                        if (Math.random() < 0.9) {
+                            minScore = 40;
+                        } else {
+                            minScore = 30;
+                        }
+                    }
+                    
+                    // 在最低分和满分之间随机
+                    return Math.floor(Math.random() * (subject.max - minScore + 1)) + minScore;
+                });
+                
+                // 计算基础总分
+                const baseTotal = baseScores.reduce((sum, score) => sum + score, 0);
+                
+                // 剩余分数分配
+                const remaining = total - baseTotal;
+                const scores = [...baseScores];
+                
+                // 如果总分不够，增加分数
+                if (remaining > 0) {
+                    for (let i = 0; i < remaining; i++) {
+                        // 随机选择一科增加分数（但不能超过满分）
+                        let validSubjects = subjects
+                            .map((_, idx) => idx)
+                            .filter(idx => scores[idx] < subjects[idx].max);
+                        
+                        if (validSubjects.length === 0) break;
+                        
+                        const randomIdx = validSubjects[Math.floor(Math.random() * validSubjects.length)];
+                        scores[randomIdx]++;
+                    }
+                }
+                // 如果总分超过，减少分数
+                else if (remaining < 0) {
+                    for (let i = 0; i < -remaining; i++) {
+                        // 随机选择一科减少分数（但不能低于0）
+                        let validSubjects = subjects
+                            .map((_, idx) => idx)
+                            .filter(idx => scores[idx] > 0);
+                        
+                        if (validSubjects.length === 0) break;
+                        
+                        const randomIdx = validSubjects[Math.floor(Math.random() * validSubjects.length)];
+                        scores[randomIdx]--;
+                    }
+                }
+                
+                return scores;
             }
             
             // 更新分数显示（动画效果）
@@ -361,6 +539,84 @@
                 }, 30);
             }
             
+            // 显示各科成绩
+            function displaySubjectScores(scores) {
+                subjectGrid.innerHTML = '';
+                
+                scores.forEach((score, index) => {
+                    const subject = subjects[index];
+                    const scorePercentage = Math.round((score / subject.max) * 100);
+                    
+                    const card = document.createElement('div');
+                    card.className = 'subject-card';
+                    card.innerHTML = `
+                        <div class="subject-name">${subject.name}</div>
+                        <div class="subject-score">${score}</div>
+                        <div class="subject-max">满分 ${subject.max} (${scorePercentage}%)</div>
+                    `;
+                    subjectGrid.appendChild(card);
+                });
+                
+                // 显示科目成绩区域
+                subjectScores.style.display = 'block';
+                
+                // 创建图表
+                createScoreChart(scores);
+            }
+            
+            // 创建各科成绩图表
+            function createScoreChart(scores) {
+                const ctx = document.getElementById('scoreChart').getContext('2d');
+                
+                // 销毁旧图表
+                if (window.scoreChart) {
+                    window.scoreChart.destroy();
+                }
+                
+                const labels = subjects.map(subject => subject.name);
+                const backgroundColors = [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                ];
+                
+                window.scoreChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: scores,
+                            backgroundColor: backgroundColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const subject = subjects[context.dataIndex];
+                                        const percentage = Math.round((context.raw / subject.max) * 100);
+                                        return `${subject.name}: ${context.raw}分 (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+            
+            // 查询按钮事件
             queryBtn.addEventListener('click', function() {
                 const name = nameInput.value.trim();
                 
@@ -369,16 +625,29 @@
                     return;
                 }
                 
-                // 生成分数
-                const score = generateScore();
+                // 生成总成绩
+                totalScore = generateTotalScore();
+                
+                // 生成各科成绩
+                generatedScores = generateSubjectScores(totalScore);
                 
                 // 显示结果
                 studentName.textContent = name + ' 同学，您的中考成绩为：';
-                updateScoreDisplay(scoreDisplay, score);
+                updateScoreDisplay(scoreDisplay, totalScore);
                 
                 // 切换显示
                 resultPlaceholder.style.display = 'none';
                 resultContent.style.display = 'block';
+                
+                // 初始隐藏科目成绩
+                subjectScores.style.display = 'none';
+            });
+            
+            // 点击总成绩显示科目成绩
+            scoreDisplay.addEventListener('click', function() {
+                if (generatedScores.length > 0) {
+                    displaySubjectScores(generatedScores);
+                }
             });
             
             // 按回车键也可以查询
