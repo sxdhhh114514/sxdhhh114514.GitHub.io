@@ -138,33 +138,31 @@
             margin: 20px 0;
             text-shadow: 0 5px 15px rgba(58, 123, 213, 0.3);
             animation: pulse 1.5s infinite;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .score-display:hover {
-            transform: scale(1.05);
-            color: #ff6b6b;
-        }
-        
-        .score-display::after {
-            content: "点击查看各科成绩";
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.9rem;
-            color: #6c757d;
-            font-weight: normal;
-            white-space: nowrap;
-            opacity: 0.8;
         }
         
         .score-range {
             font-size: 1.2rem;
             margin-top: 10px;
             color: #6c757d;
+        }
+        
+        .detail-btn {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #ff6b6b, #ff9e7d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+        }
+        
+        .detail-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
         }
         
         .subject-scores {
@@ -328,7 +326,6 @@
             input { border-radius: 12px; margin-bottom: 15px; }
             button { border-radius: 12px; padding: 16px; }
             .score-display { font-size: 4.5rem; }
-            .score-display::after { font-size: 0.8rem; }
             .logo { position: static; margin-bottom: 15px; }
             .subject-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -338,6 +335,7 @@
             .score-display { font-size: 3.5rem; }
             .student-name { font-size: 1.4rem; }
             .subject-grid { grid-template-columns: 1fr; }
+            .detail-btn { padding: 10px 20px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -367,6 +365,10 @@
                     <div class="student-name" id="studentName"></div>
                     <div class="score-display" id="scoreDisplay">0</div>
                     <div class="score-range">总分：750分</div>
+                    
+                    <button id="detailBtn" class="detail-btn">
+                        <i class="fas fa-book-open"></i> 查看各科成绩
+                    </button>
                     
                     <div id="subjectScores" class="subject-scores">
                         <div class="subject-grid" id="subjectGrid">
@@ -420,6 +422,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.getElementById('nameInput');
             const queryBtn = document.getElementById('queryBtn');
+            const detailBtn = document.getElementById('detailBtn');
             const resultPlaceholder = document.getElementById('resultPlaceholder');
             const resultContent = document.getElementById('resultContent');
             const studentName = document.getElementById('studentName');
@@ -442,6 +445,7 @@
             // 存储生成的成绩
             let generatedScores = [];
             let totalScore = 0;
+            let chart = null;
             
             // 生成符合要求的随机分数
             function generateTotalScore() {
@@ -569,8 +573,8 @@
                 const ctx = document.getElementById('scoreChart').getContext('2d');
                 
                 // 销毁旧图表
-                if (window.scoreChart) {
-                    window.scoreChart.destroy();
+                if (chart) {
+                    chart.destroy();
                 }
                 
                 const labels = subjects.map(subject => subject.name);
@@ -579,7 +583,7 @@
                     '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
                 ];
                 
-                window.scoreChart = new Chart(ctx, {
+                chart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
                         labels: labels,
@@ -641,12 +645,21 @@
                 
                 // 初始隐藏科目成绩
                 subjectScores.style.display = 'none';
+                
+                // 重置详情按钮文本
+                detailBtn.innerHTML = '<i class="fas fa-book-open"></i> 查看各科成绩';
             });
             
-            // 点击总成绩显示科目成绩
-            scoreDisplay.addEventListener('click', function() {
-                if (generatedScores.length > 0) {
+            // 详情按钮点击事件
+            detailBtn.addEventListener('click', function() {
+                if (subjectScores.style.display === 'none') {
+                    // 显示科目成绩
                     displaySubjectScores(generatedScores);
+                    detailBtn.innerHTML = '<i class="fas fa-times"></i> 收起各科成绩';
+                } else {
+                    // 隐藏科目成绩
+                    subjectScores.style.display = 'none';
+                    detailBtn.innerHTML = '<i class="fas fa-book-open"></i> 查看各科成绩';
                 }
             });
             
