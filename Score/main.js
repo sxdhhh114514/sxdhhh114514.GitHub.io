@@ -30,8 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 特殊姓名处理
     const specialNames = {
-        '王承宇': 0,
-        '何长城': 248
+        '王承宇': -2,
     };
     
     // 生成符合要求的随机分数
