@@ -30,7 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 特殊姓名处理
     const specialNames = {
-        '王承宇': -2,
+        '王承宇': 0,
+        '魏雨婷': 0,
+        '付超': -8,
+        '李旭铎': 9999999,
+        '舒玺达': 750,
     };
     
     // 生成符合要求的随机分数
