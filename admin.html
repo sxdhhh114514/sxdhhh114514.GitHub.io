@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理后台 - 66中2025级1班毕业纪念</title>
+    <title>管理后台 - 毕业纪念网站</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 极客时间 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
 </head>
 <body>
+
     <!-- 顶部导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
@@ -18,160 +19,81 @@
                 <span>66中2025级1班</span>
             </div>
             <div class="nav-links">
-                <a href="index.html">返回首页</a>
-                <a href="#" id="auth-btn">退出登录</a>
+                <a href="index.html">首页</a>
+                <a href="sxd.html">站长介绍</a>
+                <a href="admin.html" class="active">管理后台</a>
+                <a href="#" id="logoutBtn">退出登录</a>
             </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- 管理后台内容 -->
-    <div class="admin-container">
-        <div class="admin-header">
-            <h1><i class="fas fa-cog"></i> 评论管理后台</h1>
-            <p>管理所有用户发表的毕业感言</p>
-        </div>
-
-        <div class="comments-list" id="commentsList">
-            <div class="comment-loader">
-                <i class="fas fa-spinner fa-spin"></i> 加载评论中...
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="glass-container">
+            <div class="admin-header">
+                <h1 class="admin-title">网站管理后台</h1>
+                <p class="admin-subtitle">管理毕业感言和用户信息</p>
+            </div>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-label">用户总数</div>
+                    <div class="stat-value" id="userCount">0</div>
+                    <div class="stat-label">注册用户</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">评论总数</div>
+                    <div class="stat-value" id="commentCount">0</极客时间iv>
+                    <div class="stat-label">毕业感言</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">今日新增</div>
+                    <div class="stat-value" id="todayCount">0</div>
+                    <div class="stat-label">评论</div>
+                </div>
+            </div>
+            
+            <div class="admin-section">
+                <h2 class="section-title">评论管理</h2>
+                <div class="comments-list" id="commentsList">
+                    <div class="comment-loader">
+                        <i class="fas fa-spinner fa-spin"></i> 加载评论中...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-section">
+                <h2 class="section-title">用户管理</h2>
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>注册时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center;">加载用户中...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+        
+        <!-- 页脚 -->
+        <footer class="glass-container">
+            <p>©sxd 2025 重庆市第66中学校2025级1班毕业纪念网站</p>
+            <p>管理后台 · 仅限管理员访问</p>
+        </footer>
     </div>
 
-    <script>
-        // LeanCloud 初始化
-        const APP_ID = 'YOUR_APP_ID';
-        const APP_KEY = 'YOUR_APP_KEY';
-        
-        AV.init({
-            appId: APP_ID,
-            appKey: APP_KEY
-        });
-        
-        // 获取当前用户
-        const currentUser = AV.User.current();
-        
-        // 检查管理员权限
-        if (!currentUser || currentUser.get('username') !== 'admin') {
-            alert('您没有权限访问管理后台');
-            window.location.href = 'index.html';
-        }
-        
-        // 获取评论
-        async function getComments() {
-            const query = new AV.Query('Comment');
-            query.descending('createdAt');
-            try {
-                const comments = await query.find();
-                return comments.map(comment => {
-                    return {
-                        id: comment.id,
-                        author: comment.get('author'),
-                        content: comment.get('content'),
-                        createdAt: comment.createdAt
-                    };
-                });
-            } catch (error) {
-                console.error('获取评论失败:', error);
-                throw error;
-            }
-        }
-        
-        // 删除评论
-        async function deleteComment(commentId) {
-            const comment = AV.Object.createWithoutData('Comment', commentId);
-            try {
-                await comment.destroy();
-                return true;
-            } catch (error) {
-                console.error('删除评论失败:', error);
-                throw error;
-            }
-        }
-        
-        // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', async () => {
-            // 更新用户界面
-            updateAuthUI();
-            
-            // 加载评论
-            loadAdminComments();
-            
-            // 退出登录功能
-            const authBtn = document.getElementById('auth-btn');
-            if (authBtn) {
-                authBtn.addEventListener('click', () => {
-                    AV.User.logOut();
-                    window.location.href = 'index.html';
-                });
-            }
-        });
-        
-        // 加载管理评论
-        async function loadAdminComments() {
-            const commentsList = document.getElementById('commentsList');
-            
-            try {
-                const comments = await getComments();
-                renderAdminComments(comments);
-            } catch (error) {
-                commentsList.innerHTML = '<div class="comment-error"><i class="fas fa-exclamation-triangle"></i> 加载评论失败，请刷新重试</div>';
-            }
-        }
-        
-        // 渲染管理评论
-        function renderAdminComments(comments) {
-            const commentsList = document.getElementById('commentsList');
-            
-            if (!comments.length) {
-                commentsList.innerHTML = '<div class="no-comments">还没有任何评论</div>';
-                return;
-            }
-            
-            commentsList.innerHTML = '';
-            
-            comments.forEach(comment => {
-                const commentCard = document.createElement('div');
-                commentCard.className = 'comment-card';
-                commentCard.innerHTML = `
-                    <div class="comment-author">${comment.author}</div>
-                    <div class="comment-content">${comment.content}</div>
-                    <div class="comment-date">${new Date(comment.createdAt).toLocaleString()}</div>
-                    <div class="comment-actions">
-                        <button class="action-btn delete-btn" data-id="${comment.id}">
-                            <i class="fas fa-trash"></i> 删除
-                        </button>
-                    </div>
-                `;
-                
-                commentsList.appendChild(commentCard);
-            });
-            
-            // 添加删除事件
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    const commentId = btn.getAttribute('data-id');
-                    if (confirm('确定要删除这条评论吗？')) {
-                        try {
-                            await deleteComment(commentId);
-                            loadAdminComments();
-                            alert('评论已删除');
-                        } catch (error) {
-                            console.error('删除评论失败:', error);
-                            alert('删除失败，请重试');
-                        }
-                    }
-                });
-            });
-        }
-        
-        // 更新用户界面
-        function updateAuthUI() {
-            const authBtn = document.getElementById('auth-btn');
-            if (authBtn) {
-                authBtn.textContent = '退出登录';
-            }
-        }
-    </script>
+    <script src="js/admin.js"></script>
 </body>
 </html>
