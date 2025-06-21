@@ -1,184 +1,142 @@
-// 管理后台脚本
-document.addEventListener('DOMContentLoaded', () => {
-    // 初始化导航
-    initAdminNavigation();
+// js/admin.js
+// ============== LeanCloud 初始化 ==============
+const APP_ID = 'oyl9RBhC3kt6oWWIP3DSIVYE-MdYXbMMI';
+const APP_KEY = 's0nc1AP6rtNsEkDgdC7eTezo';
 
-    // 加载统计数据
-    loadStats();
-
-    // 加载用户数据
-    loadUsers();
-
-    // 加载感言数据
-    loadSpeeches();
-
-    // 加载学生数据
-    loadStudents();
-
-    // 添加用户按钮
-    document.getElementById('addUserBtn').addEventListener('click', () => {
-        document.getElementById('addUserModal').style.display = 'flex';
-    });
-
-    // 关闭模态框
-    document.querySelector('.close-modal').addEventListener('click', () => {
-        document.getElementById('addUserModal').style.display = 'none';
-    });
-
-    // 初始化媒体管理
-    initMediaManagement();
+AV.init({
+    appId: APP_ID,
+    appKey: APP_KEY
 });
 
-// 初始化后台导航
-function initAdminNavigation() {
-    const navLinks = document.querySelectorAll('.admin-nav a');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // 移除所有active类
-            document.querySelectorAll('.admin-nav a').forEach(a => {
-                a.classList.remove('active');
-            });
-
-            // 添加active类到当前链接
-            this.classList.add('active');
-
-            // 隐藏所有内容区域
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // 显示目标内容区域
-            const target = this.getAttribute('href');
-            document.querySelector(target).classList.add('active');
+// ============== 管理功能实现 ==============
+document.addEventListener('DOMContentLoaded', async () => {
+    // 检查管理员权限
+    const currentUser = AV.User.current();
+    if (!currentUser || currentUser.get('username') !== 'admin') {
+        alert('您没有权限访问此页面');
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    // 导航栏切换
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
         });
-    });
-}
-
-// 加载统计数据
-function loadStats() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const speeches = JSON.parse(localStorage.getItem('classSpeeches') || '[]');
-    const students = JSON.parse(localStorage.getItem('classStudents') || '[]');
-
-    document.getElementById('totalUsers').textContent = users.length;
-    document.getElementById('totalSpeeches').textContent = speeches.length;
-    document.getElementById('totalStudents').textContent = students.length;
-    document.getElementById('totalMedia').textContent = '6'; // 媒体文件数量
-}
-
-// 加载用户数据
-function loadUsers() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const tableBody = document.getElementById('usersTableBody');
-    tableBody.innerHTML = '';
-
-    users.forEach((user, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${user.username}</td>
-            <td>${user.email || '未提供'}</td>
-            <td>${new Date().toLocaleDateString()}</td>
-            <td><span class="status active">活跃</span></td>
-            <td>
-                <button class="btn btn-sm btn-edit"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-delete"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// 加载感言数据
-function loadSpeeches() {
-    const speeches = JSON.parse(localStorage.getItem('classSpeeches') || '[]');
-    const tableBody = document.getElementById('speechesTableBody');
-    tableBody.innerHTML = '';
-
-    speeches.forEach((speech, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${speech.author}</td>
-            <td>${speech.content.substring(0, 30)}${speech.content.length > 30 ? '...' : ''}</td>
-            <td>${speech.date}</td>
-            <td><span class="status active">已发布</span></td>
-            <td>
-                <button class="btn btn-sm btn-edit"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-delete"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// 加载学生数据
-function loadStudents() {
-    const students = JSON.parse(localStorage.getItem('classStudents') || studentData);
-    const tableBody = document.getElementById('studentsTableBody');
-    tableBody.innerHTML = '';
-
-    students.forEach((student, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${student.name}</td>
-            <td>${student.gender}</td>
-            <td>${student.phone}</td>
-            <td>
-                <button class="btn btn-sm btn-edit"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-delete"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// 初始化媒体管理
-function initMediaManagement() {
-    // 媒体标签切换
-    const mediaTabs = document.querySelectorAll('.media-tab');
-    mediaTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            mediaTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            document.querySelectorAll('.media-section').forEach(section => {
-                section.classList.remove('active');
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
             });
+        });
+    }
+    
+    // 退出登录
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            AV.User.logOut();
+            window.location.href = 'index.html';
+        });
+    }
+    
+    // 主题初始化
+    const initTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-            if (tab.dataset.tab === 'images') {
-                document.getElementById('images-section').classList.add('active');
-            } else {
-                document.getElementById('videos-section').classList.add('active');
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
+    };
+    
+    initTheme();
+    
+    // 加载统计数据
+    async function loadStatistics() {
+        try {
+            // 用户统计
+            const userQuery = new AV.Query('_User');
+            const userCount = await userQuery.count();
+            document.getElementById('userCount').textContent = userCount;
+            
+            // 评论统计
+            const commentQuery = new AV.Query('Comment');
+            const commentCount = await commentQuery.count();
+            document.getElementById('commentCount').textContent = commentCount;
+            
+            // 今日新增评论
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const todayQuery = new AV.Query('Comment');
+            todayQuery.greaterThanOrEqualTo('createdAt', today);
+            const todayCount = await todayQuery.count();
+            document.getElementById('todayCount').textContent = todayCount;
+        } catch (error) {
+            console.error('加载统计数据失败:', error);
+        }
+    }
+    
+    // 加载评论
+    async function loadComments() {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+        
+        try {
+            const query = new AV.Query('Comment');
+            query.descending('createdAt');
+            const comments = await query.find();
+            
+            commentsList.innerHTML = '';
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<div class="no-comments">暂无评论</div>';
+                return;
             }
-        });
-    });
-
-    // 图片上传按钮
-    document.getElementById('uploadImageBtn').addEventListener('click', () => {
-        document.getElementById('imageUploadArea').classList.remove('hidden');
-    });
-
-    // 取消图片上传
-    document.getElementById('cancelImageUpload').addEventListener('click', () => {
-        document.getElementById('imageUploadArea').classList.add('hidden');
-        document.getElementById('imageInput').value = '';
-    });
-
-    // 添加视频按钮
-    document.getElementById('addVideoBtn').addEventListener('click', () => {
-        document.getElementById('videoForm').classList.remove('hidden');
-    });
-
-    // 取消添加视频
-    document.getElementById('cancelVideoAdd').addEventListener('click', () => {
-        document.getElementById('videoForm').classList.add('hidden');
-        document.getElementById('videoTitle').value = '';
-        document.getElementById('videoId').value = '';
-        document.getElementById('videoDescription').value = '';
-    });
-}
+            
+            comments.forEach(comment => {
+                // 创建评论项...
+            });
+        } catch (error) {
+            console.error('加载评论失败:', error);
+            commentsList.innerHTML = '<div class="error">加载评论失败，请刷新重试</div>';
+        }
+    }
+    
+    // 加载用户
+    async function loadUsers() {
+        const usersTableBody = document.getElementById('usersTableBody');
+        if (!usersTableBody) return;
+        
+        try {
+            const query = new AV.Query('_User');
+            query.descending('createdAt');
+            const users = await query.find();
+            
+            usersTableBody.innerHTML = '';
+            
+            if (users.length === 0) {
+                usersTableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">暂无用户</td></tr>';
+                return;
+            }
+            
+            users.forEach(user => {
+                // 创建用户行...
+            });
+        } catch (error) {
+            console.error('加载用户失败:', error);
+            usersTableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">加载用户失败</td></tr>';
+        }
+    }
+    
+    // 加载所有数据
+    loadStatistics();
+    loadComments();
+    loadUsers();
+});
