@@ -1,7 +1,7 @@
 // js/forget.js
 // ============== LeanCloud 初始化 ==============
 const APP_ID = 'oyl9RBhC3kt6oWWIP3DSIVYE-MdYXbMMI';
-const APP_KEY = 's0nc1AP6rtNsEkDgdC7eTezo';
+const APP_KEY = 'fbg0pdTHfsT8VtOoqmT8snIW';
 
 AV.init({
     appId: APP_ID,
