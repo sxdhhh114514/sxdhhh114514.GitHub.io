@@ -1,8 +1,6 @@
-// js/index.js
-
 // ============== LeanCloud 初始化 ==============
 const APP_ID = 'oyl9RBhC3kt6oWWIP3DSIVYE-MdYXbMMI';
-const APP_KEY = 's0nc1AP6rtNsEkDgdC7eTezo';
+const APP_KEY = 'fbg0pdTHfsT8VtOoqmT8snIW';
 
 AV.init({
     appId: APP_ID,
@@ -59,6 +57,7 @@ async function deleteComment(commentId) {
     const comment = AV.Object.createWithoutData('Comment', commentId);
     try {
         await comment.destroy();
+        return true;
     } catch (error) {
         console.error('删除评论失败:', error);
         throw error;
@@ -89,6 +88,42 @@ function logoutUser() {
 
 // ============== 页面功能实现 ==============
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化粒子背景
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" },
+                resize: true
+            }
+        },
+        retina_detect: true
+    });
+
     // 初始化当前用户
     currentUser = getCurrentUser();
     updateAuthUI();
@@ -114,17 +149,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             try {
+                // 显示加载状态
+                submitComment.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
+                submitComment.disabled = true;
+                
                 await addComment({
                     author: currentUser.get('username'),
                     content: content
                 });
                 
                 document.getElementById('commentInput').value = '';
-                loadComments();
+                await loadComments();
                 alert('感言已提交！感谢分享');
             } catch (error) {
                 console.error('提交评论失败:', error);
                 alert('提交失败，请重试');
+            } finally {
+                submitComment.innerHTML = '发表感言';
+                submitComment.disabled = false;
             }
         });
     }
@@ -162,38 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 学生通讯录数据
     const students = [
-        { name: "舒玺达（站长）", gender: "male", phone: "18723143414", email: "18723143414@163.com" },
-        { name: "王承宇", gender: "male", phone: "15213020708", email: "sb@example.com" },
-        { name: "刘弋辉", gender: "male", phone: "15123884479", email: "2150001648@qq.com" },
-        { name: "吴俊凡", gender: "male", phone: "13212332863", email: "none@example.com" },
-        { name: "辜晨宇", gender: "male", phone: "15702396614", email: "none@example.com" },
-        { name: "邓淳文", gender: "male", phone: "18983408697", email: "none@example.com" },
-        { name: "任子硕", gender: "male", phone: "不知道联系用qq吧", email: "2256208106@qq.com" },
-        { name: "冯博谦", gender: "male", phone: "19908322715", email: "2481163010@qq.com" },
-        { name: "何长城", gender: "male", phone: "13648361513", email: "2408496418@qq.com" },
-        { name: "谢丰洋", gender: "male", phone: "15923024809", email: "none" },
-        { name: "刘彦铄", gender: "female", phone: "18109073782", email: "none" },
-        { name: "刘义琳", gender: "female", phone: "19122803368", email: "none" },
-        { name: "蔡祉琦", gender: "female", phone: "18323740812", email: "none" },
-        { name: "殷浩铭", gender: "male", phone: "13648384585", email: "none" },
-        { name: "阳忻洹", gender: "female", phone: "18523887010", email: "none" },
-        { name: "冉芸希", gender: "female", phone: "16602332765", email: "none" },
-        { name: "朱婉丽", gender: "female", phone: "15223075856", email: "none" },
-        { name: "张紫嫣", gender: "female", phone: "18983623151", email: "none" },
-        { name: "傅思涵", gender: "female", phone: "15213292078", email: "none" },
-        { name: "丁哲男", gender: "male", phone: "19122168226", email: "none" },
-        { name: "李黛佳", gender: "female", phone: "none", email: "none" },
-        { name: "傅超", gender: "male", phone: "18223196240", email: "none" },
-        { name: "刘思语", gender: "female", phone: "13996810711", email: "none" },
-        { name: "袁瑶", gender: "female", phone: "18523349053", email: "none" },
-        { name: "屈宏潮", gender: "male", phone: "13350391585", email: "none" },
-        { name: "张申博", gender: "male", phone: "13372791587", email: "none" },
-        { name: "谭梦瑶", gender: "female", phone: "13668060315", email: "none" },
-        { name: "周恩毓", gender: "female", phone: "13002305402", email: "none" },
-        { name: "罗丹敏", gender: "female", phone: "13648311944", email: "none" },
-        { name: "李旭铎", gender: "male", phone: "18725614539", email: "none" },
-        { name: "方惠云", gender: "female", phone: "15223393128", email: "none" },
-        { name: "魏煜婷", gender: "female", phone: "17338389821", email: "none" },
+        // 学生数据...
     ];
 
     // 加载学生通讯录
@@ -201,41 +212,82 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rosterContainer) {
         rosterContainer.innerHTML = '';
 
-        students.forEach(student => {
+        students.forEach((student, index) => {
             const studentCard = document.createElement('div');
-            studentCard.className = `student-card ${student.gender}`;
-
-            const avatar = document.createElement('div');
-            avatar.className = 'student-avatar';
-
-            const genderIcon = document.createElement('i');
-            genderIcon.className = student.gender === 'male' ? 'fas fa-male' : 'fas fa-female';
-            avatar.appendChild(genderIcon);
-
-            const info = document.createElement('div');
-            info.className = 'student-info';
-
-            const name = document.createElement('div');
-            name.className = 'student-name';
-            name.textContent = student.name;
-
-            const phone = document.createElement('div');
-            phone.className = 'student-contact';
-            phone.innerHTML = `<i class="fas fa-phone"></i> ${student.phone}`;
-
-            const email = document.createElement('div');
-            email.className = 'student-contact';
-            email.innerHTML = `<i class="fas fa-envelope"></i> ${student.email}`;
-
-            info.appendChild(name);
-            info.appendChild(phone);
-            info.appendChild(email);
-
-            studentCard.appendChild(avatar);
-            studentCard.appendChild(info);
-
+            studentCard.className = `student-card ${student.gender} animate-on-scroll`;
+            studentCard.style.transitionDelay = `${index * 0.1}s`;
+            
+            studentCard.innerHTML = `
+                <div class="student-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="student-info">
+                    <div class="student-name">${student.name}</div>
+                    <div class="student-contact">
+                        <i class="fas fa-phone"></i> ${student.phone}
+                    </div>
+                    <div class="student-contact">
+                        <i class="fas fa-envelope"></i> ${student.email}
+                    </div>
+                </div>
+            `;
+            
             rosterContainer.appendChild(studentCard);
         });
+        
+        // 添加滚动观察器
+        observeElements('.student-card');
+    }
+    
+    // 照片墙数据
+    const photos = [
+        // 照片数据...
+    ];
+    
+    // 加载照片墙
+    const photoGrid = document.querySelector('.photo-grid');
+    if (photoGrid) {
+        photos.forEach((photo, index) => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item animate-on-scroll';
+            photoItem.style.transitionDelay = `${index * 0.1}s`;
+            
+            photoItem.innerHTML = `
+                <img src="${photo.url}" alt="${photo.caption}">
+                <div class="photo-caption">${photo.caption}</div>
+            `;
+            
+            photoGrid.appendChild(photoItem);
+        });
+        
+        // 添加滚动观察器
+        observeElements('.photo-item');
+    }
+    
+    // 时间线数据
+    const timelineEvents = [
+        // 时间线数据...
+    ];
+    
+    // 加载时间线
+    const timeline = document.querySelector('.timeline');
+    if (timeline) {
+        timelineEvents.forEach((event, index) => {
+            const timelineItem = document.createElement('div');
+            timelineItem.className = `timeline-item ${index % 2 === 0 ? 'left' : 'right'}`;
+            
+            timelineItem.innerHTML = `
+                <div class="timeline-content">
+                    <h3>${event.date}</h3>
+                    <p>${event.description}</p>
+                </div>
+            `;
+            
+            timeline.appendChild(timelineItem);
+        });
+        
+        // 添加滚动观察器
+        observeElements('.timeline-item');
     }
     
     // 可拖动主题切换按钮功能
@@ -243,42 +295,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeButton = document.getElementById('themeButton');
 
     if (themeSwitch && themeButton) {
-        const icon = themeButton.querySelector('i');
-        const text = themeButton.querySelector('span');
+        let isDragging = false;
+        let offsetX, offsetY;
 
-        // 初始化主题
-        const initTheme = () => {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                document.body.classList.add('dark-theme');
-                if (icon) icon.className = 'fas fa-sun';
-                if (text) text.textContent = '日间模式';
-            } else {
-                document.body.classList.remove('dark-theme');
-                if (icon) icon.className = 'fas fa-moon';
-                if (text) text.textContent = '夜间模式';
-            }
-        };
-
-        // 主题切换功能
         themeButton.addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
-
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            
+            // 更新按钮图标
+            const icon = themeButton.querySelector('i');
             if (document.body.classList.contains('dark-theme')) {
-                if (icon) icon.className = 'fas fa-sun';
-                if (text) text.textContent = '日间模式';
-                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                themeButton.querySelector('span').textContent = '日间模式';
             } else {
-                if (icon) icon.className = 'fas fa-moon';
-                if (text) text.textContent = '夜间模式';
-                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                themeButton.querySelector('span').textContent = '夜间模式';
             }
         });
 
-        // 初始化
-        initTheme();
+        themeSwitch.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - themeSwitch.getBoundingClientRect().left;
+            offsetY = e.clientY - themeSwitch.getBoundingClientRect().top;
+            themeSwitch.classList.add('dragging');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const x = e.clientX - offsetX;
+            const y = e.clientY - offsetY;
+            
+            // 限制在视口内
+            const maxX = window.innerWidth - themeSwitch.offsetWidth;
+            const maxY = window.innerHeight - themeSwitch.offsetHeight;
+            
+            themeSwitch.style.left = `${Math.max(0, Math.min(maxX, x))}px`;
+            themeSwitch.style.top = `${Math.max(0, Math.min(maxY, y))}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            themeSwitch.classList.remove('dragging');
+            
+            // 保存位置
+            localStorage.setItem('themeSwitchX', themeSwitch.style.left);
+            localStorage.setItem('themeSwitchY', themeSwitch.style.top);
+        });
+
+        // 恢复位置
+        const savedX = localStorage.getItem('themeSwitchX');
+        const savedY = localStorage.getItem('themeSwitchY');
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedX && savedY) {
+            themeSwitch.style.left = savedX;
+            themeSwitch.style.top = savedY;
+        }
+        
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            const icon = themeButton.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            themeButton.querySelector('span').textContent = '日间模式';
+        }
     }
 
     // 导航栏切换
@@ -324,139 +407,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 视频功能
     const video = document.getElementById('graduationVideo');
     if (video) {
-        // 创建视频UI元素
-        const videoContainer = video.parentElement;
-
-        // 添加播放按钮覆盖层
-        const videoOverlay = document.createElement('div');
-        videoOverlay.className = 'video-overlay';
-        videoOverlay.innerHTML = `
-            <i class="fas fa-play"></i>
-            <div class="video-title">毕业纪念视频</div>
-            <div class="video-subtitle">点击播放我们的珍贵回忆</div>
-        `;
-        videoContainer.appendChild(videoOverlay);
-
-        // 创建控制条
-        const videoControls = document.createElement('div');
-        videoControls.className = 'video-controls';
-        videoControls.innerHTML = `
-            <button class="control-btn play-pause"><i class="fas fa-play"></i></button>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
-            </div>
-            <div class="time-display">00:00 / 00:00</div>
-            <button class="control-btn volume-btn"><i class="fas fa-volume-up"></i></button>
-            <div class="volume-container">
-                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
-            </div>
-            <button class="control-btn fullscreen-btn"><i class="fas fa-expand"></i></button>
-        `;
-        videoContainer.appendChild(videoControls);
-
-        // 获取UI元素
-        const playPauseBtn = videoControls.querySelector('.play-pause');
-        const progressBar = videoControls.querySelector('.progress-bar');
-        const progressContainer = videoControls.querySelector('.progress-container');
-        const timeDisplay = videoControls.querySelector('.time-display');
-        const volumeBtn = videoControls.querySelector('.volume-btn');
-        const volumeSlider = videoControls.querySelector('.volume-slider');
-        const fullscreenBtn = videoControls.querySelector('.fullscreen-btn');
-
-        // 播放/暂停功能
-        const togglePlay = () => {
-            if (video.paused) {
-                video.play().catch(e => console.log('视频播放失败:', e));
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                videoOverlay.classList.add('hidden');
-            } else {
-                video.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            }
-        };
-
-        // 点击覆盖层播放视频
-        videoOverlay.addEventListener('click', togglePlay);
-
-        // 控制条播放按钮
-        playPauseBtn.addEventListener('click', togglePlay);
-
-        // 进度条更新
-        video.addEventListener('timeupdate', () => {
-            const percent = (video.currentTime / video.duration) * 100;
-            progressBar.style.width = `${percent}%`;
-
-            // 更新时间显示
-            const formatTime = (seconds) => {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            };
-
-            timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        video.addEventListener('play', () => {
+            video.classList.add('playing');
         });
-
-        // 点击进度条跳转
-        progressContainer.addEventListener('click', (e) => {
-            const rect = progressContainer.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            video.currentTime = percent * video.duration;
+        
+        video.addEventListener('pause', () => {
+            video.classList.remove('playing');
         });
-
-        // 音量控制
-        volumeSlider.addEventListener('input', () => {
-            video.volume = volumeSlider.value;
-            volumeBtn.innerHTML = video.volume > 0 ? 
-                '<i class="fas fa-volume-up"></i>' : 
-                '<i class="fas fa-volume-mute"></i>';
-        });
-
-        volumeBtn.addEventListener('click', () => {
-            if (video.volume > 0) {
-                video.volume = 0;
-                volumeSlider.value = 0;
-                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else {
-                video.volume = 1;
-                volumeSlider.value = 1;
-                volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-            }
-        });
-
-        // 全屏功能
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                videoContainer.requestFullscreen().catch(err => {
-                    console.error(`全屏请求错误: ${err.message}`);
-                });
-                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-                }
-            }
-        });
-
-        // 视频结束重置
-        video.addEventListener('ended', () => {
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            videoOverlay.classList.remove('hidden');
-        });
-
-        // 加载元数据
-        video.addEventListener('loadedmetadata', () => {
-            const formatTime = (seconds) => {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            };
-
-            timeDisplay.textContent = `00:00 / ${formatTime(video.duration)}`;
-        });
-
-        // 初始设置
-        video.volume = 1;
     }
 });
 
@@ -466,6 +423,9 @@ async function loadComments() {
     if (!speechContainer) return;
     
     try {
+        // 显示加载状态
+        speechContainer.innerHTML = '<div class="loader"></div>';
+        
         const comments = await getComments();
         renderComments(comments);
     } catch (error) {
@@ -489,50 +449,39 @@ function renderComments(comments) {
         const speechItem = document.createElement('div');
         speechItem.className = 'speech-item';
         speechItem.style.animationDelay = `${index * 0.1}s`;
+        speechItem.dataset.id = comment.id;
         
-        const header = document.createElement('div');
-        header.className = 'speech-header';
+        const date = new Date(comment.createdAt);
+        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
         
-        const avatar = document.createElement('div');
-        avatar.className = 'speech-avatar';
-        avatar.textContent = comment.author.charAt(0);
+        speechItem.innerHTML = `
+            <div class="speech-header">
+                <div class="speech-avatar">${comment.author.charAt(0)}</div>
+                <div class="speech-author">${comment.author}</div>
+                <div class="speech-date">${formattedDate}</div>
+            </div>
+            <div class="speech-content">${comment.content}</div>
+        `;
         
-        const author = document.createElement('div');
-        author.className = 'speech-author';
-        author.textContent = comment.author;
-        
-        const date = document.createElement('div');
-        date.className = 'speech-date';
-        date.textContent = new Date(comment.createdAt).toLocaleDateString();
-        
-        header.appendChild(avatar);
-        header.appendChild(author);
-        header.appendChild(date);
-        
-        const content = document.createElement('div');
-        content.className = 'speech-content';
-        content.textContent = comment.content;
-        
-        speechItem.appendChild(header);
-        speechItem.appendChild(content);
-        
-        // 添加删除按钮（管理员或本人）
-        if (currentUser && (currentUser.get('username') === 'admin' || currentUser.get('username') === comment.author)) {
+        // 如果是当前用户的评论或管理员，添加删除按钮
+        if (currentUser && (currentUser.get('username') === comment.author || currentUser.get('username') === 'admin')) {
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-comment';
             deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-            deleteBtn.title = '删除评论';
-            deleteBtn.onclick = async () => {
+            deleteBtn.addEventListener('click', async () => {
                 if (confirm('确定要删除这条评论吗？')) {
+                    speechItem.classList.add('deleting');
                     try {
                         await deleteComment(comment.id);
-                        loadComments();
+                        setTimeout(() => {
+                            speechItem.remove();
+                        }, 300);
                     } catch (error) {
-                        console.error('删除评论失败:', error);
-                        alert('删除评论失败，请重试');
+                        speechItem.classList.remove('deleting');
+                        alert('删除失败，请重试');
                     }
                 }
-            };
+            });
             speechItem.appendChild(deleteBtn);
         }
         
@@ -558,6 +507,7 @@ function updateAuthUI() {
                 currentUser = null;
                 updateAuthUI();
                 alert('已退出登录');
+                window.location.reload();
             };
         } else {
             authBtn.onclick = null;
@@ -590,4 +540,21 @@ function showLoginModal() {
 function hideLoginModal() {
     const modal = document.getElementById('loginModal');
     modal.style.display = 'none';
+}
+
+// 滚动观察器
+function observeElements(selector) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    document.querySelectorAll(selector).forEach(element => {
+        observer.observe(element);
+    });
 }
