@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
-    <!-- LeanCloud SDK -->
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
 </head>
 <body>
@@ -28,7 +27,7 @@
                 <span>66中2025级1班</span>
             </div>
             <div class="nav-links">
-                <a href="#" class="active">首页</a>
+                <a href="index.html" class="active">首页</a>
                 <a href="sxd.html">站长介绍</a>
                 <a href="#gallery">照片墙</a>
                 <a href="#roster">通讯录</a>
@@ -36,7 +35,7 @@
                 <a href="#comments">毕业感言</a>
                 <a href="login.html" id="auth-btn">登录/注册</a>
                 <a href="admin.html" id="adminLink" style="display:none;">管理后台</a>
-                <a href="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/8WMFyDSt">毕业相册电子版下载</a>
+                <a href="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/8WMFyDSt">毕业相册下载</a>
             </div>
             <button class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
@@ -53,7 +52,7 @@
             </div>
             <h1>毕业纪念册</h1>
             <div class="subtitle">青春不散场 · 梦想再起航</div>
-            <div class="subtitle">"地球不倒塌我们就不停止维护"<div>
+            <div class="subtitle">"地球不倒塌我们就不停止维护"</div>
             <div class="class-info">
                 <i class="fas fa-map-marker-alt"></i> 重庆市第66中学校 · 
                 <i class="fas fa-graduation-cap"></i> 2025级1班
@@ -62,9 +61,9 @@
 
         <!-- 视频区域 -->
         <section class="video-section glass-container">
-            <h2 class="section-title">我们的毕业视频(为了合法我们进行了替换)</h2>
+            <h2 class="section-title">我们的毕业视频</h2>
             <div class="video-container">
-                <video id="graduationVideo" controls poster="assets/images/video-poster.jpg">
+                <video id="graduationVideo" controls poster="https://img.wjwj.top/2025/06/07/684db343fcecc80d8577e10363ad8cbc.md.jpg">
                     <source src="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/nYMT3t29" type="video/mp4">
                     您的浏览器不支持视频播放。
                 </video>
@@ -75,7 +74,54 @@
         <section class="gallery-section glass-container" id="gallery">
             <h2 class="section-title">班级记忆</h2>
             <div class="photo-grid">
-                <!-- 照片项保持不变 -->
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/07/4980b95ff1a06b55040c9944a4dc1c38.jpg" alt="大合照">
+                    <div class="photo-caption">大合照</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/07/303644eed9420a4fe40f4fe8e6df2e58.md.jpg" alt="合照2">
+                    <div class="photo-caption">合照2</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/07/ca8af22ea253b303886a878c1f06c64f.jpg" alt="打年糕">
+                    <div class="photo-caption">打年糕</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/07/684db343fcecc80d8577e10363ad8cbc.md.jpg" alt="同学们一起玩乐">
+                    <div class="photo-caption">同学们的快乐时光</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/07/6680d598ecc696e75d1768670d48e710.jpg" alt="校园风景">
+                    <div class="photo-caption">校园风景</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/facbae443fd1949a90f060f41075e620.jpg" alt="fbq个人照">
+                    <div class="photo-caption">fbq</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/e3c64a62f27279897199a644f03143ee.jpg" alt="李旭铎">
+                    <div class="photo-caption">李旭铎</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/d994587df59819fe7209aa9813dfc0dd.jpg" alt="留言">
+                    <div class="photo-caption">毕业留言</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/8127d9ec63125bc0f2ffe7e3725d051e.jpg" alt="留言">
+                    <div class="photo-caption">合照3</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/cc2cae70e6b9b3af4eab60b6b0e688eb.jpg" alt="留言">
+                    <div class="photo-caption">毕业留言2</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/14547362cca25e3fd4995beb21c0e590.jpg" alt="留言">
+                    <div class="photo-caption">毕业留言3</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://img.wjwj.top/2025/06/11/4997d3c0a8cf919a37fa7a76a97a6437.jpg" alt="站长">
+                    <div class="photo-caption">站长舒玺达</div>
+                </div>
             </div>
         </section>
 
@@ -91,7 +137,42 @@
         <section class="timeline-section glass-container" id="timeline">
             <h2 class="section-title">初中时光轴</h2>
             <div class="timeline">
-                <!-- 时间线项保持不变 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2022年9月</h3>
+                        <p>我们相遇在重庆市第66中学校2025级1班，开启了初中生活的新篇章。开学典礼上，我们怀着憧憬和期待，认识了新同学和新老师。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2023年3月</h3>
+                        <p>我们在疫情中努力学习，奋斗拼搏。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2023年9月</h3>
+                        <p>初二学年开始，我们举办了"青春梦想"主题班会。每位同学分享了自己的梦想和未来规划，加深了彼此的了解。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2024年4月</h3>
+                        <p>班级组织了一次难忘的春季郊游。我们在自然中学习，在欢笑中成长。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2025年1月</h3>
+                        <p>进入初三下学期，备战中考。同学们互相鼓励，共同进步，教室里充满了奋斗的气息。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2025年6月</h3>
+                        <p>毕业季来临！我们拍摄了毕业照，举办了毕业晚会，珍藏这三年的美好回忆。</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -144,317 +225,5 @@
     </div>
 
     <script src="js/main.js"></script>
-    <script>
-        // ============== LeanCloud 初始化 ==============
-        // 替换为你的LeanCloud App ID和App Key
-        const APP_ID = 'YOUR_APP_ID';
-        const APP_KEY = 'YOUR_APP_KEY';
-        
-        AV.init({
-            appId: APP_ID,
-            appKey: APP_KEY
-        });
-
-        // ============== 评论功能实现 ==============
-        let currentUser = null;
-        
-        // 获取评论
-        async function getComments() {
-            const query = new AV.Query('Comment');
-            query.descending('createdAt');
-            try {
-                const comments = await query.find();
-                return comments.map(comment => {
-                    return {
-                        id: comment.id,
-                        author: comment.get('author'),
-                        content: comment.get('content'),
-                        createdAt: comment.createdAt
-                    };
-                });
-            } catch (error) {
-                console.error('获取评论失败:', error);
-                throw error;
-            }
-        }
-
-        // 添加评论
-        async function addComment(comment) {
-            const Comment = AV.Object.extend('Comment');
-            const newComment = new Comment();
-            
-            newComment.set('author', comment.author);
-            newComment.set('content', comment.content);
-            
-            try {
-                const savedComment = await newComment.save();
-                return {
-                    id: savedComment.id,
-                    author: savedComment.get('author'),
-                    content: savedComment.get('content'),
-                    createdAt: savedComment.createdAt
-                };
-            } catch (error) {
-                console.error('添加评论失败:', error);
-                throw error;
-            }
-        }
-
-        // 删除评论
-        async function deleteComment(commentId) {
-            const comment = AV.Object.createWithoutData('Comment', commentId);
-            try {
-                await comment.destroy();
-            } catch (error) {
-                console.error('删除评论失败:', error);
-                throw error;
-            }
-        }
-
-        // ============== 用户认证功能 ==============
-        // 用户注册
-        async function registerUser(userData) {
-            const user = new AV.User();
-            user.setUsername(userData.username);
-            user.setPassword(userData.password);
-            user.setEmail(userData.email);
-            
-            try {
-                const newUser = await user.signUp();
-                return newUser;
-            } catch (error) {
-                console.error('注册失败:', error);
-                throw error;
-            }
-        }
-
-        // 用户登录
-        async function loginUser(username, password) {
-            try {
-                const user = await AV.User.logIn(username, password);
-                return user;
-            } catch (error) {
-                console.error('登录失败:', error);
-                throw error;
-            }
-        }
-
-        // 获取当前用户
-        function getCurrentUser() {
-            return AV.User.current();
-        }
-
-        // 用户登出
-        function logoutUser() {
-            AV.User.logOut();
-        }
-
-        // ============== 页面功能实现 ==============
-        document.addEventListener('DOMContentLoaded', () => {
-            // 初始化当前用户
-            currentUser = getCurrentUser();
-            updateAuthUI();
-            
-            // 加载评论
-            loadComments();
-            
-            // 评论提交
-            const submitComment = document.getElementById('submitComment');
-            if (submitComment) {
-                submitComment.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    
-                    if (!currentUser) {
-                        showLoginModal();
-                        return;
-                    }
-                    
-                    const content = document.getElementById('commentInput').value.trim();
-                    if (!content) {
-                        alert('请输入感言内容');
-                        return;
-                    }
-                    
-                    try {
-                        await addComment({
-                            author: currentUser.get('username'),
-                            content: content
-                        });
-                        
-                        document.getElementById('commentInput').value = '';
-                        loadComments();
-                        alert('感言已提交！感谢分享');
-                    } catch (error) {
-                        console.error('提交评论失败:', error);
-                        alert('提交失败，请重试');
-                    }
-                });
-            }
-            
-            // 登录弹窗
-            const loginModal = document.getElementById('loginModal');
-            const modalLoginForm = document.getElementById('modalLoginForm');
-            if (modalLoginForm) {
-                modalLoginForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const username = document.getElementById('modalUsername').value;
-                    const password = document.getElementById('modalPassword').value;
-                    
-                    try {
-                        const user = await loginUser(username, password);
-                        currentUser = user;
-                        updateAuthUI();
-                        hideLoginModal();
-                        alert('登录成功！');
-                    } catch (error) {
-                        alert('登录失败，请检查用户名和密码');
-                    }
-                });
-            }
-        });
-
-        // 加载评论
-        async function loadComments() {
-            const speechContainer = document.getElementById('speechContainer');
-            if (!speechContainer) return;
-            
-            try {
-                const comments = await getComments();
-                renderComments(comments);
-            } catch (error) {
-                speechContainer.innerHTML = '<div class="speech-error"><i class="fas fa-exclamation-triangle"></i> 加载评论失败，请刷新重试</div>';
-            }
-        }
-
-        // 渲染评论
-        function renderComments(comments) {
-            const speechContainer = document.getElementById('speechContainer');
-            if (!speechContainer) return;
-            
-            speechContainer.innerHTML = '';
-            
-            if (comments.length === 0) {
-                speechContainer.innerHTML = '<div class="no-comments">还没有毕业感言，快来第一个发表吧！</div>';
-                return;
-            }
-            
-            comments.forEach((comment, index) => {
-                const speechItem = document.createElement('div');
-                speechItem.className = 'speech-item';
-                speechItem.style.animationDelay = `${index * 0.1}s`;
-                
-                const header = document.createElement('div');
-                header.className = 'speech-header';
-                
-                const avatar = document.createElement('div');
-                avatar.className = 'speech-avatar';
-                avatar.textContent = comment.author.charAt(0);
-                
-                const author = document.createElement('div');
-                author.className = 'speech-author';
-                author.textContent = comment.author;
-                
-                const date = document.createElement('div');
-                date.className = 'speech-date';
-                date.textContent = new Date(comment.createdAt).toLocaleDateString();
-                
-                header.appendChild(avatar);
-                header.appendChild(author);
-                header.appendChild(date);
-                
-                const content = document.createElement('div');
-                content.className = 'speech-content';
-                content.textContent = comment.content;
-                
-                speechItem.appendChild(header);
-                speechItem.appendChild(content);
-                
-                // 添加删除按钮（管理员或本人）
-                if (currentUser && (currentUser.get('username') === 'admin' || currentUser.get('username') === comment.author)) {
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-comment';
-                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                    deleteBtn.title = '删除评论';
-                    deleteBtn.onclick = async () => {
-                        if (confirm('确定要删除这条评论吗？')) {
-                            try {
-                                await deleteComment(comment.id);
-                                loadComments();
-                            } catch (error) {
-                                console.error('删除评论失败:', error);
-                                alert('删除评论失败，请重试');
-                            }
-                        }
-                    };
-                    speechItem.appendChild(deleteBtn);
-                }
-                
-                speechContainer.appendChild(speechItem);
-            });
-        }
-
-        // 更新用户界面
-        function updateAuthUI() {
-            const authBtn = document.getElementById('auth-btn');
-            const adminLink = document.getElementById('adminLink');
-            const commentForm = document.getElementById('commentForm');
-            const authPrompt = document.getElementById('authPrompt');
-            
-            if (authBtn) {
-                authBtn.textContent = currentUser ? '退出登录' : '登录/注册';
-                authBtn.href = currentUser ? 'javascript:void(0)' : 'login.html';
-                
-                // 添加退出登录功能
-                if (currentUser) {
-                    authBtn.onclick = () => {
-                        logoutUser();
-                        currentUser = null;
-                        updateAuthUI();
-                        alert('已退出登录');
-                    };
-                } else {
-                    authBtn.onclick = null;
-                }
-            }
-            
-            if (adminLink) {
-                // 假设管理员用户名为"admin"
-                adminLink.style.display = currentUser && currentUser.get('username') === 'admin' ? 'block' : 'none';
-            }
-            
-            if (commentForm && authPrompt) {
-                if (currentUser) {
-                    commentForm.style.display = 'block';
-                    authPrompt.style.display = 'none';
-                } else {
-                    commentForm.style.display = 'none';
-                    authPrompt.style.display = 'block';
-                }
-            }
-        }
-
-        // 显示登录弹窗
-        function showLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.style.display = 'block';
-        }
-
-        // 隐藏登录弹窗
-        function hideLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.style.display = 'none';
-        }
-
-        // 点击关闭按钮
-        document.querySelector('.close')?.addEventListener('click', hideLoginModal);
-        
-        // 点击模态框外部关闭
-        window.addEventListener('click', (e) => {
-            const modal = document.getElementById('loginModal');
-            if (e.target === modal) {
-                hideLoginModal();
-            }
-        });
-    </script>
 </body>
 </html>
