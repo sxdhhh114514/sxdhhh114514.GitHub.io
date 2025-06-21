@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
-    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
 </head>
 <body>
 
@@ -27,7 +26,7 @@
                 <span>66中2025级1班</span>
             </div>
             <div class="nav-links">
-                <a href="index.html" class="active">首页</a>
+                <a href="#" class="active">首页</a>
                 <a href="sxd.html">站长介绍</a>
                 <a href="#gallery">照片墙</a>
                 <a href="#roster">通讯录</a>
@@ -35,7 +34,7 @@
                 <a href="#comments">毕业感言</a>
                 <a href="login.html" id="auth-btn">登录/注册</a>
                 <a href="admin.html" id="adminLink" style="display:none;">管理后台</a>
-                <a href="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/8WMFyDSt">毕业相册下载</a>
+                <a href="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/8WMFyDSt">毕业相册电子版下载</a>
             </div>
             <button class="nav-toggle" id="navToggle">
                 <i class="fas fa-bars"></i>
@@ -52,7 +51,7 @@
             </div>
             <h1>毕业纪念册</h1>
             <div class="subtitle">青春不散场 · 梦想再起航</div>
-            <div class="subtitle">"地球不倒塌我们就不停止维护"</div>
+            <div class="subtitle">"地球不倒塌我们就不停止维护"<div>
             <div class="class-info">
                 <i class="fas fa-map-marker-alt"></i> 重庆市第66中学校 · 
                 <i class="fas fa-graduation-cap"></i> 2025级1班
@@ -61,9 +60,9 @@
 
         <!-- 视频区域 -->
         <section class="video-section glass-container">
-            <h2 class="section-title">我们的毕业视频</h2>
+            <h2 class="section-title">我们的毕业视频(为了合法我们进行了替换)</h2>
             <div class="video-container">
-                <video id="graduationVideo" controls poster="https://img.wjwj.top/2025/06/07/684db343fcecc80d8577e10363ad8cbc.md.jpg">
+                <video id="graduationVideo" controls poster="assets/images/video-poster.jpg">
                     <source src="https://lz.qaiu.top/parser?url=https://share.feijipan.com/s/nYMT3t29" type="video/mp4">
                     您的浏览器不支持视频播放。
                 </video>
@@ -180,9 +179,7 @@
         <section class="comments-section glass-container" id="comments">
             <h2 class="section-title">毕业感言</h2>
             <div class="speech-container" id="speechContainer">
-                <div class="speech-loader">
-                    <i class="fas fa-spinner fa-spin"></i> 加载评论中...
-                </div>
+                <!-- 感言通过JavaScript加载 -->
             </div>
 
             <!-- 评论表单 -->
@@ -190,7 +187,7 @@
                 <h3>分享你的毕业感言</h3>
                 <textarea id="commentInput" placeholder="请输入你的毕业感言..." required></textarea>
                 <button id="submitComment">发表感言</button>
-                <p class="login-prompt" id="authPrompt">请先<a href="login.html">登录</a>后再发表感言</p>
+                <p class="login-prompt" id="auth-btn">请先<a href="login.html">登录</a>后再发表感言</p>
             </div>
         </section>
 
@@ -202,26 +199,6 @@
             <p>人生有梦 · 各自精彩</p>
             <p><i class="fas fa-heart"></i> 永远的一班 <i class="fas fa-heart"></i></p>
         </footer>
-    </div>
-
-    <!-- 登录弹窗 -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>登录账号</h2>
-            <form id="modalLoginForm">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="modalUsername" placeholder="用户名" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="modalPassword" placeholder="密码" required>
-                </div>
-                <button type="submit">登录</button>
-            </form>
-            <p>还没有账号？<a href="register.html">立即注册</a></p>
-        </div>
     </div>
 
     <script src="js/main.js"></script>
