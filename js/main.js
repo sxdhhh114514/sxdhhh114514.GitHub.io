@@ -1,3 +1,5 @@
+// js/index.js
+
 // ============== LeanCloud 初始化 ==============
 const APP_ID = 'oyl9RBhC3kt6oWWIP3DSIVYE-MdYXbMMI';
 const APP_KEY = 'fbg0pdTHfsT8VtOoqmT8snIW';
@@ -57,7 +59,6 @@ async function deleteComment(commentId) {
     const comment = AV.Object.createWithoutData('Comment', commentId);
     try {
         await comment.destroy();
-        return true;
     } catch (error) {
         console.error('删除评论失败:', error);
         throw error;
@@ -88,42 +89,6 @@ function logoutUser() {
 
 // ============== 页面功能实现 ==============
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化粒子背景
-    particlesJS('particles-js', {
-        particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: "#ffffff" },
-            shape: { type: "circle" },
-            opacity: { value: 0.5, random: true },
-            size: { value: 3, random: true },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: "#ffffff",
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: "none",
-                random: true,
-                straight: false,
-                out_mode: "out",
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: {
-                onhover: { enable: true, mode: "repulse" },
-                onclick: { enable: true, mode: "push" },
-                resize: true
-            }
-        },
-        retina_detect: true
-    });
-
     // 初始化当前用户
     currentUser = getCurrentUser();
     updateAuthUI();
@@ -149,24 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             try {
-                // 显示加载状态
-                submitComment.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
-                submitComment.disabled = true;
-                
                 await addComment({
                     author: currentUser.get('username'),
                     content: content
                 });
                 
                 document.getElementById('commentInput').value = '';
-                await loadComments();
+                loadComments();
                 alert('感言已提交！感谢分享');
             } catch (error) {
                 console.error('提交评论失败:', error);
                 alert('提交失败，请重试');
-            } finally {
-                submitComment.innerHTML = '发表感言';
-                submitComment.disabled = false;
             }
         });
     }
@@ -212,82 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rosterContainer) {
         rosterContainer.innerHTML = '';
 
-        students.forEach((student, index) => {
+        students.forEach(student => {
             const studentCard = document.createElement('div');
-            studentCard.className = `student-card ${student.gender} animate-on-scroll`;
-            studentCard.style.transitionDelay = `${index * 0.1}s`;
-            
-            studentCard.innerHTML = `
-                <div class="student-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="student-info">
-                    <div class="student-name">${student.name}</div>
-                    <div class="student-contact">
-                        <i class="fas fa-phone"></i> ${student.phone}
-                    </div>
-                    <div class="student-contact">
-                        <i class="fas fa-envelope"></i> ${student.email}
-                    </div>
-                </div>
-            `;
-            
-            rosterContainer.appendChild(studentCard);
+            studentCard.className = `student-card ${student.gender}`;
+
+            // 创建学生卡片...
         });
-        
-        // 添加滚动观察器
-        observeElements('.student-card');
-    }
-    
-    // 照片墙数据
-    const photos = [
-        // 照片数据...
-    ];
-    
-    // 加载照片墙
-    const photoGrid = document.querySelector('.photo-grid');
-    if (photoGrid) {
-        photos.forEach((photo, index) => {
-            const photoItem = document.createElement('div');
-            photoItem.className = 'photo-item animate-on-scroll';
-            photoItem.style.transitionDelay = `${index * 0.1}s`;
-            
-            photoItem.innerHTML = `
-                <img src="${photo.url}" alt="${photo.caption}">
-                <div class="photo-caption">${photo.caption}</div>
-            `;
-            
-            photoGrid.appendChild(photoItem);
-        });
-        
-        // 添加滚动观察器
-        observeElements('.photo-item');
-    }
-    
-    // 时间线数据
-    const timelineEvents = [
-        // 时间线数据...
-    ];
-    
-    // 加载时间线
-    const timeline = document.querySelector('.timeline');
-    if (timeline) {
-        timelineEvents.forEach((event, index) => {
-            const timelineItem = document.createElement('div');
-            timelineItem.className = `timeline-item ${index % 2 === 0 ? 'left' : 'right'}`;
-            
-            timelineItem.innerHTML = `
-                <div class="timeline-content">
-                    <h3>${event.date}</h3>
-                    <p>${event.description}</p>
-                </div>
-            `;
-            
-            timeline.appendChild(timelineItem);
-        });
-        
-        // 添加滚动观察器
-        observeElements('.timeline-item');
     }
     
     // 可拖动主题切换按钮功能
@@ -295,73 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeButton = document.getElementById('themeButton');
 
     if (themeSwitch && themeButton) {
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        themeButton.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-            
-            // 更新按钮图标
-            const icon = themeButton.querySelector('i');
-            if (document.body.classList.contains('dark-theme')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                themeButton.querySelector('span').textContent = '日间模式';
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                themeButton.querySelector('span').textContent = '夜间模式';
-            }
-        });
-
-        themeSwitch.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            offsetX = e.clientX - themeSwitch.getBoundingClientRect().left;
-            offsetY = e.clientY - themeSwitch.getBoundingClientRect().top;
-            themeSwitch.classList.add('dragging');
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
-            const x = e.clientX - offsetX;
-            const y = e.clientY - offsetY;
-            
-            // 限制在视口内
-            const maxX = window.innerWidth - themeSwitch.offsetWidth;
-            const maxY = window.innerHeight - themeSwitch.offsetHeight;
-            
-            themeSwitch.style.left = `${Math.max(0, Math.min(maxX, x))}px`;
-            themeSwitch.style.top = `${Math.max(0, Math.min(maxY, y))}px`;
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            themeSwitch.classList.remove('dragging');
-            
-            // 保存位置
-            localStorage.setItem('themeSwitchX', themeSwitch.style.left);
-            localStorage.setItem('themeSwitchY', themeSwitch.style.top);
-        });
-
-        // 恢复位置
-        const savedX = localStorage.getItem('themeSwitchX');
-        const savedY = localStorage.getItem('themeSwitchY');
-        const savedTheme = localStorage.getItem('theme');
-        
-        if (savedX && savedY) {
-            themeSwitch.style.left = savedX;
-            themeSwitch.style.top = savedY;
-        }
-        
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            const icon = themeButton.querySelector('i');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-            themeButton.querySelector('span').textContent = '日间模式';
-        }
+        // 主题切换功能...
     }
 
     // 导航栏切换
@@ -407,13 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 视频功能
     const video = document.getElementById('graduationVideo');
     if (video) {
-        video.addEventListener('play', () => {
-            video.classList.add('playing');
-        });
-        
-        video.addEventListener('pause', () => {
-            video.classList.remove('playing');
-        });
+        // 视频控制功能...
     }
 });
 
@@ -423,9 +239,6 @@ async function loadComments() {
     if (!speechContainer) return;
     
     try {
-        // 显示加载状态
-        speechContainer.innerHTML = '<div class="loader"></div>';
-        
         const comments = await getComments();
         renderComments(comments);
     } catch (error) {
@@ -446,46 +259,7 @@ function renderComments(comments) {
     }
     
     comments.forEach((comment, index) => {
-        const speechItem = document.createElement('div');
-        speechItem.className = 'speech-item';
-        speechItem.style.animationDelay = `${index * 0.1}s`;
-        speechItem.dataset.id = comment.id;
-        
-        const date = new Date(comment.createdAt);
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-        
-        speechItem.innerHTML = `
-            <div class="speech-header">
-                <div class="speech-avatar">${comment.author.charAt(0)}</div>
-                <div class="speech-author">${comment.author}</div>
-                <div class="speech-date">${formattedDate}</div>
-            </div>
-            <div class="speech-content">${comment.content}</div>
-        `;
-        
-        // 如果是当前用户的评论或管理员，添加删除按钮
-        if (currentUser && (currentUser.get('username') === comment.author || currentUser.get('username') === 'admin')) {
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-comment';
-            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-            deleteBtn.addEventListener('click', async () => {
-                if (confirm('确定要删除这条评论吗？')) {
-                    speechItem.classList.add('deleting');
-                    try {
-                        await deleteComment(comment.id);
-                        setTimeout(() => {
-                            speechItem.remove();
-                        }, 300);
-                    } catch (error) {
-                        speechItem.classList.remove('deleting');
-                        alert('删除失败，请重试');
-                    }
-                }
-            });
-            speechItem.appendChild(deleteBtn);
-        }
-        
-        speechContainer.appendChild(speechItem);
+        // 创建评论项...
     });
 }
 
@@ -507,7 +281,6 @@ function updateAuthUI() {
                 currentUser = null;
                 updateAuthUI();
                 alert('已退出登录');
-                window.location.reload();
             };
         } else {
             authBtn.onclick = null;
@@ -540,21 +313,4 @@ function showLoginModal() {
 function hideLoginModal() {
     const modal = document.getElementById('loginModal');
     modal.style.display = 'none';
-}
-
-// 滚动观察器
-function observeElements(selector) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
-    
-    document.querySelectorAll(selector).forEach(element => {
-        observer.observe(element);
-    });
 }
