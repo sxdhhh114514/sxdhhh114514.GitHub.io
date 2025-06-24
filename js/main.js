@@ -645,3 +645,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+// 在原有JS基础上添加以下内容
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ... 原有代码 ...
+  
+  // 为卡片添加顺序变量
+  document.querySelectorAll('.glass-container').forEach((card, index) => {
+    card.style.setProperty('--card-order', index);
+  });
+  
+  // ... 原有代码 ...
+});
