@@ -606,3 +606,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('loaded');
     }, 500);
 });
+// 添加在文件末尾
+// ============== 页面跳转动画 ==============
+document.addEventListener('DOMContentLoaded', () => {
+  // 页面加载完成后隐藏动画
+  setTimeout(() => {
+    const transitionElement = document.getElementById('pageTransition');
+    if (transitionElement) {
+      transitionElement.style.display = 'none';
+    }
+  }, 1000);
+  
+  // 处理页面跳转动画
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      
+      // 排除锚点链接和外部链接
+      if (!href || href.startsWith('#') || href.startsWith('javascript:') || 
+          href.includes('lz.qaiu.top') || href.includes('share.feijipan.com') ||
+          href.includes('zzxx.cqedu.cn') || href.includes('img.wjwj.top')) {
+        return;
+      }
+      
+      e.preventDefault();
+      
+      // 显示过渡动画
+      const transitionElement = document.getElementById('pageTransition');
+      if (transitionElement) {
+        transitionElement.style.display = 'flex';
+        transitionElement.querySelector('.transition-overlay').style.animation = 'slideIn 0.6s cubic-bezier(0.65, 0, 0.35, 1)';
+      }
+      
+      // 导航到新页面
+      setTimeout(() => {
+        window.location.href = href;
+      }, 800);
+    });
+  });
+});
