@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重庆市中考成绩查询</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            background: #1a56db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #1a56db;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #1a56db, transparent);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #1a56db 0%, #0d3a94 100%);
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .total-score {
+            text-align: center;
+            padding: 25px 0;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e1effe 100%);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .total-score .label {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .total-score .score {
+            font-size: 64px;
+            font-weight: bold;
+            color: #1a56db;
+            line-height: 1;
+        }
+        
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .subject-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e0;
+        }
+        
+        .subject-score {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a56db;
+            margin-bottom: 8px;
+        }
+        
+        .subject-name {
+            font-size: 16px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            font-size: 18px;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        
+        .info-label {
+            width: 120px;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #718096;
+            font-size: 14px;
+            padding: 20px;
+        }
+        
+        .print-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a56db 0%, #0d3a94 100%);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(26, 86, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(26, 86, 219, 0.4);
+        }
+        
+        @media (max-width: 600px) {
+            .subject-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .total-score .score {
+                font-size: 48px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .info-label {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">渝</div>
+            <h1>重庆市中考（联招）招生平台</h1>
+            <p class="subtitle">中考成绩查询结果</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>成绩信息</h2>
+                </div>
+                
+                <div class="card-content">
+                    <div class="total-score">
+                        <div class="label">总分</div>
+                        <div class="score">530</div>
+                    </div>
+                    
+                    <div class="subject-grid">
+                        <div class="subject-card">
+                            <div class="subject-score">75.5</div>
+                            <div class="subject-name">物理</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">45</div>
+                            <div class="subject-name">体育</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">23.5</div>
+                            <div class="subject-name">历史</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">118</div>
+                            <div class="subject-name">数学</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">51.5</div>
+                            <div class="subject-name">化学</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">90</div>
+                            <div class="subject-name">语文</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">98.5</div>
+                            <div class="subject-name">英语</div>
+                        </div>
+                        
+                        <div class="subject-card">
+                            <div class="subject-score">28</div>
+                            <div class="subject-name">道德与法治</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-graduate"></i>
+                    <h2>学生信息</h2>
+                </div>
+                
+                <div class="card-content">
+                    <div class="student-info">
+                        <div class="info-row">
+                            <div class="info-label">学生姓名：</div>
+                            <div class="info-value">舒玺达</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">报名号：</div>
+                            <div class="info-value">5016601662</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">毕业学校：</div>
+                            <div class="info-value">重庆市第六十六中学校</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="#" class="print-btn">
+                            <i class="fas fa-print"></i> 打印成绩单
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="footer">
+            <p>© 2025 重庆市教育考试院 版权所有</p>
+            <p>成绩查询系统 | 数据更新时间: 2025-06-24 16:03:38</p>
+        </div>
+    </div>
+
+    <script>
+        // 打印功能
+        document.querySelector('.print-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('已发送打印指令，请使用浏览器的打印功能(Ctrl+P)');
+            window.print();
+        });
+        
+        // 卡片悬停效果增强
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.08)';
+            });
+        });
+    </script>
+</body>
+</html>
