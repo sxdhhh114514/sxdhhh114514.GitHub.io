@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '殷浩铭': 137891,
         '叶秦曦': 250,
         '何长城': 13250,
+        '龚俊熙': 114514
     };
     
     // 生成符合要求的随机分数
